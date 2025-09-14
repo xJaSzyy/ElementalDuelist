@@ -17,4 +17,9 @@ public class HandManager : MonoBehaviour
     {
         cards.Remove(card);
     }
+
+    public int GetCardsCount()
+    {
+        return cards.Count;
+    }
 }

@@ -53,7 +53,6 @@ public class CardDeckManager : MonoBehaviour
     public void Start()
     {
         SpawnCards();
-        Shuffle(cards);
         FillHands();
     }
 
@@ -115,37 +114,54 @@ public class CardDeckManager : MonoBehaviour
 
     private void FillHands()
     {
-        for (int i = 0; i < startCardsNumber; i++)
+        Shuffle(cards);
+
+        while (playerHand.GetCardsCount() < startCardsNumber && cards.Count > 0)
         {
-            Card card = cards[i];
+            Card card = cards[0];
             card.Rotate();
             card.side = CardSide.Player;
             playerHand.AddCard(card);
-            cards.RemoveAt(i);
+            cards.RemoveAt(0);
         }
 
-        for (int i = 0; i < startCardsNumber; i++)
+        while (opponentHand.GetCardsCount() < startCardsNumber && cards.Count > 0)
         {
-            Card card = cards[i];
+            Card card = cards[0];
             card.Rotate();
             card.side = CardSide.Opponent;
             opponentHand.AddCard(card);
-            cards.RemoveAt(i);
+            cards.RemoveAt(0);
         }
     }
 
     public void OnCardClick(Card card)
     {
-        if (card.side == currentSide)
+        if (card.side != currentSide)
         {
-            if (card.position == CardPosition.Hand)
-            {
-                TableManager table = (card.side == CardSide.Player) ? playerTable : opponentTable;
-                HandManager hand = (card.side == CardSide.Player) ? playerHand : opponentHand;
+            return;
+        }
 
-                hand.RemoveCard(card);
-                table.AddCard(card);
+        if (card.position == CardPosition.Hand)
+        {
+            TableManager table = (card.side == CardSide.Player) ? playerTable : opponentTable;
+            HandManager hand = (card.side == CardSide.Player) ? playerHand : opponentHand;
+
+            TableManager table2 = (table == playerTable) ? opponentTable : playerTable;
+
+
+            if (table.GetCardsCount() == 0 && table2.IsFull())
+            {
+                if (!card.element.Beats(table2.GetCards()[0].element))
+                {
+                    return;
+                }
+
+                Debug.Log($"{card.element} beats {table2.GetCards()[0].element}");
             }
+
+            hand.RemoveCard(card);
+            table.AddCard(card);
         }
     }
 
@@ -197,11 +213,28 @@ public class CardDeckManager : MonoBehaviour
 
             playerTable.RemoveCards();
             opponentTable.RemoveCards();
+            FillHands();
         }
     }
 
     public void MoveTurn()
     {
         currentSide = currentSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
+    }
+}
+
+public static class CardElementExtensions
+{
+    public static bool Beats(this CardElement attacker, CardElement defender)
+    {
+        if (attacker == defender)
+        {
+            return true;
+        }
+
+        return (attacker == CardElement.Water && defender == CardElement.Fire)
+            || (attacker == CardElement.Fire && defender == CardElement.Air)
+            || (attacker == CardElement.Air && defender == CardElement.Earth)
+            || (attacker == CardElement.Earth && defender == CardElement.Water);
     }
 }

@@ -53,4 +53,9 @@ public class TableManager : MonoBehaviour
 
         return power;
     }
+
+    public int GetCardsCount()
+    {
+        return cards.Count;
+    }
 }

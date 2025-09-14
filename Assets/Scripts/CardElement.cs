@@ -1,7 +1,7 @@
 ﻿public enum CardElement
 {
     Fire = 0,
-    Water = 1,
+    Air = 1,
     Earth = 2,
-    Air = 4
+    Water = 4
 }
