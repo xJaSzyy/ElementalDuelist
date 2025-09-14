@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardDeckManager : MonoBehaviour
 {
@@ -34,6 +34,7 @@ public class CardDeckManager : MonoBehaviour
     [SerializeField] private List<Sprite> cardFrontSprites;
 
     [SerializeField] private GameObject cardDeck;
+    [SerializeField] private GameObject cardDiscard;
 
     [SerializeField] private HandManager playerHand;
     [SerializeField] private HandManager opponentHand;
@@ -43,7 +44,11 @@ public class CardDeckManager : MonoBehaviour
 
     [SerializeField] private GameObject cardPrefab;
 
-    public List<Card> cards = new();
+    [SerializeField] private Text turnText;
+
+    [SerializeField] private List<Card> cards = new();
+    
+    private CardSide currentSide;
 
     public void Start()
     {
@@ -54,10 +59,7 @@ public class CardDeckManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Shuffle(cards);
-        }
+        turnText.text = currentSide.ToString() + " turn";
     }
 
     private void SpawnCards()
@@ -70,6 +72,20 @@ public class CardDeckManager : MonoBehaviour
             Card card = cardGameObject.GetComponent<Card>();
             card.frontSprite = sprite;
             card.backSprite = cardBackSprite;
+                
+            string[] parts = sprite.name.Split('_');
+
+            if (Enum.TryParse(parts[0], true, out CardElement element))
+            {
+                card.element = element;
+            }
+
+            if (Enum.TryParse(parts[1], true, out CardType type))
+            {
+                card.type = type;
+            }
+
+            card.value = Convert.ToInt32(parts[2]);
 
             cards.Add(card);
         }
@@ -77,6 +93,8 @@ public class CardDeckManager : MonoBehaviour
 
     private void Shuffle<T>(List<T> cards)
     {
+        currentSide = (UnityEngine.Random.value < 0.5f) ? CardSide.Player : CardSide.Opponent;
+
         for (int i = cards.Count - 1; i > 0; i--)
         {
             int j = UnityEngine.Random.Range(0, i + 1);
@@ -118,13 +136,72 @@ public class CardDeckManager : MonoBehaviour
 
     public void OnCardClick(Card card)
     {
-        if (card.position == CardPosition.Hand)
+        if (card.side == currentSide)
         {
-            HandManager hand = card.side == CardSide.Player ? playerHand : opponentHand;
-            TableManager table = card.side == CardSide.Player ? playerTable : opponentTable;
+            if (card.position == CardPosition.Hand)
+            {
+                TableManager table = (card.side == CardSide.Player) ? playerTable : opponentTable;
+                HandManager hand = (card.side == CardSide.Player) ? playerHand : opponentHand;
 
-            hand.RemoveCard(card);
-            table.AddCard(card);
+                hand.RemoveCard(card);
+                table.AddCard(card);
+            }
         }
+    }
+
+    public void TryDetermineWinner()
+    {
+        if (playerTable.IsFull() && opponentTable.IsFull())
+        {
+            int playerPower = playerTable.GetCardsPower();
+            int opponentPower = opponentTable.GetCardsPower();
+
+            List<Card> playerTableCards = playerTable.GetCards();
+            List<Card> opponentTableCards = opponentTable.GetCards();
+
+            if (playerPower != opponentPower)
+            {
+                HandManager hand = (playerPower > opponentPower) ? playerHand : opponentHand;
+                CardSide side = (playerPower > opponentPower) ? CardSide.Player : CardSide.Opponent;
+
+                foreach (Card item in playerTableCards)
+                {
+                    item.side = side;
+                    hand.AddCard(item);
+                }
+                foreach (Card item in opponentTableCards)
+                {
+                    item.side = side;
+                    hand.AddCard(item);
+                }
+
+                currentSide = side;
+            }
+            else
+            {
+                foreach (Card item in playerTableCards)
+                {
+                    item.side = CardSide.None;
+                    item.Rotate();
+                    item.gameObject.transform.SetParent(cardDiscard.transform);
+                    item.gameObject.transform.localPosition = Vector3.zero;
+                }
+                foreach (Card item in opponentTableCards)
+                {
+                    item.side = CardSide.None;
+                    item.Rotate();
+                    item.gameObject.transform.SetParent(cardDiscard.transform);
+                    item.gameObject.transform.localPosition = Vector3.zero;
+                }
+            }
+
+            playerTable.RemoveCards();
+            opponentTable.RemoveCards();
+        }
+    }
+
+    public void MoveTurn()
+    {
+        currentSide = currentSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
     }
 }

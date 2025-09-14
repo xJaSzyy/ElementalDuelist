@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IPointerClickHandler
 {
+    public int value;
+    public CardType type;
+    public CardElement element;
+
     public CardPosition position;
     public CardSide side;
 

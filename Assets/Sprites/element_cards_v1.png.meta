@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: element_cards_v1_0
+      name: fire_number_10
       rect:
         serializedVersion: 2
         x: 0
@@ -134,7 +134,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,7 +148,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_1
+      name: fire_number_9
       rect:
         serializedVersion: 2
         x: 32
@@ -156,7 +156,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,7 +170,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_2
+      name: fire_number_8
       rect:
         serializedVersion: 2
         x: 64
@@ -178,7 +178,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,7 +192,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_3
+      name: fire_number_7
       rect:
         serializedVersion: 2
         x: 96
@@ -200,7 +200,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,7 +214,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_4
+      name: fire_number_6
       rect:
         serializedVersion: 2
         x: 128
@@ -222,7 +222,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_5
+      name: fire_action_0
       rect:
         serializedVersion: 2
         x: 160
@@ -244,7 +244,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -258,7 +258,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_6
+      name: fire_action_1
       rect:
         serializedVersion: 2
         x: 192
@@ -266,7 +266,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -280,7 +280,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_7
+      name: fire_action_2
       rect:
         serializedVersion: 2
         x: 224
@@ -288,7 +288,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -302,7 +302,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_8
+      name: water_number_10
       rect:
         serializedVersion: 2
         x: 0
@@ -310,7 +310,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -324,7 +324,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_9
+      name: water_number_9
       rect:
         serializedVersion: 2
         x: 32
@@ -332,7 +332,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -346,7 +346,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_10
+      name: water_number_8
       rect:
         serializedVersion: 2
         x: 64
@@ -354,7 +354,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -368,7 +368,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_11
+      name: water_number_7
       rect:
         serializedVersion: 2
         x: 96
@@ -376,7 +376,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -390,7 +390,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_12
+      name: water_number_6
       rect:
         serializedVersion: 2
         x: 128
@@ -398,7 +398,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -412,7 +412,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_13
+      name: water_action_0
       rect:
         serializedVersion: 2
         x: 160
@@ -420,7 +420,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -434,7 +434,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_14
+      name: water_action_1
       rect:
         serializedVersion: 2
         x: 192
@@ -442,7 +442,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -456,7 +456,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_15
+      name: water_action_2
       rect:
         serializedVersion: 2
         x: 224
@@ -464,7 +464,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -478,7 +478,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_16
+      name: earth_number_10
       rect:
         serializedVersion: 2
         x: 0
@@ -486,7 +486,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -500,7 +500,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_17
+      name: earth_number_9
       rect:
         serializedVersion: 2
         x: 32
@@ -508,7 +508,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -522,7 +522,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_18
+      name: earth_number_8
       rect:
         serializedVersion: 2
         x: 64
@@ -530,7 +530,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -544,7 +544,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_19
+      name: earth_number_7
       rect:
         serializedVersion: 2
         x: 96
@@ -552,7 +552,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -566,7 +566,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_20
+      name: earth_number_6
       rect:
         serializedVersion: 2
         x: 128
@@ -574,7 +574,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -588,7 +588,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_21
+      name: earth_action_0
       rect:
         serializedVersion: 2
         x: 160
@@ -596,7 +596,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -610,7 +610,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_22
+      name: earth_action_1
       rect:
         serializedVersion: 2
         x: 192
@@ -618,7 +618,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -632,7 +632,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_23
+      name: earth_action_2
       rect:
         serializedVersion: 2
         x: 224
@@ -640,7 +640,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -654,7 +654,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_24
+      name: air_number_10
       rect:
         serializedVersion: 2
         x: 0
@@ -662,7 +662,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -676,7 +676,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_25
+      name: air_number_9
       rect:
         serializedVersion: 2
         x: 32
@@ -684,7 +684,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -698,7 +698,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_26
+      name: air_number_8
       rect:
         serializedVersion: 2
         x: 64
@@ -706,7 +706,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -720,7 +720,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_27
+      name: air_number_7
       rect:
         serializedVersion: 2
         x: 96
@@ -728,7 +728,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -742,7 +742,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_28
+      name: air_number_6
       rect:
         serializedVersion: 2
         x: 128
@@ -750,7 +750,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -764,7 +764,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_29
+      name: air_action_0
       rect:
         serializedVersion: 2
         x: 160
@@ -772,7 +772,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -786,7 +786,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_30
+      name: air_action_1
       rect:
         serializedVersion: 2
         x: 192
@@ -794,7 +794,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -808,7 +808,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: element_cards_v1_31
+      name: air_action_2
       rect:
         serializedVersion: 2
         x: 224
@@ -816,7 +816,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -843,38 +843,38 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      element_cards_v1_0: 8513929685589760042
-      element_cards_v1_1: 945419499
-      element_cards_v1_10: -1884375756
-      element_cards_v1_11: -1891694137
-      element_cards_v1_12: 1681254121
-      element_cards_v1_13: -590868044
-      element_cards_v1_14: 1743573447
-      element_cards_v1_15: -1366863755
-      element_cards_v1_16: -2002060747
-      element_cards_v1_17: 1272777417
-      element_cards_v1_18: 845579591
-      element_cards_v1_19: -798713337
-      element_cards_v1_2: 1800630935
-      element_cards_v1_20: -1498401753
-      element_cards_v1_21: 628723006
-      element_cards_v1_22: -456752322
-      element_cards_v1_23: -423757990
-      element_cards_v1_24: -1546510258
-      element_cards_v1_25: -1068993016
-      element_cards_v1_26: 724227611
-      element_cards_v1_27: -1741190318
-      element_cards_v1_28: -474272056
-      element_cards_v1_29: -949680297
-      element_cards_v1_3: -1475177344
-      element_cards_v1_30: 1892681165
-      element_cards_v1_31: 818948804
-      element_cards_v1_4: 964667637
-      element_cards_v1_5: 873784093
-      element_cards_v1_6: 705958410
-      element_cards_v1_7: -51204024
-      element_cards_v1_8: -364830298
-      element_cards_v1_9: -1328526486
+      air_action_0: -949680297
+      air_action_1: 1892681165
+      air_action_2: 818948804
+      air_number_10: -1546510258
+      air_number_6: -474272056
+      air_number_7: -1741190318
+      air_number_8: 724227611
+      air_number_9: -1068993016
+      earth_action_0: 628723006
+      earth_action_1: -456752322
+      earth_action_2: -423757990
+      earth_number_10: -2002060747
+      earth_number_6: -1498401753
+      earth_number_7: -798713337
+      earth_number_8: 845579591
+      earth_number_9: 1272777417
+      fire_action_0: 873784093
+      fire_action_1: 705958410
+      fire_action_2: -51204024
+      fire_number_10: 8513929685589760042
+      fire_number_6: 964667637
+      fire_number_7: -1475177344
+      fire_number_8: 1800630935
+      fire_number_9: 945419499
+      water_action_0: -590868044
+      water_action_1: 1743573447
+      water_action_2: -1366863755
+      water_number_10: -364830298
+      water_number_6: 1681254121
+      water_number_7: -1891694137
+      water_number_8: -1884375756
+      water_number_9: -1328526486
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
