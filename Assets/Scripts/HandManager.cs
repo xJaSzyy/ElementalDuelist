@@ -30,12 +30,10 @@ public class HandManager : MonoBehaviour
             Vector3 up = spline.EvaluateUpVector(p);
             Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
 
-            float duration = .25f;
+            LeanTween.move(cards[i].gameObject, splinePos, .25f).setEase(LeanTweenType.easeInOutSine);
+            LeanTween.rotate(cards[i].gameObject, rotation.eulerAngles, .25f).setEase(LeanTweenType.easeInOutSine);
 
-            LeanTween.move(cards[i].gameObject, splinePos, duration).setEase(LeanTweenType.easeInOutSine);
-
-            LeanTween.rotate(cards[i].gameObject, rotation.eulerAngles, duration).setEase(LeanTweenType.easeInOutSine);
-
+            cards[i].SetSortingOrder(i);
             cards[i].UpdatePosition(splinePos, rotation);
         }
     }
@@ -43,7 +41,6 @@ public class HandManager : MonoBehaviour
     public void AddCard(Card newCard)
     {
         cards.Add(newCard);
-        newCard.spriteRenderer.sortingOrder = cards.Count;
         newCard.transform.SetParent(transform, true);
         newCard.position = CardPosition.Hand;
         UpdateCardPositions();

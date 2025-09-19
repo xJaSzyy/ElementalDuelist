@@ -13,8 +13,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public CardPosition position;
     public CardSide side;
 
-    [HideInInspector] public SpriteRenderer spriteRenderer;
-    
+    private SpriteRenderer sr;
     private Vector3 originalPosition;
     private Vector3 raisedPosition;
     private Quaternion originalRotation;
@@ -23,7 +22,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -53,6 +52,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (position != CardPosition.Hand) { return; }
+
         if (GameManager.Instance.CanClickOnCard(side))
         {
             isRaised = false;
@@ -68,11 +69,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         if (yRotation > 90f && yRotation < 270f)
         {
-            spriteRenderer.sprite = backSprite;
+            sr.sprite = backSprite;
         }
         else
         {
-            spriteRenderer.sprite = frontSprite;
+            sr.sprite = frontSprite;
         }
     }
 
@@ -126,5 +127,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         raisedPosition = originalPosition + (side == CardSide.Player ? new Vector3(0f, raisedOffset, 0f) : new Vector3(0f, -raisedOffset, 0f));
         raisedRotation = Quaternion.Euler(0f, 0f, 0f);
+    }
+
+    public void SetSortingOrder(int index)
+    {
+        sr.sortingOrder = index;
     }
 }

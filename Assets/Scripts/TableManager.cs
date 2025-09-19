@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TableManager : MonoBehaviour
 {
+    [SerializeField] private Vector3 tableCardsScale = new(0.5f, 0.5f, 0.5f);
     [SerializeField] private Transform mainCardPos;
     [SerializeField] private Transform extraCardPos;
 
@@ -17,10 +18,10 @@ public class TableManager : MonoBehaviour
         }
 
         card.transform.SetParent(transform, true);
-        card.transform.position = mainCardPos.position;
-        card.transform.rotation = mainCardPos.rotation;
-        card.spriteRenderer.sortingOrder = 0;
-        card.transform.localScale = new Vector3(.5f, .5f, .5f);
+        LeanTween.move(card.gameObject, mainCardPos.position, .25f);
+        LeanTween.rotate(card.gameObject, mainCardPos.rotation.eulerAngles, .25f);
+        LeanTween.scale(card.gameObject, tableCardsScale, 0.25f);
+        card.SetSortingOrder(0);
         mainCard = card;
 
         return true;
@@ -34,10 +35,10 @@ public class TableManager : MonoBehaviour
         }
 
         card.transform.SetParent(transform, true);
-        card.transform.position = extraCardPos.position;
-        card.transform.rotation = extraCardPos.rotation;
-        card.spriteRenderer.sortingOrder = 1;
-        card.transform.localScale = new Vector3(.5f, .5f, .5f);
+        LeanTween.move(card.gameObject, extraCardPos.position, .25f);
+        LeanTween.rotate(card.gameObject, extraCardPos.rotation.eulerAngles, .25f);
+        LeanTween.scale(card.gameObject, tableCardsScale, 0.25f);
+        card.SetSortingOrder(1);
         extraCard = card;
 
         return true;
