@@ -58,4 +58,15 @@ public class TableManager : MonoBehaviour
     {
         return extraCard;
     }
+
+    public void RemoveCards()
+    {
+        mainCard = null;
+        extraCard = null;
+    }
+
+    public int GetTotalValue()
+    {
+        return mainCard.value + extraCard.value;
+    }
 }

@@ -11,8 +11,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [Header("Other")]
     public Sprite frontSprite;
     public CardPosition position;
-    public CardSide side;
     public CardElement element;
+    public int value;
+    public CardSide side;
 
     private SpriteRenderer sr;
     private Vector3 originalPosition;

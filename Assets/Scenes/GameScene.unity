@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &76047061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 76047062}
+  m_Layer: 0
+  m_Name: ResetStack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &76047062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76047061}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &310257013
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,6 +809,7 @@ MonoBehaviour:
   sideText: {fileID: 1715865708}
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   cardDeck: {fileID: 1502612314}
+  resetStack: {fileID: 76047061}
   playerHand: {fileID: 546710803}
   opponentHand: {fileID: 314144638}
   playerTable: {fileID: 1664148497}
@@ -1377,3 +1409,4 @@ SceneRoots:
   - {fileID: 1041241200}
   - {fileID: 1664148498}
   - {fileID: 995260550}
+  - {fileID: 76047062}

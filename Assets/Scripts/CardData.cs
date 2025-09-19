@@ -1,4 +1,5 @@
 using System;
+using UnityEditorInternal;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/Card")]
@@ -31,6 +32,22 @@ public static class CardElementExtensions
             (CardElement.Fire, CardElement.Air) => true,
             (CardElement.Air, CardElement.Earth) => true,
             (CardElement.Earth, CardElement.Water) => true,
+            _ => false
+        };
+    }
+
+    public static bool Combined(this CardElement element, CardElement other)
+    {
+        return (element, other) switch
+        {
+            (CardElement.Air, CardElement.Air) => true,
+            (CardElement.Fire, CardElement.Fire) => true,
+            (CardElement.Earth, CardElement.Earth) => true,
+            (CardElement.Water, CardElement.Water) => true,
+            (CardElement.Air, CardElement.Fire) => true,
+            (CardElement.Fire, CardElement.Air) => true,
+            (CardElement.Earth, CardElement.Water) => true,
+            (CardElement.Water, CardElement.Earth) => true,
             _ => false
         };
     }

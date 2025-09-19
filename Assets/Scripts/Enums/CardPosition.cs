@@ -5,6 +5,6 @@
         Deck = 0,
         Hand = 1,
         Table = 2,
-        Discard = 3
+        ResetStack = 3
     }
 }
