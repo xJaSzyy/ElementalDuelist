@@ -103,7 +103,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnCardClick(Card card)
+    public bool CanClickOnCard(CardSide side)
+    {
+        TableManager table = side == CardSide.Player ? playerTable : opponentTable;
+        return !table.IsFull();
+    }
+
+    public void ClickOnCard(Card card)
     {
         if (card.side == CardSide.Player)
         {

@@ -53,11 +53,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        isRaised = false;
-        LeanTween.cancel(gameObject);
-        transform.position = originalPosition;
-        transform.rotation = originalRotation;
-        GameManager.Instance.OnCardClick(this);
+        if (GameManager.Instance.CanClickOnCard(side))
+        {
+            isRaised = false;
+            LeanTween.cancel(gameObject);
+            transform.SetPositionAndRotation(originalPosition, originalRotation);
+            GameManager.Instance.ClickOnCard(this);
+        }
     }
 
     private void Flip()

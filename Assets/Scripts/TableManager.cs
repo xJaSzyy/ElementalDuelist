@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TableManager : MonoBehaviour
@@ -12,7 +13,6 @@ public class TableManager : MonoBehaviour
     {
         if (mainCard != null)
         {
-            Debug.Log("Main card exists");
             return false;
         }
 
@@ -30,7 +30,6 @@ public class TableManager : MonoBehaviour
     {
         if (extraCard != null)
         {
-            Debug.Log("Extra card exists");
             return false;
         }
 
@@ -42,5 +41,10 @@ public class TableManager : MonoBehaviour
         extraCard = card;
 
         return true;
+    }
+
+    public bool IsFull()
+    {
+        return (mainCard != null) && (extraCard != null);
     }
 }
