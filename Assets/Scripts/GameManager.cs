@@ -1,6 +1,7 @@
 using Assets.Scripts.Enums;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     [Header("Options")]
     [SerializeField] private int maxHandCards;
 
+    [Header("UI")]
+    [SerializeField] private TMP_Text sideText;
+
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private GameObject cardDeck;
@@ -37,7 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<CardData> cardDatas = new();
     [SerializeField] private List<Card> cards = new();
 
-    private CardSide currentSide;
+    private CardSide firstSide = CardSide.Player;
+    private CardSide currentSide = CardSide.Player;
 
     private void Awake()
     {
@@ -63,6 +68,8 @@ public class GameManager : MonoBehaviour
         {
             FillHands();
         }
+
+        sideText.text = $"{currentSide} turn";
     }
 
     private void DrawCards()
@@ -72,6 +79,7 @@ public class GameManager : MonoBehaviour
             GameObject cardObject = Instantiate(cardPrefab, cardDeck.transform);
             Card card = cardObject.GetComponent<Card>();
             card.frontSprite = cardData.sprite;
+            card.element = cardData.element;
             card.Rotate();
             
             cards.Add(card);
@@ -105,6 +113,8 @@ public class GameManager : MonoBehaviour
 
     public bool CanClickOnCard(CardSide side)
     {
+        if (currentSide != side) { return false; }
+
         TableManager table = side == CardSide.Player ? playerTable : opponentTable;
         return !table.IsFull();
     }
@@ -113,16 +123,58 @@ public class GameManager : MonoBehaviour
     {
         if (card.side == CardSide.Player)
         {
-            if (playerTable.SetMainCard(card) || playerTable.SetExtraCard(card))
+            if (opponentTable.GetMainCard() != null && card.element.Beats(opponentTable.GetMainCard().element))
             {
-                playerHand.RemoveCard(card);
+                if (playerTable.SetMainCard(card))
+                {
+                    playerHand.RemoveCard(card);
+                }
+            }
+
+            if (opponentTable.GetMainCard() == null)
+            {
+                if (playerTable.SetMainCard(card))
+                {
+                    playerHand.RemoveCard(card);
+
+                    if (firstSide == CardSide.Player)
+                    {
+                        currentSide = CardSide.Opponent;
+                    }
+                }
+                else if (playerTable.SetExtraCard(card))
+                {
+                    playerHand.RemoveCard(card);
+                    currentSide = CardSide.Opponent;
+                }
             }
         }
         else if (card.side == CardSide.Opponent)
         {
-            if (opponentTable.SetMainCard(card) || opponentTable.SetExtraCard(card))
+            if (playerTable.GetMainCard() != null && card.element.Beats(playerTable.GetMainCard().element))
             {
-                opponentHand.RemoveCard(card);
+                if (opponentTable.SetMainCard(card))
+                {
+                    opponentHand.RemoveCard(card);
+                }
+            }
+
+            if (playerTable.GetMainCard() == null)
+            {
+                if (opponentTable.SetMainCard(card))
+                {
+                    opponentHand.RemoveCard(card);
+
+                    if (firstSide == CardSide.Opponent)
+                    {
+                        currentSide = CardSide.Player;
+                    }
+                }
+                else if (opponentTable.SetExtraCard(card))
+                {
+                    opponentHand.RemoveCard(card);
+                    currentSide = CardSide.Player;
+                }
             }
         }
     }

@@ -48,4 +48,14 @@ public class TableManager : MonoBehaviour
     {
         return (mainCard != null) && (extraCard != null);
     }
+
+    public Card GetMainCard()
+    {
+        return mainCard;
+    }
+    
+    public Card GetExtraCard()
+    {
+        return extraCard;
+    }
 }

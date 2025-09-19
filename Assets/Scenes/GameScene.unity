@@ -775,6 +775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHandCards: 5
+  sideText: {fileID: 1715865708}
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   cardDeck: {fileID: 1502612314}
   playerHand: {fileID: 546710803}
@@ -878,6 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7e263ab6c73ec4588932b20687c3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tableCardsScale: {x: 0.5, y: 0.5, z: 0.5}
   mainCardPos: {fileID: 1541889325}
   extraCardPos: {fileID: 611815178}
   mainCard: {fileID: 0}
@@ -1201,6 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7e263ab6c73ec4588932b20687c3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tableCardsScale: {x: 0.5, y: 0.5, z: 0.5}
   mainCardPos: {fileID: 814829763}
   extraCardPos: {fileID: 405769500}
   mainCard: {fileID: 0}
