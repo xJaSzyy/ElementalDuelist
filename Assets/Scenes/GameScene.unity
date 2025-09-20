@@ -313,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   splineContainer: {fileID: 310257014}
+  side: 2
 --- !u!4 &314144639
 Transform:
   m_ObjectHideFlags: 0
@@ -544,6 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   splineContainer: {fileID: 1581628451}
+  side: 1
 --- !u!4 &546710804
 Transform:
   m_ObjectHideFlags: 0

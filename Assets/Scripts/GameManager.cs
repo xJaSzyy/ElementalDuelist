@@ -125,40 +125,98 @@ public class GameManager : MonoBehaviour
         TableManager table2 = currentSide == CardSide.Player ? opponentTable : playerTable;
         HandManager hand2 = currentSide == CardSide.Player ? opponentHand : playerHand;
 
-        if (table.GetMainCard() == null && card.side == firstSide)
+        if (table.GetMainCard() == null && card.side == firstSide) // First card && First side
         {
             if (table.SetMainCard(card))
             {
                 hand.RemoveCard(card);
-                currentSide = currentSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
+
+                if (!hand2.CanBeat(card))
+                {
+                    hand2.AddCard(card);
+
+                    FillHand(hand2, hand2.side, hand2.GetCardsCount() + 1);
+                    FillHand(hand, hand.side, maxHandCards);
+
+                    firstSide = hand.side;
+                    currentSide = firstSide;
+
+                    Debug.Log("NOT BEATS");
+                }
+                else
+                {
+                    SwapCurrentSide();
+                }
             }
         }
         else if (table.GetMainCard() == null && card.side != firstSide)
         {
-            if (card.element.Beats(table2.GetMainCard().element))
+            if (card.element.Beats(table2.GetMainCard().element)) // First card && Second side
             {
                 if (table.SetMainCard(card))
                 {
                     hand.RemoveCard(card);
+
                     if (hand.IsEmpty() || hand2.IsEmpty())
                     {
                         StartCoroutine(DetermineWinnerCoroutine(false));
                     }
+                    else if (!hand.CanCombined(card))
+                    {
+                        var card2 = table2.GetMainCard();
+                        hand.AddCard(card);
+                        hand.AddCard(card2);
+
+                        FillHand(hand, hand.side, hand.GetCardsCount() + 2);
+                        FillHand(hand2, hand2.side, maxHandCards);
+
+                        table2.RemoveCards();
+
+                        firstSide = hand2.side;
+                        currentSide = firstSide;
+
+                        Debug.Log("NOT COMBINED");
+                    }
                 }
             }
         }
-        else if (table.GetMainCard() != null && card.side != firstSide)
+        else if (table.GetMainCard() != null && card.side != firstSide) // Second card && Second side
         {
             if (card.element.Combined(table.GetMainCard().element))
             {
                 if (table.SetExtraCard(card))
                 {
                     hand.RemoveCard(card);
-                    currentSide = currentSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
+
+                    if (!hand2.CanCombined(table2.GetMainCard()))
+                    {
+                        var main1 = table.GetMainCard();
+                        var main2 = table2.GetMainCard();
+                        var extra1 = table.GetExtraCard();
+
+                        hand2.AddCard(main1);
+                        hand2.AddCard(main2);
+                        CardToResetStack(extra1);
+
+                        FillHand(hand2, hand2.side, hand2.GetCardsCount() + 2);
+                        FillHand(hand, hand.side, maxHandCards);
+
+                        table.RemoveCards();
+                        table2.RemoveCards();
+
+                        firstSide = hand.side;
+                        currentSide = firstSide;
+
+                        Debug.Log("NOT COMBINED");
+                    }
+                    else
+                    {
+                        SwapCurrentSide();
+                    }
                 }
             }
         }
-        else if (table.GetMainCard() != null && card.side == firstSide)
+        else if (table.GetMainCard() != null && card.side == firstSide) // Second card && First side
         {
             if (card.element.Combined(table.GetMainCard().element))
             {
@@ -188,9 +246,6 @@ public class GameManager : MonoBehaviour
             TableManager loserTable = playerTotalValue > opponentTotalValue ? opponentTable : playerTable;
             HandManager loserHand = playerTotalValue > opponentTotalValue ? opponentHand : playerHand;
             HandManager winnerHand = playerTotalValue > opponentTotalValue ? playerHand : opponentHand;
-
-            main1.side = loserSide;
-            main2.side = loserSide;
 
             loserHand.AddCard(main1);
             loserHand.AddCard(main2);
@@ -261,6 +316,10 @@ public class GameManager : MonoBehaviour
             });
     }
 
+    private void SwapCurrentSide()
+    {
+        currentSide = currentSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
+    }
 
     private void Shuffle<T>(List<T> cards)
     {

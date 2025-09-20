@@ -8,6 +8,7 @@ public class HandManager : MonoBehaviour
 {
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
+    public CardSide side;
     
     private List<Card> cards = new();
 
@@ -44,10 +45,14 @@ public class HandManager : MonoBehaviour
         cards.Add(newCard);
         newCard.transform.SetParent(transform, true);
         newCard.position = CardPosition.Hand;
+        newCard.side = side;
         newCard.stopRaised = true;
         LeanTween.scale(newCard.gameObject, Vector3.one, 0.25f).setEase(LeanTweenType.easeInOutSine)
-            .setOnComplete(() => newCard.stopRaised = false);
-        UpdateCardPositions();
+            .setOnComplete(() =>
+            {
+                newCard.stopRaised = false;
+                UpdateCardPositions();
+            });
     }
 
     public void RemoveCard(Card removeCard)
@@ -72,6 +77,19 @@ public class HandManager : MonoBehaviour
         foreach (Card item in cards)
         {
             if (item.element.Beats(card.element))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool CanCombined(Card card)
+    {
+        foreach (Card item in cards)
+        {
+            if (item.element.Combined(card.element))
             {
                 return true;
             }
