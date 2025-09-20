@@ -141,6 +141,9 @@ public class GameManager : MonoBehaviour
                     firstSide = hand.side;
                     currentSide = firstSide;
 
+                    table.RemoveCards();
+                    table2.RemoveCards();
+
                     Debug.Log("NOT BEATS");
                 }
                 else
@@ -170,6 +173,7 @@ public class GameManager : MonoBehaviour
                         FillHand(hand, hand.side, hand.GetCardsCount() + 2);
                         FillHand(hand2, hand2.side, maxHandCards);
 
+                        table.RemoveCards();
                         table2.RemoveCards();
 
                         firstSide = hand2.side;
