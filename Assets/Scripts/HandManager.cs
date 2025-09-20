@@ -1,4 +1,5 @@
 using Assets.Scripts.Enums;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -43,6 +44,9 @@ public class HandManager : MonoBehaviour
         cards.Add(newCard);
         newCard.transform.SetParent(transform, true);
         newCard.position = CardPosition.Hand;
+        newCard.stopRaised = true;
+        LeanTween.scale(newCard.gameObject, Vector3.one, 0.25f).setEase(LeanTweenType.easeInOutSine)
+            .setOnComplete(() => newCard.stopRaised = false);
         UpdateCardPositions();
     }
 
@@ -56,5 +60,23 @@ public class HandManager : MonoBehaviour
     public int GetCardsCount()
     {
         return cards.Count;
+    }
+
+    public bool IsEmpty()
+    {
+        return cards.Count == 0;
+    }
+
+    public bool CanBeat(Card card)
+    {
+        foreach (Card item in cards)
+        {
+            if (item.element.Beats(card.element))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

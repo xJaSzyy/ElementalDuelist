@@ -93,23 +93,19 @@ public class GameManager : MonoBehaviour
     {
         Shuffle(cards);
 
-        while (playerHand.GetCardsCount() < maxHandCards && cards.Count > 0)
-        {
-            Card card = cards[0];
-            card.transform.position = cardDeck.transform.position;
-            card.side = CardSide.Player;
-            card.Rotate();
-            playerHand.AddCard(card);
-            cards.RemoveAt(0);
-        }
+        FillHand(playerHand, CardSide.Player, maxHandCards);
+        FillHand(opponentHand, CardSide.Opponent, maxHandCards);
+    }
 
-        while (opponentHand.GetCardsCount() < maxHandCards && cards.Count > 0)
+    private void FillHand(HandManager hand, CardSide side, int maxHand)
+    {
+        while (hand.GetCardsCount() < maxHand && cards.Count > 0)
         {
             Card card = cards[0];
             card.transform.position = cardDeck.transform.position;
-            card.side = CardSide.Opponent;
+            card.side = side;
             card.Rotate();
-            opponentHand.AddCard(card);
+            hand.AddCard(card);
             cards.RemoveAt(0);
         }
     }
@@ -126,10 +122,11 @@ public class GameManager : MonoBehaviour
     {
         TableManager table = currentSide == CardSide.Player ? playerTable : opponentTable;
         HandManager hand = currentSide == CardSide.Player ? playerHand : opponentHand;
+        TableManager table2 = currentSide == CardSide.Player ? opponentTable : playerTable;
+        HandManager hand2 = currentSide == CardSide.Player ? opponentHand : playerHand;
 
         if (table.GetMainCard() == null && card.side == firstSide)
         {
-            Debug.Log("FIRST CARD FIRST SIDE");
             if (table.SetMainCard(card))
             {
                 hand.RemoveCard(card);
@@ -138,23 +135,20 @@ public class GameManager : MonoBehaviour
         }
         else if (table.GetMainCard() == null && card.side != firstSide)
         {
-            Debug.Log("FIRST CARD SECOND SIDE");
-            TableManager table2 = currentSide == CardSide.Player ? opponentTable : playerTable;
             if (card.element.Beats(table2.GetMainCard().element))
             {
                 if (table.SetMainCard(card))
                 {
                     hand.RemoveCard(card);
+                    if (hand.IsEmpty() || hand2.IsEmpty())
+                    {
+                        StartCoroutine(DetermineWinnerCoroutine(false));
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log("NOT BEATS");
             }
         }
         else if (table.GetMainCard() != null && card.side != firstSide)
         {
-            Debug.Log("SECOND CARD SECOND SIDE");
             if (card.element.Combined(table.GetMainCard().element))
             {
                 if (table.SetExtraCard(card))
@@ -163,30 +157,21 @@ public class GameManager : MonoBehaviour
                     currentSide = currentSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
                 }
             }
-            else
-            {
-                Debug.Log("NOT COMBINE");
-            }
         }
         else if (table.GetMainCard() != null && card.side == firstSide)
         {
-            Debug.Log("SECOND CARD FIRST SIDE");
             if (card.element.Combined(table.GetMainCard().element))
             {
                 if (table.SetExtraCard(card))
                 {
                     hand.RemoveCard(card);
-                    StartCoroutine(DetermineWinnerCoroutine());
+                    StartCoroutine(DetermineWinnerCoroutine(true));
                 }
-            }
-            else
-            {
-                Debug.Log("NOT COMBINE");
             }
         }
     }
 
-    private void DetermineWinner()
+    private void DetermineWinner(bool fullHand = true)
     {
         int playerTotalValue = playerTable.GetTotalValue();
         int opponentTotalValue = opponentTable.GetTotalValue();
@@ -199,50 +184,83 @@ public class GameManager : MonoBehaviour
         if (playerTotalValue != opponentTotalValue)
         {
             CardSide loserSide = playerTotalValue > opponentTotalValue ? CardSide.Opponent : CardSide.Player;
+            CardSide winnerSide = playerTotalValue > opponentTotalValue ? CardSide.Player : CardSide.Opponent;
             TableManager loserTable = playerTotalValue > opponentTotalValue ? opponentTable : playerTable;
             HandManager loserHand = playerTotalValue > opponentTotalValue ? opponentHand : playerHand;
-
-            main1.transform.localScale = Vector3.one;
-            main2.transform.localScale = Vector3.one;
+            HandManager winnerHand = playerTotalValue > opponentTotalValue ? playerHand : opponentHand;
 
             main1.side = loserSide;
-            loserHand.AddCard(main1);
-            Debug.Log("LOSER TAKE ONE");
             main2.side = loserSide;
-            loserHand.AddCard(main2);
-            Debug.Log("LOSER TAKE ONE AGAIN");
 
-            CardToResetStack(extra1);
-            CardToResetStack(extra2);
+            loserHand.AddCard(main1);
+            loserHand.AddCard(main2);
+
+            if (fullHand)
+            {
+                CardToResetStack(extra1);
+                CardToResetStack(extra2);
+            }
+
+            Debug.Log($"Winner {winnerSide} & {playerTotalValue} > {opponentTotalValue} {playerTotalValue > opponentTotalValue}");
+            FillHand(loserHand, loserSide, loserHand.GetCardsCount() + 2);
+            FillHand(winnerHand, winnerSide, maxHandCards);
+
+            firstSide = winnerSide;
+            currentSide = firstSide;
         }
         else
         {
             CardToResetStack(main1);
             CardToResetStack(main2);
-            CardToResetStack(extra1);
-            CardToResetStack(extra2);
+
+            if (fullHand)
+            {
+                CardToResetStack(extra1);
+                CardToResetStack(extra2);
+            }
+
+            FillHand(playerHand, CardSide.Player, maxHandCards);
+            FillHand(opponentHand, CardSide.Opponent, maxHandCards);
+
+            firstSide = firstSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
+            currentSide = firstSide;
+        }
+
+        if (playerHand.IsEmpty())
+        {
+            Debug.Log("PLAYER WIN");
+        }
+        else if (opponentHand.IsEmpty())
+        {
+            Debug.Log("OPPONENT WIN");
         }
 
         playerTable.RemoveCards();
         opponentTable.RemoveCards();
     }
 
-    IEnumerator DetermineWinnerCoroutine()
+    IEnumerator DetermineWinnerCoroutine(bool fullHand = true)
     {
         yield return new WaitForSeconds(.25f);
-        DetermineWinner();
+        DetermineWinner(fullHand);
     }
 
     private void CardToResetStack(Card card)
     {
         card.position = CardPosition.ResetStack;
-        card.transform.localScale = Vector3.one;
-        card.transform.SetParent(resetStack.transform, false);
-        card.transform.localPosition = Vector3.zero;
-        card.transform.rotation = Quaternion.identity;
-        card.Rotate();
-        Debug.Log("CARD TO RESET");
+
+        LeanTween.move(card.gameObject, resetStack.transform.position, 0.25f).setEase(LeanTweenType.easeInOutSine);
+        LeanTween.scale(card.gameObject, Vector3.one, 0.25f).setEase(LeanTweenType.easeInOutSine);
+        LeanTween.rotate(card.gameObject, new Vector3(0f, 180f, 0f), 0.25f).setEase(LeanTweenType.easeInOutSine)
+            .setOnComplete(() =>
+            {
+                card.transform.SetParent(resetStack.transform, false);
+                card.transform.localPosition = Vector3.zero;
+                card.transform.rotation = Quaternion.identity;
+                card.Rotate();
+            });
     }
+
 
     private void Shuffle<T>(List<T> cards)
     {

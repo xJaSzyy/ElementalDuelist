@@ -67,6 +67,11 @@ public class TableManager : MonoBehaviour
 
     public int GetTotalValue()
     {
-        return mainCard.value + extraCard.value;
+        int totalValue = 0;
+
+        totalValue += mainCard != null ? mainCard.value : 0;
+        totalValue += extraCard != null ? extraCard.value : 0;
+
+        return totalValue;
     }
 }

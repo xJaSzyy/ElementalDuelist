@@ -105,8 +105,9 @@ MonoBehaviour:
   raisedOffset: 2
   frontSprite: {fileID: 0}
   position: 0
-  side: 0
   element: 0
+  value: 0
+  side: 0
 --- !u!61 &-7938681068401707721
 BoxCollider2D:
   m_ObjectHideFlags: 0

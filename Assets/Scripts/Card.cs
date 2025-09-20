@@ -21,6 +21,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private Quaternion originalRotation;
     private Quaternion raisedRotation;
     private bool isRaised = false;
+    
+    [HideInInspector] public bool stopRaised = false;
 
     private void Awake()
     {
@@ -34,7 +36,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand) { return; }
+        if (position != CardPosition.Hand || stopRaised) { return; }
 
         if (!isRaised)
         {
@@ -44,7 +46,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand) { return; }
+        if (position != CardPosition.Hand || stopRaised) { return; }
 
         if (isRaised)
         {
