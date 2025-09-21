@@ -1,5 +1,4 @@
 using Assets.Scripts.Enums;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            FillHands();
+            StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
         }
 
         sideText.text = $"{currentSide} turn";
@@ -89,15 +88,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void FillHands()
+    IEnumerator FillHandsCoroutine(int maxPlayerHand, int maxOpponentHand)
     {
         Shuffle(cards);
 
-        FillHand(playerHand, CardSide.Player, maxHandCards);
-        FillHand(opponentHand, CardSide.Opponent, maxHandCards);
+        yield return StartCoroutine(FillHandCoroutine(playerHand, CardSide.Player, maxPlayerHand));
+        yield return StartCoroutine(FillHandCoroutine(opponentHand, CardSide.Opponent, maxOpponentHand));
     }
 
     private void FillHand(HandManager hand, CardSide side, int maxHand)
+    {
+        StartCoroutine(FillHandCoroutine(hand, side, maxHand));
+    }
+
+    IEnumerator FillHandCoroutine(HandManager hand, CardSide side, int maxHand)
     {
         while (hand.GetCardsCount() < maxHand && cards.Count > 0)
         {
@@ -107,6 +111,8 @@ public class GameManager : MonoBehaviour
             card.Rotate();
             hand.AddCard(card);
             cards.RemoveAt(0);
+
+            yield return new WaitForSeconds(.25f);
         }
     }
 
@@ -135,8 +141,10 @@ public class GameManager : MonoBehaviour
                 {
                     hand2.AddCard(card);
 
-                    FillHand(hand2, hand2.side, hand2.GetCardsCount() + 1);
-                    FillHand(hand, hand.side, maxHandCards);
+                    int firstMaxHand = (hand.side == CardSide.Player) ? maxHandCards : hand2.GetCardsCount() + 1;
+                    int secondMaxHand = (hand.side == CardSide.Player) ? hand2.GetCardsCount() + 1 : maxHandCards;
+
+                    StartCoroutine(FillHandsCoroutine(firstMaxHand, secondMaxHand));
 
                     firstSide = hand.side;
                     currentSide = firstSide;
@@ -170,14 +178,18 @@ public class GameManager : MonoBehaviour
                         hand.AddCard(card);
                         hand.AddCard(card2);
 
-                        FillHand(hand, hand.side, hand.GetCardsCount() + 2);
-                        FillHand(hand2, hand2.side, maxHandCards);
+                        int firstMaxHand = (hand2.side == CardSide.Player) ? maxHandCards : hand2.GetCardsCount() + 2;
+                        int secondMaxHand = (hand2.side == CardSide.Player) ? hand2.GetCardsCount() + 2 : maxHandCards;
+
+                        StartCoroutine(FillHandsCoroutine(firstMaxHand, secondMaxHand));
 
                         table.RemoveCards();
                         table2.RemoveCards();
 
                         firstSide = hand2.side;
                         currentSide = firstSide;
+
+                        DetermineGameEnd();
 
                         Debug.Log("NOT COMBINED");
                     }
@@ -202,8 +214,10 @@ public class GameManager : MonoBehaviour
                         hand2.AddCard(main2);
                         CardToResetStack(extra1);
 
-                        FillHand(hand2, hand2.side, hand2.GetCardsCount() + 2);
-                        FillHand(hand, hand.side, maxHandCards);
+                        int firstMaxHand = (hand.side == CardSide.Player) ? maxHandCards : hand2.GetCardsCount() + 2;
+                        int secondMaxHand = (hand.side == CardSide.Player) ? hand2.GetCardsCount() + 2 : maxHandCards;
+
+                        StartCoroutine(FillHandsCoroutine(firstMaxHand, secondMaxHand));
 
                         table.RemoveCards();
                         table2.RemoveCards();
@@ -260,9 +274,12 @@ public class GameManager : MonoBehaviour
                 CardToResetStack(extra2);
             }
 
-            Debug.Log($"Winner {winnerSide} & {playerTotalValue} > {opponentTotalValue} {playerTotalValue > opponentTotalValue}");
-            FillHand(loserHand, loserSide, loserHand.GetCardsCount() + 2);
-            FillHand(winnerHand, winnerSide, maxHandCards);
+            Debug.Log($"Winner {winnerSide}");
+
+            int firstMaxHand = (winnerSide == CardSide.Player) ? maxHandCards : loserHand.GetCardsCount() + 2;
+            int secondMaxHand = (winnerSide == CardSide.Player) ? loserHand.GetCardsCount() + 2 : maxHandCards;
+
+            StartCoroutine(FillHandsCoroutine(firstMaxHand, secondMaxHand));
 
             firstSide = winnerSide;
             currentSide = firstSide;
@@ -278,21 +295,13 @@ public class GameManager : MonoBehaviour
                 CardToResetStack(extra2);
             }
 
-            FillHand(playerHand, CardSide.Player, maxHandCards);
-            FillHand(opponentHand, CardSide.Opponent, maxHandCards);
+            StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
 
             firstSide = firstSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
             currentSide = firstSide;
         }
 
-        if (playerHand.IsEmpty())
-        {
-            Debug.Log("PLAYER WIN");
-        }
-        else if (opponentHand.IsEmpty())
-        {
-            Debug.Log("OPPONENT WIN");
-        }
+        DetermineGameEnd();
 
         playerTable.RemoveCards();
         opponentTable.RemoveCards();
@@ -323,6 +332,18 @@ public class GameManager : MonoBehaviour
     private void SwapCurrentSide()
     {
         currentSide = currentSide == CardSide.Player ? CardSide.Opponent : CardSide.Player;
+    }
+
+    private void DetermineGameEnd()
+    {
+        if (playerHand.IsEmpty())
+        {
+            Debug.Log("PLAYER WIN");
+        }
+        else if (opponentHand.IsEmpty())
+        {
+            Debug.Log("OPPONENT WIN");
+        }
     }
 
     private void Shuffle<T>(List<T> cards)
