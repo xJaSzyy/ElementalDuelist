@@ -48,6 +48,12 @@ public class HandManager : MonoBehaviour
         newCard.position = CardPosition.Hand;
         newCard.side = side;
         newCard.stopRaised = true;
+
+        if (newCard.side == CardSide.Opponent)
+        {
+            newCard.hidden = true;
+        }
+
         LeanTween.scale(newCard.gameObject, Vector3.one, 0.25f).setEase(LeanTweenType.easeInOutSine)
             .setOnComplete(() =>
             {

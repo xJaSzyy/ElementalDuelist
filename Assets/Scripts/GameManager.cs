@@ -112,11 +112,6 @@ public class GameManager : MonoBehaviour
             hand.AddCard(card);
             cards.RemoveAt(0);
 
-            if (side == CardSide.Opponent)
-            {
-                card.hidden = true;
-            }
-
             yield return new WaitForSeconds(.25f);
 
             card.Rotate();

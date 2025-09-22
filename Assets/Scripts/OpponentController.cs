@@ -9,25 +9,37 @@ public class OpponentController : MonoBehaviour
     [SerializeField] private TableManager table;
     [SerializeField] private TableManager playerTable;
     [SerializeField] private float duration = .5f;
+    [SerializeField] private float holdTime = 1f;
+
+    private float opponentSideHoldTime = 0f;
+    private bool actionPerformed = false;
 
     private void Update()
     {
-        if (GameManager.Instance.currentSide == CardSide.Opponent && 
-            hand.GetCardsCount() > 0)
+        if (GameManager.Instance.currentSide == CardSide.Opponent)
         {
-            Action();
+            opponentSideHoldTime += Time.deltaTime;
+
+            if (opponentSideHoldTime >= holdTime && !actionPerformed)
+            {
+                actionPerformed = true;
+                PerformAction();
+            }
+        }
+        else
+        {
+            opponentSideHoldTime = 0f;
+            actionPerformed = false;
         }
     }
 
-    public void Action()
+    private void PerformAction()
     {
         StartCoroutine(ActionCoroutine());
     }
 
     IEnumerator ActionCoroutine()
     {
-        yield return new WaitForSeconds(duration);
-
         Card mainCard = table.GetMainCard();
         Card extraCard = table.GetExtraCard();
 
@@ -66,5 +78,10 @@ public class OpponentController : MonoBehaviour
             yield break;
         }
         GameManager.Instance.ClickOnCard(cardToTable);
+
+        yield return new WaitForSeconds(duration);
+
+        opponentSideHoldTime = 0f;
+        actionPerformed = false;
     }
 }
