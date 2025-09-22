@@ -1,12 +1,15 @@
 using Assets.Scripts.Enums;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("Settings")]
     [SerializeField] private Sprite backSprite;
     [SerializeField] private float raisedOffset = 1f;
+    [SerializeField] private float shadowOffset = 100f;
     
     [Header("Other")]
     public Sprite frontSprite;
@@ -21,17 +24,53 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private Quaternion originalRotation;
     private Quaternion raisedRotation;
     private bool isRaised = false;
-    
+    private Camera mainCamera;
+    private Transform shadow;
+
     [HideInInspector] public bool stopRaised = false;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        mainCamera = Camera.main;
+        shadow = transform.GetChild(0).transform;
     }
 
     private void Update()
     {
         Flip();
+        Shadow();
+    }
+
+    private void Shadow()
+    {
+        if (position == CardPosition.Deck || position == CardPosition.ResetStack)
+        {
+            if (transform.GetSiblingIndex() == transform.parent.childCount - 1)
+            {
+                shadow.gameObject.SetActive(true);
+            }
+            else
+            {
+                shadow.gameObject.SetActive(false);
+                return;
+            }
+        }
+        else
+        {
+            shadow.gameObject.SetActive(true);
+        }
+
+        Vector2 viewportCenter = mainCamera.ScreenToWorldPoint(new Vector2(Screen.width / 2f, Screen.height / 2f));
+
+        float distance = transform.position.x - viewportCenter.x;
+
+        float t = Mathf.Clamp01(Mathf.Abs(distance / (Screen.width / 2f)));
+        float offsetX = Mathf.Lerp(0f, -Mathf.Sign(distance) * shadowOffset, t);
+
+        Vector3 shadowPos = shadow.localPosition;
+        shadowPos.x = offsetX;
+        shadow.localPosition = shadowPos;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -105,8 +144,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             LeanTween.cancel(gameObject);
         };
 
-        LeanTween.move(gameObject, raisedPosition, 0.3f).setEaseOutCubic();
-        LeanTween.rotate(gameObject, Vector3.zero, 0.3f).setEaseOutCubic();
+        LeanTween.move(gameObject, raisedPosition, 0.25f).setEaseOutBack();
+        LeanTween.rotate(gameObject, Vector3.zero, 0.25f).setEaseOutBack();
 
         isRaised = true;
     }
@@ -118,8 +157,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             LeanTween.cancel(gameObject);
         }
 
-        LeanTween.move(gameObject, originalPosition, 0.3f).setEaseInCubic();
-        LeanTween.rotate(gameObject, originalRotation.eulerAngles, 0.3f).setEaseInCubic();
+        LeanTween.move(gameObject, originalPosition, 0.25f).setEaseInBack();
+        LeanTween.rotate(gameObject, originalRotation.eulerAngles, 0.25f).setEaseInBack();
 
         isRaised = false;
     }

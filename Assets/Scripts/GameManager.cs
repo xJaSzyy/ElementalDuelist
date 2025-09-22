@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         DrawCards();
+        StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
     }
 
     private void Update()
@@ -108,11 +109,11 @@ public class GameManager : MonoBehaviour
             Card card = cards[0];
             card.transform.position = cardDeck.transform.position;
             card.side = side;
-            card.Rotate();
             hand.AddCard(card);
             cards.RemoveAt(0);
 
             yield return new WaitForSeconds(.25f);
+            card.Rotate();
         }
     }
 
