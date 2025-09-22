@@ -35,7 +35,7 @@ public class HandManager : MonoBehaviour
             LeanTween.move(cards[i].gameObject, splinePos, .25f).setEase(LeanTweenType.easeInOutSine);
             LeanTween.rotate(cards[i].gameObject, rotation.eulerAngles, .25f).setEase(LeanTweenType.easeInOutSine);
 
-            cards[i].SetSortingOrder(i);
+            cards[i].SetSortingOrder((i + 1) * 10);
             cards[i].UpdatePosition(splinePos, rotation);
             cards[i].stopRaised = false;
         }

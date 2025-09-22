@@ -7,24 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    #region Singleton
-    private static GameManager instance;
-
-    public static GameManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                GameObject gameObject = new();
-                instance = gameObject.AddComponent<GameManager>();
-            }
-
-            return instance;
-        }
-    }
-    #endregion Singleton
-
     [Header("Options")]
     [SerializeField] private int maxHandCards;
 
@@ -47,21 +29,6 @@ public class GameManager : MonoBehaviour
 
     private CardSide firstSide = CardSide.Player;
     [HideInInspector] public CardSide currentSide = CardSide.Player;
-
-    //public bool idle = false;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
@@ -88,6 +55,7 @@ public class GameManager : MonoBehaviour
             card.frontSprite = cardData.sprite;
             card.element = cardData.element;
             card.value = cardData.value;
+            card.gameManager = this;
             card.Rotate();
             
             cards.Add(card);

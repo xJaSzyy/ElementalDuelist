@@ -29,6 +29,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     [HideInInspector] public bool hidden = false;
     [HideInInspector] public bool stopRaised = false;
+    [HideInInspector] public GameManager gameManager;
 
     private void Awake()
     {
@@ -98,12 +99,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (position != CardPosition.Hand || side != CardSide.Player) { return; }
 
-        if (GameManager.Instance.CanClickOnCard(side))
+        if (gameManager.CanClickOnCard(side))
         {
             isRaised = false;
             LeanTween.cancel(gameObject);
             transform.SetPositionAndRotation(originalPosition, originalRotation);
-            GameManager.Instance.ClickOnCard(this);
+            gameManager.ClickOnCard(this);
         }
     }
 

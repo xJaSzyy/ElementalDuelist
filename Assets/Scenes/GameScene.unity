@@ -481,7 +481,9 @@ MonoBehaviour:
   hand: {fileID: 314144638}
   table: {fileID: 995260549}
   playerTable: {fileID: 1664148497}
-  blockAction: 0
+  gameManager: {fileID: 752597072}
+  duration: 0.5
+  holdTime: 1
 --- !u!1 &405769499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,7 +1052,6 @@ MonoBehaviour:
   opponentHand: {fileID: 314144638}
   playerTable: {fileID: 1664148497}
   opponentTable: {fileID: 995260549}
-  opponentController: {fileID: 314144640}
   cardDatas:
   - {fileID: 11400000, guid: 5ab6ddc37c94585418f716568885bfca, type: 2}
   - {fileID: 11400000, guid: e0df78df02a86854c8bc608e26cfb117, type: 2}

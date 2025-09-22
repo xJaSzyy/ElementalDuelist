@@ -8,6 +8,7 @@ public class OpponentController : MonoBehaviour
     [SerializeField] private HandManager hand;
     [SerializeField] private TableManager table;
     [SerializeField] private TableManager playerTable;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private float duration = .5f;
     [SerializeField] private float holdTime = 1f;
 
@@ -16,7 +17,7 @@ public class OpponentController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.currentSide == CardSide.Opponent)
+        if (gameManager.currentSide == CardSide.Opponent)
         {
             opponentSideHoldTime += Time.deltaTime;
 
@@ -77,7 +78,8 @@ public class OpponentController : MonoBehaviour
         {
             yield break;
         }
-        GameManager.Instance.ClickOnCard(cardToTable);
+
+        gameManager.ClickOnCard(cardToTable);
 
         yield return new WaitForSeconds(duration);
 
