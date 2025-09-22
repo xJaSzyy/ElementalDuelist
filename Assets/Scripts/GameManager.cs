@@ -100,11 +100,6 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(FillHandCoroutine(opponentHand, CardSide.Opponent, maxOpponentHand));
     }
 
-    private void FillHand(HandManager hand, CardSide side, int maxHand)
-    {
-        StartCoroutine(FillHandCoroutine(hand, side, maxHand));
-    }
-
     IEnumerator FillHandCoroutine(HandManager hand, CardSide side, int maxHand)
     {
         while (hand.GetCardsCount() < maxHand && cards.Count > 0)
@@ -115,7 +110,13 @@ public class GameManager : MonoBehaviour
             hand.AddCard(card);
             cards.RemoveAt(0);
 
+            if (side == CardSide.Opponent)
+            {
+                card.hidden = true;
+            }
+
             yield return new WaitForSeconds(.25f);
+
             card.Rotate();
         }
     }

@@ -51,7 +51,6 @@ public class HandManager : MonoBehaviour
         LeanTween.scale(newCard.gameObject, Vector3.one, 0.25f).setEase(LeanTweenType.easeInOutSine)
             .setOnComplete(() =>
             {
-                //newCard.stopRaised = false;
                 UpdateCardPositions();
             });
     }

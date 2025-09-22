@@ -22,6 +22,7 @@ public class TableManager : MonoBehaviour
         LeanTween.rotate(card.gameObject, mainCardPos.rotation.eulerAngles, .25f);
         LeanTween.scale(card.gameObject, tableCardsScale, 0.25f);
         card.SetSortingOrder(0);
+        card.hidden = false;
         mainCard = card;
 
         return true;
@@ -39,6 +40,7 @@ public class TableManager : MonoBehaviour
         LeanTween.rotate(card.gameObject, extraCardPos.rotation.eulerAngles, .25f);
         LeanTween.scale(card.gameObject, tableCardsScale, 0.25f);
         card.SetSortingOrder(1);
+        card.hidden = false;
         extraCard = card;
 
         return true;

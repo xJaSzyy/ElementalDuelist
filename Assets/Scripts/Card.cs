@@ -27,6 +27,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private Camera mainCamera;
     private Transform shadow;
 
+    [HideInInspector] public bool hidden = false;
     [HideInInspector] public bool stopRaised = false;
 
     private void Awake()
@@ -108,6 +109,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private void Flip()
     {
+        if (hidden)
+        {
+            sr.sprite = backSprite;
+            return;
+        }
+
         float yRotation = transform.rotation.eulerAngles.y;
 
         if (yRotation > 90f && yRotation < 270f)
