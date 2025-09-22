@@ -17,6 +17,11 @@ public class OpponentController : MonoBehaviour
 
     private void Update()
     {
+        if (hand.GetCardsCount() <= 0)
+        {
+            return;
+        }
+
         if (gameManager.currentSide == CardSide.Opponent)
         {
             opponentSideHoldTime += Time.deltaTime;
