@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text sideText;
+    [SerializeField] private TMP_Text winnerText;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HandManager opponentHand;
     [SerializeField] private TableManager playerTable;
     [SerializeField] private TableManager opponentTable;
+    [SerializeField] private GameObject endBackground;
 
     [SerializeField] private List<CardData> cardDatas = new();
     [SerializeField] private List<Card> cards = new();
@@ -153,6 +156,8 @@ public class GameManager : MonoBehaviour
                     table.RemoveCards();
                     table2.RemoveCards();
 
+                    DetermineGameEnd();
+
                     Debug.Log("NOT BEATS");
                 }
                 else
@@ -225,6 +230,8 @@ public class GameManager : MonoBehaviour
 
                         firstSide = hand.side;
                         currentSide = firstSide;
+
+                        DetermineGameEnd();
 
                         Debug.Log("NOT COMBINED");
                     }
@@ -339,11 +346,13 @@ public class GameManager : MonoBehaviour
     {
         if (playerHand.IsEmpty())
         {
-            Debug.Log("PLAYER WIN");
+            winnerText.text = "Player win!";
+            endBackground.SetActive(true);
         }
         else if (opponentHand.IsEmpty())
         {
-            Debug.Log("OPPONENT WIN");
+            winnerText.text = "Opponent win!";
+            endBackground.SetActive(true);
         }
     }
 
@@ -366,4 +375,18 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    #region UI
+
+    public void RestartButton_Click()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void MenuButton_Click()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
+
+    #endregion
 }

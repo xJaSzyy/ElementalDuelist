@@ -37,6 +37,7 @@ public class HandManager : MonoBehaviour
 
             cards[i].SetSortingOrder(i);
             cards[i].UpdatePosition(splinePos, rotation);
+            cards[i].stopRaised = false;
         }
     }
 
@@ -50,7 +51,7 @@ public class HandManager : MonoBehaviour
         LeanTween.scale(newCard.gameObject, Vector3.one, 0.25f).setEase(LeanTweenType.easeInOutSine)
             .setOnComplete(() =>
             {
-                newCard.stopRaised = false;
+                //newCard.stopRaised = false;
                 UpdateCardPositions();
             });
     }
