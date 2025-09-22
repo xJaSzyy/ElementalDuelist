@@ -76,7 +76,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand || stopRaised) { return; }
+        if (position != CardPosition.Hand || stopRaised || side != CardSide.Player) { return; }
 
         if (!isRaised)
         {
@@ -86,7 +86,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand || stopRaised) { return; }
+        if (position != CardPosition.Hand || stopRaised || side != CardSide.Player) { return; }
 
         if (isRaised)
         {
@@ -96,7 +96,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand) { return; }
+        if (position != CardPosition.Hand || side != CardSide.Player) { return; }
 
         if (GameManager.Instance.CanClickOnCard(side))
         {

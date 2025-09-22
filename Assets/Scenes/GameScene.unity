@@ -428,6 +428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 314144639}
   - component: {fileID: 314144638}
+  - component: {fileID: 314144640}
   m_Layer: 0
   m_Name: OpponentHand
   m_TagString: Untagged
@@ -465,6 +466,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &314144640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314144637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299efc06bdfa7c14f88becc0c34b1504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: {fileID: 314144638}
+  table: {fileID: 995260549}
+  playerTable: {fileID: 1664148497}
+  blockAction: 0
 --- !u!1 &405769499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1042,7 @@ MonoBehaviour:
   maxHandCards: 5
   sideText: {fileID: 1715865708}
   winnerText: {fileID: 980330399}
+  endBackground: {fileID: 466576296}
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   cardDeck: {fileID: 1502612314}
   resetStack: {fileID: 76047061}
@@ -1032,7 +1050,7 @@ MonoBehaviour:
   opponentHand: {fileID: 314144638}
   playerTable: {fileID: 1664148497}
   opponentTable: {fileID: 995260549}
-  endBackground: {fileID: 466576296}
+  opponentController: {fileID: 314144640}
   cardDatas:
   - {fileID: 11400000, guid: 5ab6ddc37c94585418f716568885bfca, type: 2}
   - {fileID: 11400000, guid: e0df78df02a86854c8bc608e26cfb117, type: 2}
@@ -1055,6 +1073,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a49cb05e2ea8a245b51f707bcee1ee7, type: 2}
   - {fileID: 11400000, guid: e2e2cf2265b429e4a84766329adb309c, type: 2}
   cards: []
+  currentSide: 1
 --- !u!4 &752597073
 Transform:
   m_ObjectHideFlags: 0

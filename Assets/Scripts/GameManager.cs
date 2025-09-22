@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text sideText;
     [SerializeField] private TMP_Text winnerText;
+    [SerializeField] private GameObject endBackground;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -40,13 +41,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HandManager opponentHand;
     [SerializeField] private TableManager playerTable;
     [SerializeField] private TableManager opponentTable;
-    [SerializeField] private GameObject endBackground;
 
     [SerializeField] private List<CardData> cardDatas = new();
     [SerializeField] private List<Card> cards = new();
 
     private CardSide firstSide = CardSide.Player;
-    private CardSide currentSide = CardSide.Player;
+    [HideInInspector] public CardSide currentSide = CardSide.Player;
+
+    //public bool idle = false;
 
     private void Awake()
     {

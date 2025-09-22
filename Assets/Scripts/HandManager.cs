@@ -62,6 +62,11 @@ public class HandManager : MonoBehaviour
         UpdateCardPositions();
     }
 
+    public List<Card> GetCards()
+    {
+        return cards;
+    }
+
     public int GetCardsCount()
     {
         return cards.Count;
