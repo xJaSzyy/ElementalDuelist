@@ -3,9 +3,13 @@
     public enum CardElement
     {
         Fire = 0,
-        Water = 1,
-        Earth = 2,
-        Air = 3
+        Air = 1,
+        Water = 2,
+        Light = 3,
+        Darkness = 4,
+        Love = 5,
+        Magic = 6,
+        Nature = 7
     }
 
     public static class CardElementExtensions
@@ -14,14 +18,23 @@
         {
             return (element, other) switch
             {
-                (CardElement.Water, CardElement.Water) => true,
                 (CardElement.Fire, CardElement.Fire) => true,
                 (CardElement.Air, CardElement.Air) => true,
-                (CardElement.Earth, CardElement.Earth) => true,
-                (CardElement.Water, CardElement.Fire) => true,
+                (CardElement.Water, CardElement.Water) => true,
+                (CardElement.Light, CardElement.Light) => true,
+                (CardElement.Darkness, CardElement.Darkness) => true,
+                (CardElement.Love, CardElement.Love) => true,
+                (CardElement.Magic, CardElement.Magic) => true,
+                (CardElement.Nature, CardElement.Nature) => true,
+
                 (CardElement.Fire, CardElement.Air) => true,
-                (CardElement.Air, CardElement.Earth) => true,
-                (CardElement.Earth, CardElement.Water) => true,
+                (CardElement.Air, CardElement.Water) => true,
+                (CardElement.Water, CardElement.Light) => true,
+                (CardElement.Light, CardElement.Darkness) => true,
+                (CardElement.Darkness, CardElement.Love) => true,
+                (CardElement.Love, CardElement.Magic) => true,
+                (CardElement.Magic, CardElement.Nature) => true,
+                (CardElement.Nature, CardElement.Fire) => true,
                 _ => false
             };
         }
@@ -30,14 +43,23 @@
         {
             return (element, other) switch
             {
-                (CardElement.Air, CardElement.Air) => true,
                 (CardElement.Fire, CardElement.Fire) => true,
-                (CardElement.Earth, CardElement.Earth) => true,
+                (CardElement.Air, CardElement.Air) => true,
                 (CardElement.Water, CardElement.Water) => true,
-                (CardElement.Air, CardElement.Fire) => true,
+                (CardElement.Light, CardElement.Light) => true,
+                (CardElement.Darkness, CardElement.Darkness) => true,
+                (CardElement.Love, CardElement.Love) => true,
+                (CardElement.Magic, CardElement.Magic) => true,
+                (CardElement.Nature, CardElement.Nature) => true,
+
                 (CardElement.Fire, CardElement.Air) => true,
-                (CardElement.Earth, CardElement.Water) => true,
-                (CardElement.Water, CardElement.Earth) => true,
+                (CardElement.Air, CardElement.Fire) => true,
+                (CardElement.Air, CardElement.Water) => true,
+                (CardElement.Water, CardElement.Air) => true,
+                (CardElement.Darkness, CardElement.Love) => true,
+                (CardElement.Love, CardElement.Darkness) => true,
+                (CardElement.Love, CardElement.Magic) => true,
+                (CardElement.Magic, CardElement.Love) => true,
                 _ => false
             };
         }

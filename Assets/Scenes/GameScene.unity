@@ -482,8 +482,8 @@ MonoBehaviour:
   table: {fileID: 995260549}
   playerTable: {fileID: 1664148497}
   gameManager: {fileID: 752597072}
-  duration: 0.5
-  holdTime: 1
+  duration: 0.25
+  holdTime: 0.25
 --- !u!1 &405769499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155d563ef3e05d6428b9aa7afe58bfb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHandCards: 5
+  maxHandCards: 7
   sideText: {fileID: 1715865708}
   winnerText: {fileID: 980330399}
   endBackground: {fileID: 466576296}
@@ -1053,26 +1053,46 @@ MonoBehaviour:
   playerTable: {fileID: 1664148497}
   opponentTable: {fileID: 995260549}
   cardDatas:
-  - {fileID: 11400000, guid: 5ab6ddc37c94585418f716568885bfca, type: 2}
-  - {fileID: 11400000, guid: e0df78df02a86854c8bc608e26cfb117, type: 2}
-  - {fileID: 11400000, guid: acae022b4bb09c74083c18ca5474af33, type: 2}
-  - {fileID: 11400000, guid: a1ab197a2e422e3429d4f9cc175e8658, type: 2}
-  - {fileID: 11400000, guid: d4c175c4155b0804b94622f72e4a0170, type: 2}
-  - {fileID: 11400000, guid: 8cdb523621e0f0645a90a5d59448fab6, type: 2}
-  - {fileID: 11400000, guid: 9fe40626fc7bc9e4f9fbd0e39db5eb5c, type: 2}
-  - {fileID: 11400000, guid: 9a2bb776d3605e242966412373cb5cf5, type: 2}
-  - {fileID: 11400000, guid: cb666b3accc3afc4f9dcdcc1716b90a5, type: 2}
-  - {fileID: 11400000, guid: 5b775b7336a23b749ba99c0edea5611d, type: 2}
-  - {fileID: 11400000, guid: d60ec97f87f71be42a94936173deb742, type: 2}
-  - {fileID: 11400000, guid: a45cb4164d21ade48ac7c832c85c00be, type: 2}
-  - {fileID: 11400000, guid: 3a21b823908000c438bff508878b0cae, type: 2}
-  - {fileID: 11400000, guid: e82ec2ee2c660eb449cd48f9215dffe8, type: 2}
-  - {fileID: 11400000, guid: 8c776b610dec92c4c9d97fcac4fd27c1, type: 2}
-  - {fileID: 11400000, guid: 8bf5666935a3edb408063dc8a9e2b75a, type: 2}
-  - {fileID: 11400000, guid: dc1454b42e239aa4d920c06b08ad81f1, type: 2}
-  - {fileID: 11400000, guid: d5cba95102b721f439a6bbaeab7869be, type: 2}
-  - {fileID: 11400000, guid: 5a49cb05e2ea8a245b51f707bcee1ee7, type: 2}
-  - {fileID: 11400000, guid: e2e2cf2265b429e4a84766329adb309c, type: 2}
+  - {fileID: 11400000, guid: 257fba2c634afe64aa160a634dbf2a13, type: 2}
+  - {fileID: 11400000, guid: fcf18b9e2a10ec744b6d9e3b62fe7b3e, type: 2}
+  - {fileID: 11400000, guid: 471fe002a26f8774486840d31cab0e63, type: 2}
+  - {fileID: 11400000, guid: 878d5bdd3e2a8c84f99995de9c3b5852, type: 2}
+  - {fileID: 11400000, guid: 3a94f75f21579844f875dcad8ccfa7d9, type: 2}
+  - {fileID: 11400000, guid: 37faa6cf4a8deb248b540e9b92227c86, type: 2}
+  - {fileID: 11400000, guid: f58204a95cd49314dbeaaad32268c6e2, type: 2}
+  - {fileID: 11400000, guid: 479825108f6c7224aac8bcc39330649f, type: 2}
+  - {fileID: 11400000, guid: 12d02c3db803dd441ab74d0d5bf5286e, type: 2}
+  - {fileID: 11400000, guid: 1ff9fd4f4ed517144921592dbbd8d324, type: 2}
+  - {fileID: 11400000, guid: 2c5117e78e082f7419c472e4b62b7806, type: 2}
+  - {fileID: 11400000, guid: 97b22f8d61121a240b6070343dd00fec, type: 2}
+  - {fileID: 11400000, guid: cc3573cb22108764bba3a8065803f418, type: 2}
+  - {fileID: 11400000, guid: 4def28a39f9f2cc48bd70c9fdcd7b313, type: 2}
+  - {fileID: 11400000, guid: 91e2a24aebd5d964db0cffa8967ee4bf, type: 2}
+  - {fileID: 11400000, guid: 9bca4294934c5db49a4645de145ed912, type: 2}
+  - {fileID: 11400000, guid: bb3be28f37c19734ebc9b31ba562c624, type: 2}
+  - {fileID: 11400000, guid: 986dae18f4cc9b44999361d03e0a0e6e, type: 2}
+  - {fileID: 11400000, guid: 4291763f7551219468fc624eb2727e11, type: 2}
+  - {fileID: 11400000, guid: a2071b7f8cf6b7a4196d42a37c656001, type: 2}
+  - {fileID: 11400000, guid: f224959273b28f548b14947d18d3fbc7, type: 2}
+  - {fileID: 11400000, guid: e87cecd0041df6147962db7c6b4ece77, type: 2}
+  - {fileID: 11400000, guid: c28012d2de769db45b6384ad646a6b84, type: 2}
+  - {fileID: 11400000, guid: 3f6ea5ca433583b43b74b40ffb3cddb8, type: 2}
+  - {fileID: 11400000, guid: 6f397884372a51a45b53f30d00ce1ff9, type: 2}
+  - {fileID: 11400000, guid: 512da76dea2565b4e98b3abd48f0bbf1, type: 2}
+  - {fileID: 11400000, guid: 1aa6b538ac5594e49a74fb3153f08a32, type: 2}
+  - {fileID: 11400000, guid: 32cd9f2a6b22dc242a6a5cbf35e8bb32, type: 2}
+  - {fileID: 11400000, guid: 0d6eb0d5432dceb46b5c4415636d6105, type: 2}
+  - {fileID: 11400000, guid: 9aa581b9a55e2be41ae2bf579e9901eb, type: 2}
+  - {fileID: 11400000, guid: 412f4fcd5e35649499b7d2cca3c96e7f, type: 2}
+  - {fileID: 11400000, guid: e47a9cb26cdbe7a4e9aadecd3a95a42f, type: 2}
+  - {fileID: 11400000, guid: 7409e6d8157f51a4db759e599ffa0a88, type: 2}
+  - {fileID: 11400000, guid: b173ee7204344af4b957b0a1427dae49, type: 2}
+  - {fileID: 11400000, guid: 1707f7d9ad256a84384e6f46bee7ecb5, type: 2}
+  - {fileID: 11400000, guid: 4d109f1e2198a224596269055d6bfdca, type: 2}
+  - {fileID: 11400000, guid: e6580298141c70742bd96e3d838b3a86, type: 2}
+  - {fileID: 11400000, guid: cf77bd2f0eb4af2418442f5d2899a539, type: 2}
+  - {fileID: 11400000, guid: a8bb70fc904a8054ba755ee96ac529ee, type: 2}
+  - {fileID: 11400000, guid: 22391691bbd23ed429cb208342ff9b49, type: 2}
   cards: []
   currentSide: 1
 --- !u!4 &752597073
@@ -1286,9 +1306,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1503484207}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 96, y: -88}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &937211139
@@ -1627,9 +1647,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1503484207}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 256, y: -88}
   m_SizeDelta: {x: 128, y: 144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1172578738
@@ -1717,7 +1737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1503484207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2013,7 +2033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -160, y: -25}
+  m_AnchoredPosition: {x: -176, y: -33}
   m_SizeDelta: {x: 320, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715865708
@@ -2036,7 +2056,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player`s turn
+  m_text: FOCK YOU
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

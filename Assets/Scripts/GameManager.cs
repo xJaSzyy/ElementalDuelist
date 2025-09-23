@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     private CardSide firstSide = CardSide.Player;
     [HideInInspector] public CardSide currentSide = CardSide.Player;
+    private float elapsedTime = 0f;
+    private bool end = false;
 
     private void Start()
     {
@@ -38,10 +40,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (end)
         {
-            StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
+            sideText.gameObject.SetActive(false);
+            return;
         }
+
+        elapsedTime += Time.deltaTime;
 
         sideText.text = $"{currentSide} turn";
     }
@@ -96,6 +101,8 @@ public class GameManager : MonoBehaviour
 
     public void ClickOnCard(Card card)
     {
+        if (end) { return; }
+
         TableManager table = currentSide == CardSide.Player ? playerTable : opponentTable;
         HandManager hand = currentSide == CardSide.Player ? playerHand : opponentHand;
         TableManager table2 = currentSide == CardSide.Player ? opponentTable : playerTable;
@@ -312,12 +319,22 @@ public class GameManager : MonoBehaviour
     {
         if (playerHand.IsEmpty())
         {
-            winnerText.text = "Player win!";
+            end = true;
+
+            int minutes = Mathf.FloorToInt(elapsedTime / 60f);
+            int seconds = Mathf.FloorToInt(elapsedTime % 60f);
+
+            winnerText.text = string.Format("You win in {0:00}:{1:00}", minutes, seconds);
             endBackground.SetActive(true);
         }
         else if (opponentHand.IsEmpty())
         {
-            winnerText.text = "Opponent win!";
+            end = true;
+
+            int minutes = Mathf.FloorToInt(elapsedTime / 60f);
+            int seconds = Mathf.FloorToInt(elapsedTime % 60f);
+
+            winnerText.text = string.Format("You lose in {0:00}:{1:00}", minutes, seconds);
             endBackground.SetActive(true);
         }
     }
