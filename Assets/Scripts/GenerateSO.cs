@@ -13,9 +13,9 @@ public class GenerateSO : MonoBehaviour
 
     private readonly CardElement[] elementsOrder = new CardElement[]
     {
-        CardElement.Fire, CardElement.Air, CardElement.Water,
-        CardElement.Light, CardElement.Darkness,
-        CardElement.Love, CardElement.Magic, CardElement.Nature
+        CardElement.Fire, CardElement.Water, CardElement.Energy,
+        CardElement.Earth, CardElement.Nature,
+        CardElement.Magic
     };
 
 #if UNITY_EDITOR

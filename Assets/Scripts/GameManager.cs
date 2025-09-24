@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HandManager opponentHand;
     [SerializeField] private TableManager playerTable;
     [SerializeField] private TableManager opponentTable;
+    [SerializeField] private IconSettuper iconSettuper;
 
     [SerializeField] private List<CardData> cardDatas = new();
     [SerializeField] private List<Card> cards = new();
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
             card.value = cardData.value;
             card.gameManager = this;
             card.Rotate();
+            iconSettuper.Setup(card);
             
             cards.Add(card);
         }
