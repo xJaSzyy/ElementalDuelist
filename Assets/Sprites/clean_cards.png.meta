@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: fd216ad4dafcda548a997fe102108cf6
+guid: a69e175c2a294b149bb016e9cf58cf0b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6413233250485622031
-    second: element_card_back_0
+      213: 7696885580660868619
+    second: clean_cards_0
+  - first:
+      213: -2184125162365044542
+    second: clean_cards_1
+  - first:
+      213: -2439201148439504297
+    second: clean_cards_2
+  - first:
+      213: 3304215382679084737
+    second: clean_cards_3
+  - first:
+      213: -442232347996445288
+    second: clean_cards_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +36,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -46,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
@@ -126,7 +138,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: element_card_back_0
+      name: clean_cards_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +153,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1faa413665e9ff6a0800000000000000
-      internalID: -6413233250485622031
+      spriteID: b060e10e7a4d0da60800000000000000
+      internalID: 7696885580660868619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: clean_cards_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c83d30acbd60b1e0800000000000000
+      internalID: -2184125162365044542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: clean_cards_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75ad98b9a77362ed0800000000000000
+      internalID: -2439201148439504297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: clean_cards_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ced7f1526eeadd20800000000000000
+      internalID: 3304215382679084737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: clean_cards_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8952c75c500ecd9f0800000000000000
+      internalID: -442232347996445288
       vertices: []
       indices: 
       edges: []
@@ -151,7 +251,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: d5e0fff535fe0fa4bac3f448acbc1aa0
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +261,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      element_card_back_0: -6413233250485622031
+      clean_cards_0: 7696885580660868619
+      clean_cards_1: -2184125162365044542
+      clean_cards_2: -2439201148439504297
+      clean_cards_3: 3304215382679084737
+      clean_cards_4: -442232347996445288
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

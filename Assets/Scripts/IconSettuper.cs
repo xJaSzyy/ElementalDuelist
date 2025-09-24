@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class IconSettuper : MonoBehaviour
 {
     [SerializeField] private Sprite[] iconSprites;
+    [SerializeField] private Color[] colors;
 
     [SerializeField] private int iconStartIndex;
     [SerializeField] private Vector2Int iconUpPos = new(5, 51);
@@ -22,7 +23,8 @@ public class IconSettuper : MonoBehaviour
         Texture2D cardTex = card.frontSprite.texture;
         Rect cardRect = card.frontSprite.rect;
 
-        int iconIndex = (iconStartIndex * 12) + Array.IndexOf(elementsOrder, card.element) * 2;
+        int elementIndex = Array.IndexOf(elementsOrder, card.element);
+        int iconIndex = (iconStartIndex * 12) + elementIndex * 2;
 
         Texture2D iconUpTex = iconSprites[iconIndex].texture;
         Rect iconUpRect = iconSprites[iconIndex].rect;
@@ -37,10 +39,28 @@ public class IconSettuper : MonoBehaviour
             (int)cardRect.x,
             (int)cardRect.y,
             (int)cardRect.width,
-            (int)cardRect.height);
+            (int)cardRect.height); 
 
         Texture2D newTex = new Texture2D((int)cardRect.width, (int)cardRect.height, TextureFormat.ARGB32, false);
         newTex.SetPixels(cardPixels);
+
+        Color[] pixels = newTex.GetPixels();
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i].a < 1f)
+            {
+                continue;
+            }
+
+            if (IsColorApproximatelyWhite(pixels[i]))
+            {
+                pixels[i] = Color.blue;
+            }
+        }
+
+        newTex.SetPixels(0, 0, newTex.width, newTex.height, pixels);
+        newTex.Apply();
 
         Color[] iconUpPixels = iconUpTex.GetPixels(
             (int)iconUpRect.x,
@@ -78,7 +98,6 @@ public class IconSettuper : MonoBehaviour
         ReplaceBlock(iconDownPos, iconDownPixels);
 
         newTex.filterMode = FilterMode.Point;
-
         newTex.Compress(false);
 
         newTex.Apply();
@@ -89,5 +108,14 @@ public class IconSettuper : MonoBehaviour
             card.frontSprite.pixelsPerUnit);
 
         card.frontSprite = newSprite;
+    }
+
+    private bool IsColorApproximatelyWhite(Color color)
+    {
+        float tolerance = 0.01f; 
+        return Mathf.Abs(color.r - 1f) < tolerance
+               && Mathf.Abs(color.g - 1f) < tolerance
+               && Mathf.Abs(color.b - 1f) < tolerance
+               && color.a > 0.9f; 
     }
 }
