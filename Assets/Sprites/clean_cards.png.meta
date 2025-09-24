@@ -163,7 +163,7 @@ TextureImporter:
       name: clean_cards_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
         width: 32
         height: 64
@@ -185,7 +185,7 @@ TextureImporter:
       name: clean_cards_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 64
         y: 0
         width: 32
         height: 64
@@ -207,7 +207,7 @@ TextureImporter:
       name: clean_cards_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 96
         y: 0
         width: 32
         height: 64
@@ -229,7 +229,7 @@ TextureImporter:
       name: clean_cards_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 128
         y: 0
         width: 32
         height: 64

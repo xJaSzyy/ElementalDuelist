@@ -50,12 +50,13 @@ public class IconSettuper : MonoBehaviour
         {
             if (pixels[i].a < 1f)
             {
+                pixels[i] = Color.clear;
                 continue;
             }
 
             if (IsColorApproximatelyWhite(pixels[i]))
             {
-                pixels[i] = Color.blue;
+                pixels[i] = colors[elementIndex];
             }
         }
 
