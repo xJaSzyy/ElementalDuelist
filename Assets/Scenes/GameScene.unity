@@ -1151,7 +1151,7 @@ MonoBehaviour:
   - {r: 0.6313726, g: 0.3803922, b: 0.34901962, a: 1}
   - {r: 0.23529413, g: 0.6392157, b: 0.43529415, a: 1}
   - {r: 0.47058827, g: 0.22352943, b: 0.52156866, a: 1}
-  iconStartIndex: 0
+  settings: {fileID: 11400000, guid: d28376eaf944e344a80ca36d4aa3721c, type: 2}
   iconUpPos: {x: 5, y: 51}
   iconDownPos: {x: 19, y: 5}
 --- !u!1 &814829762

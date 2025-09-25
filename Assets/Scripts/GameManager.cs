@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     private float elapsedTime = 0f;
     private bool end = false;
 
-    private void Awake()
+    private void Start()
     {
         DrawCards();
         StartCoroutine(Countdown());
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             card.value = cardData.value;
             card.gameManager = this;
             card.Rotate();
-            iconSettuper.Setup(card);
+            card.frontSprite = iconSettuper.GenerateSprite(card.frontSprite, card.element);
             
             cards.Add(card);
         }

@@ -19,6 +19,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private Button backSettingsButton;
 
+    private void Awake()
+    {
+        buttons.SetActive(true);
+        profilePanel.SetActive(false);
+        settingsPanel.SetActive(false);
+    }
+
     private void OnEnable()
     {
         playButton.onClick.AddListener(PlayButton_Click);

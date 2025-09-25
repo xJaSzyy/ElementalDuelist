@@ -8,9 +8,11 @@ public class IconSettuper : MonoBehaviour
     [SerializeField] private Sprite[] iconSprites;
     [SerializeField] private Color[] colors;
 
-    [SerializeField] private int iconStartIndex;
+    [SerializeField] private SettingsData settings;
     [SerializeField] private Vector2Int iconUpPos = new(5, 51);
     [SerializeField] private Vector2Int iconDownPos = new(19, 5);
+    
+    private int iconStartIndex;
 
     private readonly CardElement[] elementsOrder = new CardElement[]
     {
@@ -18,12 +20,17 @@ public class IconSettuper : MonoBehaviour
         CardElement.Earth, CardElement.Nature, CardElement.Magic
     };
 
-    public void Setup(Card card)
+    private void Awake()
     {
-        Texture2D cardTex = card.frontSprite.texture;
-        Rect cardRect = card.frontSprite.rect;
+        iconStartIndex = settings.iconStartIndex;
+    }
 
-        int elementIndex = Array.IndexOf(elementsOrder, card.element);
+    public Sprite GenerateSprite(Sprite sprite, CardElement element)
+    {
+        Texture2D cardTex = sprite.texture;
+        Rect cardRect = sprite.rect;
+
+        int elementIndex = Array.IndexOf(elementsOrder, element);
         int iconIndex = (iconStartIndex * 12) + elementIndex * 2;
 
         Texture2D iconUpTex = iconSprites[iconIndex].texture;
@@ -105,10 +112,10 @@ public class IconSettuper : MonoBehaviour
 
         Sprite newSprite = Sprite.Create(newTex,
             new Rect(0, 0, newTex.width, newTex.height),
-            card.frontSprite.pivot / new Vector2(cardRect.width, cardRect.height),
-            card.frontSprite.pixelsPerUnit);
+            sprite.pivot / new Vector2(cardRect.width, cardRect.height),
+            sprite.pixelsPerUnit);
 
-        card.frontSprite = newSprite;
+        return newSprite;
     }
 
     private bool IsColorApproximatelyWhite(Color color)
@@ -118,5 +125,31 @@ public class IconSettuper : MonoBehaviour
                && Mathf.Abs(color.g - 1f) < tolerance
                && Mathf.Abs(color.b - 1f) < tolerance
                && color.a > 0.9f; 
+    }
+
+    public void AddIconStartIndex()
+    {
+        iconStartIndex++;
+
+        int maxStartIndex = (iconSprites.Length / 12) - 1;
+
+        if (iconStartIndex > maxStartIndex)
+        {
+            iconStartIndex = maxStartIndex;
+        }
+
+        settings.iconStartIndex = iconStartIndex;
+    }
+
+    public void RemoveIconStartIndex()
+    {
+        iconStartIndex--;
+
+        if (iconStartIndex < 0)
+        {
+            iconStartIndex = 0;
+        }
+
+        settings.iconStartIndex = iconStartIndex;
     }
 }
