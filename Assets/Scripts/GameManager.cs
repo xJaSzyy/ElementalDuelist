@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text sideText;
     [SerializeField] private TMP_Text winnerText;
     [SerializeField] private GameObject endBackground;
+    [SerializeField] private TMP_Text countdownText;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -33,9 +34,30 @@ public class GameManager : MonoBehaviour
     private float elapsedTime = 0f;
     private bool end = false;
 
-    private void Start()
+    private void Awake()
     {
         DrawCards();
+        StartCoroutine(Countdown());
+    }
+
+    IEnumerator Countdown()
+    {
+        for (int i = 3; i > 0; i--)
+        {
+            countdownText.text = i.ToString();
+
+            countdownText.rectTransform.localScale = Vector3.zero;
+            LeanTween.scale(countdownText.rectTransform, Vector3.one, 0.5f).setEase(LeanTweenType.easeOutBack);
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        countdownText.text = "";
+        GameStart();
+    }
+
+    private void GameStart()
+    {
         StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
     }
 
