@@ -7,10 +7,15 @@ public class ProfileManager : MonoBehaviour
 {
     [SerializeField] private IconSettuper iconSettuper;
     [SerializeField] private Sprite cleanCardSprite;
-    [SerializeField] private Image iconPreview;
 
-    [SerializeField] private Button nextButton;
-    [SerializeField] private Button prevButton;
+    [SerializeField] private Image iconPreview;
+    [SerializeField] private Image colorPreview;
+
+    [SerializeField] private Button nextIconButton;
+    [SerializeField] private Button prevIconButton;
+    
+    [SerializeField] private Button nextColorButton;
+    [SerializeField] private Button prevColorButton;
 
     [SerializeField] private float amplitude = 50f;
     [SerializeField] private float duration = 2f; 
@@ -26,8 +31,10 @@ public class ProfileManager : MonoBehaviour
 
     private void OnEnable()
     {
-        nextButton.onClick.AddListener(NextButton_Click);
-        prevButton.onClick.AddListener(PrevButton_Click);
+        nextIconButton.onClick.AddListener(NextIconButton_Click);
+        prevIconButton.onClick.AddListener(PrevIconButton_Click);
+        nextColorButton.onClick.AddListener(NextColorButton_Click);
+        prevColorButton.onClick.AddListener(PrevColorButton_Click);
 
         LeanTween.moveY(iconPreview.gameObject, transform.position.y + amplitude, duration)
                  .setEaseInOutSine() 
@@ -38,25 +45,41 @@ public class ProfileManager : MonoBehaviour
 
     private void OnDisable()
     {
-        nextButton.onClick.RemoveListener(NextButton_Click);
-        prevButton.onClick.RemoveListener(PrevButton_Click);
+        nextIconButton.onClick.RemoveListener(NextIconButton_Click);
+        prevIconButton.onClick.RemoveListener(PrevIconButton_Click);
+        nextColorButton.onClick.RemoveListener(NextColorButton_Click);
+        prevColorButton.onClick.RemoveListener(PrevColorButton_Click);
 
         LeanTween.cancel(gameObject);
 
         StopAllCoroutines();
     }
 
-    private void NextButton_Click()
+    private void NextIconButton_Click()
     {
         StopAllCoroutines();
         iconSettuper.AddIconStartIndex();
         StartCoroutine(ChangeIconPreview());
     }
 
-    private void PrevButton_Click()
+    private void PrevIconButton_Click()
     {
         StopAllCoroutines();
         iconSettuper.RemoveIconStartIndex();
+        StartCoroutine(ChangeIconPreview());
+    }
+
+    private void NextColorButton_Click()
+    {
+        StopAllCoroutines();
+        iconSettuper.AddColorStartIndex();
+        StartCoroutine(ChangeIconPreview());
+    }
+
+    private void PrevColorButton_Click()
+    {
+        StopAllCoroutines();
+        iconSettuper.RemoveColorStartIndex();
         StartCoroutine(ChangeIconPreview());
     }
 

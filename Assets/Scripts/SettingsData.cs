@@ -4,4 +4,5 @@ using UnityEngine;
 public class SettingsData : ScriptableObject
 {
     public int iconStartIndex = 0;
+    public int colorStartIndex = 0;
 }

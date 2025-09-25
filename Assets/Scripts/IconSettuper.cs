@@ -13,6 +13,7 @@ public class IconSettuper : MonoBehaviour
     [SerializeField] private Vector2Int iconDownPos = new(19, 5);
     
     private int iconStartIndex;
+    private int colorStartIndex;
 
     private readonly CardElement[] elementsOrder = new CardElement[]
     {
@@ -23,6 +24,7 @@ public class IconSettuper : MonoBehaviour
     private void Awake()
     {
         iconStartIndex = settings.iconStartIndex;
+        colorStartIndex = settings.colorStartIndex;
     }
 
     public Sprite GenerateSprite(Sprite sprite, CardElement element)
@@ -32,6 +34,7 @@ public class IconSettuper : MonoBehaviour
 
         int elementIndex = Array.IndexOf(elementsOrder, element);
         int iconIndex = (iconStartIndex * 12) + elementIndex * 2;
+        int colorIndex = (colorStartIndex * 6) + elementIndex;
 
         Texture2D iconUpTex = iconSprites[iconIndex].texture;
         Rect iconUpRect = iconSprites[iconIndex].rect;
@@ -63,7 +66,7 @@ public class IconSettuper : MonoBehaviour
 
             if (IsColorApproximatelyWhite(pixels[i]))
             {
-                pixels[i] = colors[elementIndex];
+                pixels[i] = colors[colorIndex];
             }
         }
 
@@ -151,5 +154,31 @@ public class IconSettuper : MonoBehaviour
         }
 
         settings.iconStartIndex = iconStartIndex;
+    }
+
+    public void AddColorStartIndex()
+    {
+        colorStartIndex++;
+
+        int maxStartIndex = (colors.Length / 6) - 1;
+
+        if (colorStartIndex > maxStartIndex)
+        {
+            colorStartIndex = maxStartIndex;
+        }
+
+        settings.colorStartIndex = colorStartIndex;
+    }
+
+    public void RemoveColorStartIndex()
+    {
+        colorStartIndex--;
+
+        if (colorStartIndex < 0)
+        {
+            colorStartIndex = 0;
+        }
+
+        settings.colorStartIndex = colorStartIndex;
     }
 }
