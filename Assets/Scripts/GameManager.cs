@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text sideText;
     [SerializeField] private TMP_Text winnerText;
-    [SerializeField] private GameObject endBackground;
+    [SerializeField] private GameObject endPanel;
     [SerializeField] private TMP_Text countdownText;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private Button menuButton;
+    [SerializeField] private Button restartButton;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -40,6 +44,35 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Countdown());
     }
 
+    private void Update()
+    {
+        if (end)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pausePanel.SetActive(!pausePanel.activeSelf);
+        }
+
+        elapsedTime += Time.deltaTime;
+
+        sideText.text = $"{currentSide} turn";
+    }
+
+    private void OnEnable()
+    {
+        menuButton.onClick.AddListener(MenuButton_Click);
+        restartButton.onClick.AddListener(RestartButton_Click);
+    }
+
+    private void OnDisable()
+    {
+        menuButton.onClick.RemoveListener(MenuButton_Click);
+        restartButton.onClick.RemoveListener(RestartButton_Click);
+    }
+
     IEnumerator Countdown()
     {
         for (int i = 3; i > 0; i--)
@@ -59,19 +92,6 @@ public class GameManager : MonoBehaviour
     private void GameStart()
     {
         StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
-    }
-
-    private void Update()
-    {
-        if (end)
-        {
-            sideText.gameObject.SetActive(false);
-            return;
-        }
-
-        elapsedTime += Time.deltaTime;
-
-        sideText.text = $"{currentSide} turn";
     }
 
     private void DrawCards()
@@ -344,22 +364,26 @@ public class GameManager : MonoBehaviour
         if (playerHand.IsEmpty())
         {
             end = true;
+            sideText.gameObject.SetActive(false);
+            pausePanel.SetActive(false);
 
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
             winnerText.text = string.Format("You win in {0:00}:{1:00}", minutes, seconds);
-            endBackground.SetActive(true);
+            endPanel.SetActive(true);
         }
         else if (opponentHand.IsEmpty())
         {
             end = true;
+            sideText.gameObject.SetActive(false);
+            pausePanel.SetActive(false);
 
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
             winnerText.text = string.Format("You lose in {0:00}:{1:00}", minutes, seconds);
-            endBackground.SetActive(true);
+            endPanel.SetActive(true);
         }
     }
 
@@ -385,12 +409,12 @@ public class GameManager : MonoBehaviour
 
     #region UI
 
-    public void RestartButton_Click()
+    private void RestartButton_Click()
     {
         SceneManager.LoadScene("GameScene");
     }
 
-    public void MenuButton_Click()
+    private void MenuButton_Click()
     {
         SceneManager.LoadScene("MenuScene");
     }
