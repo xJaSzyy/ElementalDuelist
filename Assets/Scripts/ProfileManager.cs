@@ -11,7 +11,9 @@ public class ProfileManager : MonoBehaviour
     [SerializeField] private List<Sprite> colorSprites;
 
     [SerializeField] private Image iconPreview;
+    [SerializeField] private List<Image> iconPagePoints;
     [SerializeField] private Image colorPreview;
+    [SerializeField] private List<Image> colorPagePoints;
 
     [SerializeField] private Button nextIconButton;
     [SerializeField] private Button prevIconButton;
@@ -19,7 +21,7 @@ public class ProfileManager : MonoBehaviour
     [SerializeField] private Button nextColorButton;
     [SerializeField] private Button prevColorButton;
 
-    [SerializeField] private float amplitude = 50f;
+    [SerializeField] private float amplitude = 80f;
     [SerializeField] private float duration = 2f; 
 
     private readonly CardElement[] elementsOrder = new CardElement[]
@@ -38,6 +40,9 @@ public class ProfileManager : MonoBehaviour
         prevIconButton.onClick.AddListener(PrevIconButton_Click);
         nextColorButton.onClick.AddListener(NextColorButton_Click);
         prevColorButton.onClick.AddListener(PrevColorButton_Click);
+
+        UpdateIconPagePoints();
+        UpdateColorPagePoints();
 
         startIconPostion = iconPreview.transform.position;
 
@@ -70,6 +75,8 @@ public class ProfileManager : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(ChangeIconPreview());
         }
+
+        UpdateIconPagePoints();
     }
 
     private void PrevIconButton_Click()
@@ -79,6 +86,8 @@ public class ProfileManager : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(ChangeIconPreview());
         }
+
+        UpdateIconPagePoints();
     }
 
     private void NextColorButton_Click()
@@ -89,6 +98,8 @@ public class ProfileManager : MonoBehaviour
             colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
             StartCoroutine(ChangeIconPreview());
         }
+
+        UpdateColorPagePoints();
     }
 
     private void PrevColorButton_Click()
@@ -98,6 +109,38 @@ public class ProfileManager : MonoBehaviour
             StopAllCoroutines();
             colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
             StartCoroutine(ChangeIconPreview());
+        }
+
+        UpdateColorPagePoints();
+    }
+
+    private void UpdateIconPagePoints()
+    {
+        for (int i = 0; i < iconPagePoints.Count; i++)
+        {
+            if (i == iconSettuper.GetIconIndex())
+            {
+                iconPagePoints[i].color = Color.black;
+            }
+            else
+            {
+                iconPagePoints[i].color = Color.white;
+            }
+        }
+    }
+
+    private void UpdateColorPagePoints()
+    {
+        for (int i = 0; i < colorPagePoints.Count; i++)
+        {
+            if (i == iconSettuper.GetColorIndex())
+            {
+                colorPagePoints[i].color = Color.black;
+            }
+            else
+            {
+                colorPagePoints[i].color = Color.white;
+            }
         }
     }
 

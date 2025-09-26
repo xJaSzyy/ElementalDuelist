@@ -231,6 +231,11 @@ public class IconSettuper : MonoBehaviour
         return true;
     }
 
+    public int GetIconIndex()
+    {
+        return iconStartIndex;
+    }
+
     public int GetColorIndex()
     {
         return colorStartIndex;
