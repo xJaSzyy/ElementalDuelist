@@ -143,8 +143,10 @@ public class IconSettuper : MonoBehaviour
     }
 
 
-    public void AddIconStartIndex()
+    public bool AddIconStartIndex()
     {
+        int index = iconStartIndex;
+
         iconStartIndex++;
 
         int maxStartIndex = (iconSprites.Length / 12) - 1;
@@ -155,10 +157,19 @@ public class IconSettuper : MonoBehaviour
         }
 
         settings.iconStartIndex = iconStartIndex;
+
+        if (index == iconStartIndex)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    public void RemoveIconStartIndex()
+    public bool RemoveIconStartIndex()
     {
+        int index = iconStartIndex;
+
         iconStartIndex--;
 
         if (iconStartIndex < 0)
@@ -167,10 +178,19 @@ public class IconSettuper : MonoBehaviour
         }
 
         settings.iconStartIndex = iconStartIndex;
+
+        if (index == iconStartIndex)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    public void AddColorStartIndex()
+    public bool AddColorStartIndex()
     {
+        int index = colorStartIndex;
+
         colorStartIndex++;
 
         int maxStartIndex = (colors.Length / 6) - 1;
@@ -181,10 +201,19 @@ public class IconSettuper : MonoBehaviour
         }
 
         settings.colorStartIndex = colorStartIndex;
+
+        if (index == colorStartIndex)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    public void RemoveColorStartIndex()
+    public bool RemoveColorStartIndex()
     {
+        int index = colorStartIndex;
+
         colorStartIndex--;
 
         if (colorStartIndex < 0)
@@ -193,6 +222,13 @@ public class IconSettuper : MonoBehaviour
         }
 
         settings.colorStartIndex = colorStartIndex;
+
+        if (index == colorStartIndex)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public int GetColorIndex()

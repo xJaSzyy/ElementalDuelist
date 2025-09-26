@@ -30,6 +30,7 @@ public class ProfileManager : MonoBehaviour
 
     private int currentIndex = 0;
     private CardElement currentElement = CardElement.Fire;
+    private Vector3 startIconPostion;
 
     private void OnEnable()
     {
@@ -38,7 +39,9 @@ public class ProfileManager : MonoBehaviour
         nextColorButton.onClick.AddListener(NextColorButton_Click);
         prevColorButton.onClick.AddListener(PrevColorButton_Click);
 
-        LeanTween.moveY(iconPreview.gameObject, transform.position.y + amplitude, duration)
+        startIconPostion = iconPreview.transform.position;
+
+        LeanTween.moveY(iconPreview.gameObject, iconPreview.transform.position.y + amplitude, duration)
                  .setEaseInOutSine() 
                  .setLoopPingPong();
 
@@ -53,39 +56,49 @@ public class ProfileManager : MonoBehaviour
         nextColorButton.onClick.RemoveListener(NextColorButton_Click);
         prevColorButton.onClick.RemoveListener(PrevColorButton_Click);
 
-        LeanTween.cancel(gameObject);
+        LeanTween.cancel(iconPreview.gameObject);
+
+        iconPreview.transform.position = startIconPostion;
 
         StopAllCoroutines();
     }
 
     private void NextIconButton_Click()
     {
-        StopAllCoroutines();
-        iconSettuper.AddIconStartIndex();
-        StartCoroutine(ChangeIconPreview());
+        if (iconSettuper.AddIconStartIndex())
+        {
+            StopAllCoroutines();
+            StartCoroutine(ChangeIconPreview());
+        }
     }
 
     private void PrevIconButton_Click()
     {
-        StopAllCoroutines();
-        iconSettuper.RemoveIconStartIndex();
-        StartCoroutine(ChangeIconPreview());
+        if (iconSettuper.RemoveIconStartIndex())
+        {
+            StopAllCoroutines();
+            StartCoroutine(ChangeIconPreview());
+        }
     }
 
     private void NextColorButton_Click()
     {
-        StopAllCoroutines();
-        iconSettuper.AddColorStartIndex();
-        colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
-        StartCoroutine(ChangeIconPreview());
+        if (iconSettuper.AddColorStartIndex())
+        {
+            StopAllCoroutines();
+            colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
+            StartCoroutine(ChangeIconPreview());
+        }
     }
 
     private void PrevColorButton_Click()
     {
-        StopAllCoroutines();
-        iconSettuper.RemoveColorStartIndex();
-        colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
-        StartCoroutine(ChangeIconPreview());
+        if (iconSettuper.RemoveColorStartIndex())
+        {
+            StopAllCoroutines();
+            colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
+            StartCoroutine(ChangeIconPreview());
+        }
     }
 
     IEnumerator ChangeIconPreview()
