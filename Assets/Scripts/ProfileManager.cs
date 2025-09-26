@@ -1,5 +1,6 @@
 using Assets.Scripts.Enums;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class ProfileManager : MonoBehaviour
 {
     [SerializeField] private IconSettuper iconSettuper;
     [SerializeField] private Sprite cleanCardSprite;
+    [SerializeField] private List<Sprite> colorSprites;
 
     [SerializeField] private Image iconPreview;
     [SerializeField] private Image colorPreview;
@@ -40,6 +42,7 @@ public class ProfileManager : MonoBehaviour
                  .setEaseInOutSine() 
                  .setLoopPingPong();
 
+        colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
         StartCoroutine(ChangeIconPreview());
     }
 
@@ -73,6 +76,7 @@ public class ProfileManager : MonoBehaviour
     {
         StopAllCoroutines();
         iconSettuper.AddColorStartIndex();
+        colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
         StartCoroutine(ChangeIconPreview());
     }
 
@@ -80,6 +84,7 @@ public class ProfileManager : MonoBehaviour
     {
         StopAllCoroutines();
         iconSettuper.RemoveColorStartIndex();
+        colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
         StartCoroutine(ChangeIconPreview());
     }
 

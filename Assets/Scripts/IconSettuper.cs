@@ -54,25 +54,6 @@ public class IconSettuper : MonoBehaviour
         Texture2D newTex = new Texture2D((int)cardRect.width, (int)cardRect.height, TextureFormat.ARGB32, false);
         newTex.SetPixels(cardPixels);
 
-        Color[] pixels = newTex.GetPixels();
-
-        for (int i = 0; i < pixels.Length; i++)
-        {
-            if (pixels[i].a < 1f)
-            {
-                pixels[i] = Color.clear;
-                continue;
-            }
-
-            if (IsColorApproximatelyWhite(pixels[i]))
-            {
-                pixels[i] = colors[colorIndex];
-            }
-        }
-
-        newTex.SetPixels(0, 0, newTex.width, newTex.height, pixels);
-        newTex.Apply();
-
         Color[] iconUpPixels = iconUpTex.GetPixels(
             (int)iconUpRect.x,
             (int)iconUpRect.y,
@@ -108,9 +89,30 @@ public class IconSettuper : MonoBehaviour
         ReplaceBlock(iconUpPos, iconUpPixels);
         ReplaceBlock(iconDownPos, iconDownPixels);
 
+        Color[] pixels = newTex.GetPixels();
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i].a < 1f)
+            {
+                pixels[i] = Color.clear;
+                continue;
+            }
+
+            if (IsColorApproximatelyMain(pixels[i]))
+            {
+                pixels[i] = colors[colorIndex];
+            }
+            else if (IsColorApproximatelyAccent(pixels[i]))
+            {
+                pixels[i] = colors[colorIndex] * .9f;
+            }
+        }
+
+        newTex.SetPixels(0, 0, newTex.width, newTex.height, pixels);
+
         newTex.filterMode = FilterMode.Point;
         newTex.Compress(false);
-
         newTex.Apply();
 
         Sprite newSprite = Sprite.Create(newTex,
@@ -121,7 +123,7 @@ public class IconSettuper : MonoBehaviour
         return newSprite;
     }
 
-    private bool IsColorApproximatelyWhite(Color color)
+    private bool IsColorApproximatelyMain(Color color)
     {
         float tolerance = 0.01f; 
         return Mathf.Abs(color.r - 1f) < tolerance
@@ -129,6 +131,17 @@ public class IconSettuper : MonoBehaviour
                && Mathf.Abs(color.b - 1f) < tolerance
                && color.a > 0.9f; 
     }
+
+    private bool IsColorApproximatelyAccent(Color color)
+    {
+        float tolerance = 0.01f;
+        float target = 191f / 255f; 
+        return Mathf.Abs(color.r - target) < tolerance
+               && Mathf.Abs(color.g - target) < tolerance
+               && Mathf.Abs(color.b - target) < tolerance
+               && color.a > 0.9f;
+    }
+
 
     public void AddIconStartIndex()
     {
@@ -180,5 +193,10 @@ public class IconSettuper : MonoBehaviour
         }
 
         settings.colorStartIndex = colorStartIndex;
+    }
+
+    public int GetColorIndex()
+    {
+        return colorStartIndex;
     }
 }
