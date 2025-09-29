@@ -4,67 +4,85 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    [Header("Options")]
+    [SerializeField] private float duration = .5f;
+
     [Header("Buttons")]
-    [SerializeField] private GameObject buttons;
+    [SerializeField] private RectTransform buttons;
+    [SerializeField] private RectTransform loadingScreen;
     [SerializeField] private Button playButton;
-    [SerializeField] private Button profileButton;
+    [SerializeField] private Button customizeButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
 
     [Header("Profile Panel")]
-    [SerializeField] private GameObject profilePanel;
-    [SerializeField] private Button backProfileButton;
+    [SerializeField] private RectTransform customizePanel;
+    [SerializeField] private Button backCustomizeButton;
     
     [Header("Settings Panel")]
-    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private RectTransform settingsPanel;
     [SerializeField] private Button backSettingsButton;
+
+    private Vector2 rightScreenPosition;
+    private Vector2 leftScreenPosition;
+    private Vector2 onScreenPosition;
 
     private void Awake()
     {
-        buttons.SetActive(true);
-        profilePanel.SetActive(false);
-        settingsPanel.SetActive(false);
+        buttons.gameObject.SetActive(true);
+        customizePanel.gameObject.SetActive(false);
+        settingsPanel.gameObject.SetActive(false);
+        loadingScreen.gameObject.SetActive(false);
+
+        leftScreenPosition = onScreenPosition - new Vector2(Screen.width, 0);
+        onScreenPosition = customizePanel.anchoredPosition;
+        rightScreenPosition = onScreenPosition + new Vector2(Screen.width, 0);
+
+        customizePanel.anchoredPosition = rightScreenPosition;
+        settingsPanel.anchoredPosition = rightScreenPosition;
+        loadingScreen.anchoredPosition = rightScreenPosition;
     }
 
     private void OnEnable()
     {
         playButton.onClick.AddListener(PlayButton_Click);
-        profileButton.onClick.AddListener(ProfileButton_Click);
+        customizeButton.onClick.AddListener(CustomizeButton_Click);
         settingsButton.onClick.AddListener(SettingsButton_Click);
         exitButton.onClick.AddListener(ExitButton_Click);
 
-        backProfileButton.onClick.AddListener(BackButton_Click);
-
-        backSettingsButton.onClick.AddListener(BackButton_Click);
+        backCustomizeButton.onClick.AddListener(BackCustomizeButton_Click);
+        backSettingsButton.onClick.AddListener(BackSettingsButton_Click);
     }
 
     private void OnDisable()
     {
         playButton.onClick.RemoveListener(PlayButton_Click);
-        profileButton.onClick.RemoveListener(ProfileButton_Click);
+        customizeButton.onClick.RemoveListener(CustomizeButton_Click);
         settingsButton.onClick.RemoveListener(SettingsButton_Click);
         exitButton.onClick.RemoveListener(ExitButton_Click);
 
-        backProfileButton.onClick.RemoveListener(BackButton_Click);
-
-        backSettingsButton.onClick.RemoveListener(BackButton_Click);
+        backCustomizeButton.onClick.RemoveListener(BackCustomizeButton_Click);
+        backSettingsButton.onClick.RemoveListener(BackSettingsButton_Click);
     }
 
     private void PlayButton_Click()
     {
-        SceneManager.LoadScene("GameScene");
+        loadingScreen.gameObject.SetActive(true);
+        LeanTween.move(buttons, leftScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(loadingScreen, onScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
     }
 
-    private void ProfileButton_Click()
+    private void CustomizeButton_Click()
     {
-        buttons.SetActive(false);
-        profilePanel.SetActive(true);
+        SlideIn(customizePanel);
     }
 
     private void SettingsButton_Click()
     {
-        buttons.SetActive(false);
-        settingsPanel.SetActive(true);
+        SlideIn(settingsPanel);
     }
 
     private void ExitButton_Click()
@@ -72,10 +90,29 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    private void BackButton_Click()
+    private void BackCustomizeButton_Click()
     {
-        settingsPanel.SetActive(false);
-        profilePanel.SetActive(false);
-        buttons.SetActive(true);
+        SlideOut(customizePanel);
+    }
+
+    private void BackSettingsButton_Click()
+    {
+        SlideOut(settingsPanel);
+    }
+
+    private void SlideIn(RectTransform rect)
+    {
+        rect.gameObject.SetActive(true);
+        LeanTween.move(buttons, leftScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(rect, onScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad);
+    }
+
+    private void SlideOut(RectTransform rect)
+    {
+        LeanTween.move(buttons, onScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(rect, rightScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        {
+            rect.gameObject.SetActive(false);
+        });
     }
 }
