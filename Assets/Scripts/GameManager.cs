@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public CardSide currentSide = CardSide.Player;
     private float elapsedTime = 0f;
     private bool end = false;
+    private bool paused = false;
 
     private void Start()
     {
@@ -57,7 +58,17 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pausePanel.SetActive(!pausePanel.activeSelf);
+            if (paused)
+            {
+                ResumeButton_Click();
+            }
+            else
+            {
+                pausePanel.SetActive(true);
+                pausePanel.transform.localScale = Vector3.zero;
+                LeanTween.scale(pausePanel, Vector3.one, .25f);
+                paused = true;
+            }
         }
 
         elapsedTime += Time.deltaTime;
@@ -442,7 +453,8 @@ public class GameManager : MonoBehaviour
 
     private void ResumeButton_Click()
     {
-        pausePanel.SetActive(false);
+        LeanTween.scale(pausePanel, Vector3.zero, .25f).setOnComplete(() => pausePanel.SetActive(false));
+        paused = false;
     }
 
     private void MenuButton_Click()
