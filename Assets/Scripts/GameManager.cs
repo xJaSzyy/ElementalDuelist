@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     [Header("Options")]
     [SerializeField] private int maxHandCards;
+    [SerializeField] private Sprite winSprite;
+    [SerializeField] private Sprite loseSprite;
 
     [Header("UI")]
     [SerializeField] private TMP_Text sideText;
@@ -17,8 +19,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject endPanel;
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private GameObject pausePanel;
-    [SerializeField] private Button menuButton;
+    [SerializeField] private Button[] menuButtons;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Image winnerImage;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -63,14 +67,24 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        menuButton.onClick.AddListener(MenuButton_Click);
         restartButton.onClick.AddListener(RestartButton_Click);
+        resumeButton.onClick.AddListener(ResumeButton_Click);
+
+        foreach (Button menuButton in menuButtons)
+        {
+            menuButton.onClick.AddListener(MenuButton_Click);
+        }
     }
 
     private void OnDisable()
     {
-        menuButton.onClick.RemoveListener(MenuButton_Click);
         restartButton.onClick.RemoveListener(RestartButton_Click);
+        resumeButton.onClick.RemoveListener(ResumeButton_Click);
+
+        foreach (Button menuButton in menuButtons)
+        {
+            menuButton.onClick.RemoveListener(MenuButton_Click);
+        }
     }
 
     IEnumerator Countdown()
@@ -370,7 +384,13 @@ public class GameManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
-            winnerText.text = string.Format("You win in {0:00}:{1:00}", minutes, seconds);
+            winnerImage.sprite = winSprite;
+            RectTransform rt = winnerImage.GetComponent<RectTransform>();
+            Vector2 size = rt.sizeDelta;
+            size.x = winnerImage.sprite.rect.width * 6;
+            rt.sizeDelta = size;
+
+            winnerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             endPanel.SetActive(true);
         }
         else if (opponentHand.IsEmpty())
@@ -382,7 +402,13 @@ public class GameManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
-            winnerText.text = string.Format("You lose in {0:00}:{1:00}", minutes, seconds);
+            winnerImage.sprite = loseSprite;
+            RectTransform rt = winnerImage.GetComponent<RectTransform>();
+            Vector2 size = rt.sizeDelta;
+            size.x = winnerImage.sprite.rect.width * 6;  
+            rt.sizeDelta = size;
+
+            winnerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             endPanel.SetActive(true);
         }
     }
@@ -412,6 +438,11 @@ public class GameManager : MonoBehaviour
     private void RestartButton_Click()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    private void ResumeButton_Click()
+    {
+        pausePanel.SetActive(false);
     }
 
     private void MenuButton_Click()

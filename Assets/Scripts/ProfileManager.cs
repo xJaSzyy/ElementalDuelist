@@ -9,6 +9,8 @@ public class ProfileManager : MonoBehaviour
     [SerializeField] private IconSettuper iconSettuper;
     [SerializeField] private Sprite cleanCardSprite;
     [SerializeField] private List<Sprite> colorSprites;
+    [SerializeField] private Sprite defaultPointSprite;
+    [SerializeField] private Sprite selectedPointSprite;
 
     [SerializeField] private Image iconPreview;
     [SerializeField] private List<Image> iconPagePoints;
@@ -72,46 +74,42 @@ public class ProfileManager : MonoBehaviour
     {
         if (iconSettuper.AddIconStartIndex())
         {
+            UpdateIconPagePoints();
             StopAllCoroutines();
             StartCoroutine(ChangeIconPreview());
         }
-
-        UpdateIconPagePoints();
     }
 
     private void PrevIconButton_Click()
     {
         if (iconSettuper.RemoveIconStartIndex())
         {
+            UpdateIconPagePoints();
             StopAllCoroutines();
             StartCoroutine(ChangeIconPreview());
         }
-
-        UpdateIconPagePoints();
     }
 
     private void NextColorButton_Click()
     {
         if (iconSettuper.AddColorStartIndex())
         {
+            UpdateColorPagePoints();
             StopAllCoroutines();
             colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
             StartCoroutine(ChangeIconPreview());
         }
-
-        UpdateColorPagePoints();
     }
 
     private void PrevColorButton_Click()
     {
         if (iconSettuper.RemoveColorStartIndex())
         {
+            UpdateColorPagePoints();
             StopAllCoroutines();
             colorPreview.sprite = colorSprites[iconSettuper.GetColorIndex()];
             StartCoroutine(ChangeIconPreview());
         }
-
-        UpdateColorPagePoints();
     }
 
     private void UpdateIconPagePoints()
@@ -120,11 +118,11 @@ public class ProfileManager : MonoBehaviour
         {
             if (i == iconSettuper.GetIconIndex())
             {
-                iconPagePoints[i].color = Color.black;
+                iconPagePoints[i].sprite = selectedPointSprite;
             }
             else
             {
-                iconPagePoints[i].color = Color.white;
+                iconPagePoints[i].sprite = defaultPointSprite;
             }
         }
     }
@@ -135,11 +133,11 @@ public class ProfileManager : MonoBehaviour
         {
             if (i == iconSettuper.GetColorIndex())
             {
-                colorPagePoints[i].color = Color.black;
+                colorPagePoints[i].sprite = selectedPointSprite;
             }
             else
             {
-                colorPagePoints[i].color = Color.white;
+                colorPagePoints[i].sprite = defaultPointSprite;
             }
         }
     }
