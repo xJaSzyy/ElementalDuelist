@@ -10,11 +10,11 @@ public class GameManager : MonoBehaviour
 {
     [Header("Options")]
     [SerializeField] private int maxHandCards;
-    [SerializeField] private Sprite winSprite;
-    [SerializeField] private Sprite loseSprite;
+    [SerializeField] private Sprite playerTurnSprite;
+    [SerializeField] private Sprite opponentTurnSprite;
 
     [Header("UI")]
-    [SerializeField] private TMP_Text sideText;
+    [SerializeField] private Image sideImage;
     [SerializeField] private CustomText winnerText;
     [SerializeField] private GameObject endPanel;
     [SerializeField] private TMP_Text countdownText;
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 
         elapsedTime += Time.deltaTime;
 
-        sideText.text = $"{currentSide} turn";
+        sideImage.sprite = currentSide == CardSide.Player ? playerTurnSprite : opponentTurnSprite;
     }
 
     private void OnEnable()
@@ -130,7 +130,14 @@ public class GameManager : MonoBehaviour
 
     private void GameStart()
     {
-        StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
+        StartCoroutine(GameStartCoroutine());
+    }
+
+    private IEnumerator GameStartCoroutine()
+    {
+        yield return StartCoroutine(FillHandsCoroutine(maxHandCards, maxHandCards));
+        started = true;
+        sideImage.gameObject.SetActive(true);
     }
 
     private void DrawCards()
@@ -156,8 +163,6 @@ public class GameManager : MonoBehaviour
 
         yield return StartCoroutine(FillHandCoroutine(playerHand, CardSide.Player, maxPlayerHand));
         yield return StartCoroutine(FillHandCoroutine(opponentHand, CardSide.Opponent, maxOpponentHand));
-
-        started = true;
     }
 
     IEnumerator FillHandCoroutine(HandManager hand, CardSide side, int maxHand)
@@ -405,7 +410,7 @@ public class GameManager : MonoBehaviour
         if (playerHand.IsEmpty())
         {
             end = true;
-            sideText.gameObject.SetActive(false);
+            sideImage.gameObject.SetActive(false);
             pausePanel.SetActive(false);
 
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
@@ -417,7 +422,7 @@ public class GameManager : MonoBehaviour
         else if (opponentHand.IsEmpty())
         {
             end = true;
-            sideText.gameObject.SetActive(false);
+            sideImage.gameObject.SetActive(false);
             pausePanel.SetActive(false);
 
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
