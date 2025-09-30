@@ -203,6 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 99052448}
 --- !u!114 &99052448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1718,6 +1720,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 870692833}
 --- !u!1 &970740276
 GameObject:
   m_ObjectHideFlags: 0
@@ -3792,6 +3796,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 2011031572}
 --- !u!1 &2041590686
 GameObject:
   m_ObjectHideFlags: 0
@@ -4002,6 +4008,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 2066663702}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

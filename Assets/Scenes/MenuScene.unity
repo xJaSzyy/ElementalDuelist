@@ -542,23 +542,31 @@ MonoBehaviour:
   customizeButton: {fileID: 894333367}
   settingsButton: {fileID: 1477834407}
   exitButton: {fileID: 1416651468}
-  menuButtons:
-  - {fileID: 394260504}
-  - {fileID: 894333370}
-  - {fileID: 1477834410}
-  - {fileID: 1416651471}
+  mainCustomGroups:
+  - buttons:
+    - {fileID: 394260504}
+  - buttons:
+    - {fileID: 894333370}
+  - buttons:
+    - {fileID: 1477834410}
+  - buttons:
+    - {fileID: 1416651471}
   customizePanel: {fileID: 2086790331}
   backCustomizeButton: {fileID: 649353960}
-  customizeButtons:
-  - {fileID: 649353963}
-  - {fileID: 1942837983}
-  - {fileID: 1845786734}
-  - {fileID: 1211291651}
-  - {fileID: 1384912794}
+  customizeCustomGroups:
+  - buttons:
+    - {fileID: 649353963}
+  - buttons:
+    - {fileID: 1942837983}
+    - {fileID: 1845786734}
+  - buttons:
+    - {fileID: 1211291651}
+    - {fileID: 1384912794}
   settingsPanel: {fileID: 1923528600}
   backSettingsButton: {fileID: 1366902905}
-  settingsButtons:
-  - {fileID: 1366902908}
+  settingsCustomGroups:
+  - buttons:
+    - {fileID: 1366902908}
 --- !u!4 &241826131
 Transform:
   m_ObjectHideFlags: 0
@@ -645,11 +653,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1507909f1d443bd42ac859dca9787248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 394260504}
-  - {fileID: 894333370}
-  - {fileID: 1477834410}
-  - {fileID: 1416651471}
+  customGroups:
+  - buttons:
+    - {fileID: 394260504}
+  - buttons:
+    - {fileID: 894333370}
+  - buttons:
+    - {fileID: 1477834410}
+  - buttons:
+    - {fileID: 1416651471}
+  selectedCustomGroupIndex: 0
+  selectedCustomButtonIndex: 0
 --- !u!1 &330352372
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 394260501}
 --- !u!1 &432416194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,6 +1253,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.2
+  pressScaleFactor: 0.9
+  button: {fileID: 649353960}
 --- !u!1 &788662384
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,6 +1515,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 894333367}
 --- !u!1 &932977887
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,6 +2205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.2
+  pressScaleFactor: 0.9
+  button: {fileID: 1211291648}
 --- !u!224 &1338882756 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 951773916496991929, guid: 2c9193d613a1a194294284e80337effa, type: 3}
@@ -2325,6 +2347,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.2
+  pressScaleFactor: 0.9
+  button: {fileID: 1366902905}
 --- !u!1 &1384912789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,6 +2484,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.2
+  pressScaleFactor: 0.9
+  button: {fileID: 1384912791}
 --- !u!1 &1416651466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2596,6 +2622,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 1416651468}
 --- !u!1 &1440411922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2811,6 +2839,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.1
+  pressScaleFactor: 0.9
+  button: {fileID: 1477834407}
 --- !u!1 &1515041342
 GameObject:
   m_ObjectHideFlags: 0
@@ -3302,6 +3332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.2
+  pressScaleFactor: 0.9
+  button: {fileID: 1845786731}
 --- !u!1 &1923528599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3474,6 +3506,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.05
   scaleFactor: 1.2
+  pressScaleFactor: 0.9
+  button: {fileID: 1942837980}
 --- !u!1 &2005745909
 GameObject:
   m_ObjectHideFlags: 0

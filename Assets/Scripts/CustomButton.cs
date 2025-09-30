@@ -6,15 +6,14 @@ public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     [SerializeField] private float duration = 0.05f;
     [SerializeField] private float scaleFactor = 1.1f;
-    [SerializeField] private float pressScaleFactor = 0.9f; // smaller scale on press
+    [SerializeField] private float pressScaleFactor = 0.9f;
+    [SerializeField] private Button button;
 
     private Vector3 originalScale;
-    private Button button;
 
     private void Awake()
     {
         originalScale = transform.localScale;
-        button = GetComponent<Button>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

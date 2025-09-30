@@ -1,12 +1,15 @@
+using Assets.Scripts.Enums;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private CustomButton[] buttons;
-    private int selectedIndex = 0;
+    [SerializeField] private List<CustomHorizontalGroup> customGroups;
+    private int selectedCustomGroupIndex = -1;
+    private int selectedCustomButtonIndex = 0;
 
-    private enum InputMode { Keyboard, Mouse }
+    
     private InputMode currentInputMode = InputMode.Keyboard;
 
     private Vector3 lastMousePosition;
@@ -14,7 +17,7 @@ public class InputController : MonoBehaviour
 
     private void Start()
     {
-        UpdateButtons();
+        UpdateCustomGroups();
         lastMousePosition = Input.mousePosition;
     }
 
@@ -27,8 +30,8 @@ public class InputController : MonoBehaviour
                 currentInputMode = InputMode.Mouse;
                 if (!hasClearedSelection)
                 {
-                    selectedIndex = -1;  
-                    UpdateButtons();
+                    selectedCustomGroupIndex = -1;  
+                    UpdateCustomGroups();
                     hasClearedSelection = true;
                 }
             }
@@ -42,8 +45,8 @@ public class InputController : MonoBehaviour
                 currentInputMode = InputMode.Mouse;
                 if (!hasClearedSelection)
                 {
-                    selectedIndex = -1;  
-                    UpdateButtons();
+                    selectedCustomGroupIndex = -1;  
+                    UpdateCustomGroups();
                     hasClearedSelection = true;
                 }
             }
@@ -56,11 +59,11 @@ public class InputController : MonoBehaviour
             {
                 currentInputMode = InputMode.Keyboard;
                 hasClearedSelection = false;
-                if (selectedIndex == -1)
+                if (selectedCustomGroupIndex == -1)
                 {
-                    selectedIndex = 0;
+                    selectedCustomGroupIndex = 0;
                 }
-                UpdateButtons();
+                UpdateCustomGroups();
             }
         }
 
@@ -68,65 +71,97 @@ public class InputController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
-                selectedIndex--;
-                if (selectedIndex < 0)
+                selectedCustomGroupIndex--;
+                if (selectedCustomGroupIndex < 0)
                 {
-                    selectedIndex = 0;
+                    selectedCustomGroupIndex = 0;
                 }
-                UpdateButtons();
+                UpdateCustomGroups();
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                selectedIndex++;
-                if (selectedIndex > buttons.Length - 1)
+                selectedCustomGroupIndex++;
+                if (selectedCustomGroupIndex > customGroups.Count - 1)
                 {
-                    selectedIndex = buttons.Length - 1;
+                    selectedCustomGroupIndex = customGroups.Count - 1;
                 }
-                UpdateButtons();
+                UpdateCustomGroups();
+            }
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                selectedCustomButtonIndex--;
+                if (selectedCustomButtonIndex < 0)
+                {
+                    selectedCustomButtonIndex = 0;
+                }
+                UpdateCustomGroups();
+            }
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                selectedCustomButtonIndex++;
+                if (selectedCustomButtonIndex > customGroups[selectedCustomGroupIndex].buttons.Count - 1)
+                {
+                    selectedCustomButtonIndex = customGroups[selectedCustomGroupIndex].buttons.Count - 1;
+                }
+                UpdateCustomGroups();
             }
             else if (Input.GetKeyDown(KeyCode.Return))
             {
-                buttons[selectedIndex].Press();
+                customGroups[selectedCustomGroupIndex].buttons[selectedCustomButtonIndex].Press();
             }
             
             if (Input.GetKeyUp(KeyCode.Return))
             {
-                buttons[selectedIndex].Release();
-                buttons[selectedIndex].Click();
+                customGroups[selectedCustomGroupIndex].buttons[selectedCustomButtonIndex].Release();
+                customGroups[selectedCustomGroupIndex].buttons[selectedCustomButtonIndex].Click();
             }
         }
     }
 
-    private void UpdateButtons()
+    private void UpdateCustomGroups()
     {
-        for (int i = 0; i < buttons.Length; i++)
+        if (selectedCustomGroupIndex != -1 && customGroups[selectedCustomGroupIndex].buttons.Count - 1 < selectedCustomButtonIndex)
         {
-            if (i == selectedIndex)
+            selectedCustomButtonIndex = 0;
+        }
+
+        for (int i = 0; i < customGroups.Count; i++)
+        {
+            customGroups[i].DeselectAll();
+
+            if (i == selectedCustomGroupIndex)
             {
-                buttons[i].Select();
-            }
-            else
-            {
-                buttons[i].Deselect();
+                customGroups[i].buttons[selectedCustomButtonIndex].Select();
             }
         }
     }
 
-    public void SetButtons(CustomButton[] newButtons)
+    public void SetCustomHorizontalGroups(List<CustomHorizontalGroup> newCustomGroups)
     {
-        buttons = new CustomButton[newButtons.Length];
-        for (int i = 0; i < newButtons.Length; i++)
-        {
-            buttons[i] = newButtons[i];
-        }
-        selectedIndex = 0;
+        customGroups = newCustomGroups;
+
+        selectedCustomGroupIndex = 0;
 
         if (currentInputMode == InputMode.Mouse)
         {
-            selectedIndex = -1;
+            selectedCustomGroupIndex = -1;
             hasClearedSelection = true;
         }
 
-        UpdateButtons();
+        UpdateCustomGroups();
+    }
+}
+
+[Serializable]
+public class CustomHorizontalGroup
+{
+    public List<CustomButton> buttons;
+
+    public void DeselectAll()
+    {
+        foreach (CustomButton button in buttons)
+        {
+            button.Deselect();
+        }
     }
 }
