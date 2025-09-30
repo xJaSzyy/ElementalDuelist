@@ -6,6 +6,7 @@ public class MenuManager : MonoBehaviour
 {
     [Header("Options")]
     [SerializeField] private float duration = .5f;
+    [SerializeField] private InputController inputController;
 
     [Header("Buttons")]
     [SerializeField] private RectTransform buttons;
@@ -14,14 +15,17 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button customizeButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] private CustomButton[] menuButtons;
 
-    [Header("Profile Panel")]
+    [Header("Customize Panel")]
     [SerializeField] private RectTransform customizePanel;
     [SerializeField] private Button backCustomizeButton;
+    [SerializeField] private CustomButton[] customizeButtons;
     
     [Header("Settings Panel")]
     [SerializeField] private RectTransform settingsPanel;
     [SerializeField] private Button backSettingsButton;
+    [SerializeField] private CustomButton[] settingsButtons;
 
     private Vector2 rightScreenPosition;
     private Vector2 leftScreenPosition;
@@ -78,11 +82,13 @@ public class MenuManager : MonoBehaviour
     private void CustomizeButton_Click()
     {
         SlideIn(customizePanel);
+        inputController.SetButtons(customizeButtons);
     }
 
     private void SettingsButton_Click()
     {
         SlideIn(settingsPanel);
+        inputController.SetButtons(settingsButtons);
     }
 
     private void ExitButton_Click()
@@ -93,11 +99,13 @@ public class MenuManager : MonoBehaviour
     private void BackCustomizeButton_Click()
     {
         SlideOut(customizePanel);
+        inputController.SetButtons(menuButtons);
     }
 
     private void BackSettingsButton_Click()
     {
         SlideOut(settingsPanel);
+        inputController.SetButtons(menuButtons);
     }
 
     private void SlideIn(RectTransform rect)
