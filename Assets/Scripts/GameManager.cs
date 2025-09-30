@@ -15,14 +15,13 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text sideText;
-    [SerializeField] private TMP_Text winnerText;
+    [SerializeField] private CustomText winnerText;
     [SerializeField] private GameObject endPanel;
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private Button[] menuButtons;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button resumeButton;
-    [SerializeField] private Image winnerImage;
     [SerializeField] private RectTransform loadingScreen;
 
     [Header("References")]
@@ -43,6 +42,7 @@ public class GameManager : MonoBehaviour
     private float elapsedTime = 0f;
     private bool end = false;
     private bool paused = false;
+    private bool started = false;
 
     private Vector2 rightScreenPosition;
     private Vector2 leftScreenPosition;
@@ -156,6 +156,8 @@ public class GameManager : MonoBehaviour
 
         yield return StartCoroutine(FillHandCoroutine(playerHand, CardSide.Player, maxPlayerHand));
         yield return StartCoroutine(FillHandCoroutine(opponentHand, CardSide.Opponent, maxOpponentHand));
+
+        started = true;
     }
 
     IEnumerator FillHandCoroutine(HandManager hand, CardSide side, int maxHand)
@@ -176,7 +178,7 @@ public class GameManager : MonoBehaviour
 
     public bool CanClickOnCard(CardSide side)
     {
-        if (currentSide != side) { return false; }
+        if (currentSide != side || !started) { return false; }
 
         TableManager table = side == CardSide.Player ? playerTable : opponentTable;
         return !table.IsFull();
@@ -409,13 +411,7 @@ public class GameManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
-            winnerImage.sprite = winSprite;
-            RectTransform rt = winnerImage.GetComponent<RectTransform>();
-            Vector2 size = rt.sizeDelta;
-            size.x = winnerImage.sprite.rect.width * 6;
-            rt.sizeDelta = size;
-
-            winnerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            winnerText.SetText(string.Format("You win in {0:00}:{1:00}", minutes, seconds), new Color32(120, 161, 88, 255));
             endPanel.SetActive(true);
         }
         else if (opponentHand.IsEmpty())
@@ -427,13 +423,7 @@ public class GameManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
-            winnerImage.sprite = loseSprite;
-            RectTransform rt = winnerImage.GetComponent<RectTransform>();
-            Vector2 size = rt.sizeDelta;
-            size.x = winnerImage.sprite.rect.width * 6;  
-            rt.sizeDelta = size;
-
-            winnerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            winnerText.SetText(string.Format("You lose in {0:00}:{1:00}", minutes, seconds), new Color32(177, 80, 83, 255));
             endPanel.SetActive(true);
         }
     }
