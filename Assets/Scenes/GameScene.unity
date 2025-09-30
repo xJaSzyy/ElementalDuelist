@@ -1256,6 +1256,7 @@ GameObject:
   - component: {fileID: 752597073}
   - component: {fileID: 752597072}
   - component: {fileID: 752597074}
+  - component: {fileID: 752597075}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1289,6 +1290,17 @@ MonoBehaviour:
   restartButton: {fileID: 870692833}
   resumeButton: {fileID: 99052448}
   loadingScreen: {fileID: 350803917}
+  mainGroups: []
+  endPanelGroups:
+  - buttons:
+    - {fileID: 870692836}
+  - buttons:
+    - {fileID: 2066663705}
+  pausePanelGroups:
+  - buttons:
+    - {fileID: 99052447}
+  - buttons:
+    - {fileID: 2011031575}
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   cardDeck: {fileID: 1502612314}
   resetStack: {fileID: 76047061}
@@ -1297,6 +1309,7 @@ MonoBehaviour:
   playerTable: {fileID: 1664148497}
   opponentTable: {fileID: 995260549}
   iconSettuper: {fileID: 752597074}
+  inputController: {fileID: 752597075}
   cardDatas:
   - {fileID: 11400000, guid: 6b235eeea34165341965429cf04821ec, type: 2}
   - {fileID: 11400000, guid: a141f8a5066e0ff44b372ade07280d3c, type: 2}
@@ -1404,6 +1417,19 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: d28376eaf944e344a80ca36d4aa3721c, type: 2}
   iconUpPos: {x: 5, y: 51}
   iconDownPos: {x: 19, y: 5}
+--- !u!114 &752597075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752597071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507909f1d443bd42ac859dca9787248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customGroups: []
 --- !u!1 &788389462
 GameObject:
   m_ObjectHideFlags: 0
@@ -4021,9 +4047,9 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 546710804}
   - {fileID: 314144639}
-  - {fileID: 752597073}
   - {fileID: 547385850}
   - {fileID: 1041241200}
   - {fileID: 1664148498}
   - {fileID: 995260550}
   - {fileID: 76047062}
+  - {fileID: 752597073}
