@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button restartButton;
     [SerializeField] private Button resumeButton;
     [SerializeField] private Image winnerImage;
+    [SerializeField] private RectTransform loadingScreen;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -42,6 +43,19 @@ public class GameManager : MonoBehaviour
     private float elapsedTime = 0f;
     private bool end = false;
     private bool paused = false;
+
+    private Vector2 rightScreenPosition;
+    private Vector2 leftScreenPosition;
+    private Vector2 onScreenPosition;
+
+    private void Awake()
+    {
+        onScreenPosition = pausePanel.GetComponent<RectTransform>().anchoredPosition;
+        leftScreenPosition = onScreenPosition - new Vector2(Screen.width, 0);
+        rightScreenPosition = onScreenPosition + new Vector2(Screen.width, 0);
+
+        loadingScreen.GetComponent<RectTransform>().anchoredPosition = rightScreenPosition;
+    }
 
     private void Start()
     {
@@ -83,7 +97,7 @@ public class GameManager : MonoBehaviour
 
         foreach (Button menuButton in menuButtons)
         {
-            menuButton.onClick.AddListener(MenuButton_Click);
+            menuButton.onClick.AddListener(() => MenuButton_Click(menuButton.transform.parent.parent.GetComponent<RectTransform>()));
         }
     }
 
@@ -94,7 +108,7 @@ public class GameManager : MonoBehaviour
 
         foreach (Button menuButton in menuButtons)
         {
-            menuButton.onClick.RemoveListener(MenuButton_Click);
+            menuButton.onClick.RemoveAllListeners();
         }
     }
 
@@ -457,9 +471,14 @@ public class GameManager : MonoBehaviour
         paused = false;
     }
 
-    private void MenuButton_Click()
+    private void MenuButton_Click(RectTransform rect)
     {
-        SceneManager.LoadScene("MenuScene");
+        loadingScreen.gameObject.SetActive(true);
+        LeanTween.move(rect, leftScreenPosition, .5f).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(loadingScreen, onScreenPosition, .5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        {
+            SceneManager.LoadScene("MenuScene");
+        });
     }
 
     #endregion

@@ -34,8 +34,8 @@ public class MenuManager : MonoBehaviour
         settingsPanel.gameObject.SetActive(false);
         loadingScreen.gameObject.SetActive(false);
 
-        leftScreenPosition = onScreenPosition - new Vector2(Screen.width, 0);
         onScreenPosition = customizePanel.anchoredPosition;
+        leftScreenPosition = onScreenPosition - new Vector2(Screen.width, 0);
         rightScreenPosition = onScreenPosition + new Vector2(Screen.width, 0);
 
         customizePanel.anchoredPosition = rightScreenPosition;
