@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button restartButton;
     [SerializeField] private Button resumeButton;
     [SerializeField] private RectTransform loadingScreen;
+    [SerializeField] private List<CustomHorizontalGroup> mainGroups;
+    [SerializeField] private List<CustomHorizontalGroup> endPanelGroups;
+    [SerializeField] private List<CustomHorizontalGroup> pausePanelGroups;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -33,6 +36,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TableManager playerTable;
     [SerializeField] private TableManager opponentTable;
     [SerializeField] private IconSettuper iconSettuper;
+    [SerializeField] private InputController inputController;
 
     [SerializeField] private List<CardData> cardDatas = new();
     [SerializeField] private List<Card> cards = new();
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour
                 pausePanel.transform.localScale = Vector3.zero;
                 LeanTween.scale(pausePanel, Vector3.one, .25f);
                 paused = true;
+                inputController.SetCustomHorizontalGroups(pausePanelGroups);
             }
         }
 
@@ -409,28 +414,33 @@ public class GameManager : MonoBehaviour
     {
         if (playerHand.IsEmpty())
         {
-            end = true;
-            sideImage.gameObject.SetActive(false);
-            pausePanel.SetActive(false);
-
-            int minutes = Mathf.FloorToInt(elapsedTime / 60f);
-            int seconds = Mathf.FloorToInt(elapsedTime % 60f);
-
-            winnerText.SetText(string.Format("You win in {0:00}:{1:00}", minutes, seconds), new Color32(120, 161, 88, 255));
-            endPanel.SetActive(true);
+            EndGame(true);
         }
         else if (opponentHand.IsEmpty())
         {
-            end = true;
-            sideImage.gameObject.SetActive(false);
-            pausePanel.SetActive(false);
-
-            int minutes = Mathf.FloorToInt(elapsedTime / 60f);
-            int seconds = Mathf.FloorToInt(elapsedTime % 60f);
-
-            winnerText.SetText(string.Format("You lose in {0:00}:{1:00}", minutes, seconds), new Color32(177, 80, 83, 255));
-            endPanel.SetActive(true);
+            EndGame(false);
         }
+    }
+
+    private void EndGame(bool playerWon)
+    {
+        end = true;
+        sideImage.gameObject.SetActive(false);
+        pausePanel.SetActive(false);
+
+        string resultText = playerWon ? "You win" : "You lose";
+        Color32 resultColor = playerWon ? new Color32(120, 161, 88, 255) : new Color32(177, 80, 83, 255);
+
+        winnerText.SetText($"{resultText} in {FormatElapsedTime(elapsedTime)}", resultColor);
+        endPanel.SetActive(true);
+        inputController.SetCustomHorizontalGroups(endPanelGroups);
+    }
+
+    private string FormatElapsedTime(float timeSeconds)
+    {
+        int minutes = Mathf.FloorToInt(timeSeconds / 60f);
+        int seconds = Mathf.FloorToInt(timeSeconds % 60f);
+        return $"{minutes:00}:{seconds:00}";
     }
 
     private void Shuffle<T>(List<T> cards)
@@ -464,6 +474,7 @@ public class GameManager : MonoBehaviour
     {
         LeanTween.scale(pausePanel, Vector3.zero, .25f).setOnComplete(() => pausePanel.SetActive(false));
         paused = false;
+        inputController.SetCustomHorizontalGroups(mainGroups);
     }
 
     private void MenuButton_Click(RectTransform rect)
