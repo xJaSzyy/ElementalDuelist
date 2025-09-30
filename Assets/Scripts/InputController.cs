@@ -9,7 +9,6 @@ public class InputController : MonoBehaviour
     private int selectedCustomGroupIndex = -1;
     private int selectedCustomButtonIndex = 0;
 
-    
     private InputMode currentInputMode = InputMode.Keyboard;
 
     private Vector3 lastMousePosition;
@@ -131,7 +130,7 @@ public class InputController : MonoBehaviour
 
             if (i == selectedCustomGroupIndex)
             {
-                customGroups[i].buttons[selectedCustomButtonIndex].Select();
+                customGroups[i].buttons[selectedCustomButtonIndex].Select(true);
             }
         }
     }
@@ -149,6 +148,24 @@ public class InputController : MonoBehaviour
         }
 
         UpdateCustomGroups();
+    }
+
+    public void Reselect(CustomButton customButton)
+    {
+        for (int i = 0; i < customGroups.Count; i++)
+        {
+            for (int j = 0; j < customGroups[i].buttons.Count; j++)
+            {
+                if (customGroups[i].buttons[j] == customButton)
+                {
+                    selectedCustomGroupIndex = i;
+                    selectedCustomButtonIndex = j;
+                    UpdateCustomGroups();
+
+                    return;
+                }
+            }
+        }
     }
 }
 

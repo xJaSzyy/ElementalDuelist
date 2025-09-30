@@ -8,7 +8,7 @@ public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private float scaleFactor = 1.1f;
     [SerializeField] private float pressScaleFactor = 0.9f;
     [SerializeField] private Button button;
-
+    
     private Vector3 originalScale;
 
     private void Awake()
@@ -40,10 +40,19 @@ public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    public void Select()
+    public void Select(bool keyboard = false)
     {
         LeanTween.scale(gameObject, originalScale * scaleFactor, duration).setEaseInOutQuad();
         button.GetComponent<Image>().color = new Color32(212, 193, 105, 255);
+
+        if (!keyboard)
+        {
+            InputController inputController = FindAnyObjectByType<InputController>();
+            if (inputController != null)
+            {
+                inputController.Reselect(this);
+            }
+        }
     }
 
     public void Deselect()
