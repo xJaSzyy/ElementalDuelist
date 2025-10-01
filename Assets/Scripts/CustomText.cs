@@ -57,17 +57,22 @@ public class CustomText : MonoBehaviour
         }
 
         float totalWidth = 0f;
+        int length = 0;
 
         foreach (var slot in slots)
         {
-            RectTransform rt = slot.GetComponent<RectTransform>();
-            totalWidth += rt.rect.width;
+            if (slot.enabled)
+            {
+                RectTransform rt = slot.GetComponent<RectTransform>();
+                totalWidth += rt.rect.width;
+                length++;
+            }
         }
-        float gapsWidth = 8f * (slots.Length - 1);
+
+        float gapsWidth = 8f * (length - 1);
         float totalWidthWithGaps = totalWidth + gapsWidth;
 
         RectTransform parent = slots[0].transform.parent.GetComponent<RectTransform>();
         parent.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, totalWidthWithGaps);
-
     }
 }

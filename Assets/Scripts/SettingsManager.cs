@@ -7,6 +7,8 @@ public class SettingsManager : MonoBehaviour
     [Header("Resolution")]
     [SerializeField] private Button nextResolutionButton;
     [SerializeField] private Button prevResolutionButton;
+    [SerializeField] private CustomText resolutionText;
+    [SerializeField] private RectTransform resolutionPanel;
 
     private Resolution[] resolutions;
     private int resolutionIndex = 0;
@@ -24,6 +26,8 @@ public class SettingsManager : MonoBehaviour
                 break;
             }
         }
+
+        UpdateResolution();
     }
 
     private void OnEnable()
@@ -45,7 +49,7 @@ public class SettingsManager : MonoBehaviour
         {
             resolutionIndex = 0;
         }
-        SetResolution(resolutionIndex);
+        UpdateResolution();
     }
 
     private void PrevResolutionButton_Click()
@@ -55,13 +59,39 @@ public class SettingsManager : MonoBehaviour
         {
             resolutionIndex = resolutions.Length - 1;
         }
-        SetResolution(resolutionIndex);
+        UpdateResolution();
     }
 
-    private void SetResolution(int index)
+    private void UpdateResolution()
     {
-        Resolution res = resolutions[index];
+        Resolution res = resolutions[resolutionIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
-        Debug.Log("Set resolution: " + res.width + "x" + res.height);
+
+        resolutionText.SetText(res.width + "x" + res.height, Color.white);
+
+        UpdatePanelWidth();
+    }
+
+    private void UpdatePanelWidth()
+    {
+        int childCount = resolutionPanel.childCount;
+        float totalWidth = 0f;
+
+        for (int i = 0; i < childCount; i++)
+        {
+            RectTransform child = resolutionPanel.GetChild(i) as RectTransform;
+            if (child != null)
+            {
+                totalWidth += child.rect.width;
+            }
+        }
+
+        float totalSpacing = 32f * (childCount - 1);
+
+        float width = totalWidth + totalSpacing;
+
+        Vector2 size = resolutionPanel.sizeDelta;
+        size.x = width;
+        resolutionPanel.sizeDelta = size;
     }
 }
