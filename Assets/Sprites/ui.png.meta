@@ -1155,8 +1155,8 @@ TextureImporter:
       name: ui_18
       rect:
         serializedVersion: 2
-        x: 240
-        y: 479
+        x: 239
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1177,8 +1177,8 @@ TextureImporter:
       name: ui_19
       rect:
         serializedVersion: 2
-        x: 252
-        y: 479
+        x: 251
+        y: 430
         width: 5
         height: 17
       alignment: 0
@@ -1199,8 +1199,8 @@ TextureImporter:
       name: ui_20
       rect:
         serializedVersion: 2
-        x: 258
-        y: 479
+        x: 257
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1221,8 +1221,8 @@ TextureImporter:
       name: ui_21
       rect:
         serializedVersion: 2
-        x: 270
-        y: 479
+        x: 269
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1243,8 +1243,8 @@ TextureImporter:
       name: ui_22
       rect:
         serializedVersion: 2
-        x: 282
-        y: 479
+        x: 281
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1265,8 +1265,8 @@ TextureImporter:
       name: ui_23
       rect:
         serializedVersion: 2
-        x: 294
-        y: 479
+        x: 293
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1287,8 +1287,8 @@ TextureImporter:
       name: ui_24
       rect:
         serializedVersion: 2
-        x: 306
-        y: 479
+        x: 305
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1309,8 +1309,8 @@ TextureImporter:
       name: ui_25
       rect:
         serializedVersion: 2
-        x: 318
-        y: 479
+        x: 317
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1331,8 +1331,8 @@ TextureImporter:
       name: ui_26
       rect:
         serializedVersion: 2
-        x: 330
-        y: 479
+        x: 329
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1353,8 +1353,8 @@ TextureImporter:
       name: ui_27
       rect:
         serializedVersion: 2
-        x: 342
-        y: 479
+        x: 341
+        y: 430
         width: 11
         height: 17
       alignment: 0
@@ -1375,8 +1375,8 @@ TextureImporter:
       name: ui_28
       rect:
         serializedVersion: 2
-        x: 354
-        y: 479
+        x: 353
+        y: 430
         width: 5
         height: 17
       alignment: 0
@@ -1965,6 +1965,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: ui_55
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 430
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 500ebe403d4de684d9451964133ad7c1
+      internalID: 2004927930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -2030,6 +2052,7 @@ TextureImporter:
       ui_52: -1448289429
       ui_53: -1895718181
       ui_54: -1478074196
+      ui_55: 2004927930
       ui_6: 2163036573998151787
       ui_7: 8599436577718238185
       ui_8: -9080700020481880845
