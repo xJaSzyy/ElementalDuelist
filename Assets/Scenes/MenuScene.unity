@@ -568,6 +568,9 @@ MonoBehaviour:
   settingsCustomGroups:
   - gameObjects:
     - {fileID: 1366902903}
+  - gameObjects:
+    - {fileID: 1603205171}
+    - {fileID: 718671989}
 --- !u!4 &241826131
 Transform:
   m_ObjectHideFlags: 0

@@ -76,7 +76,7 @@ public class InputController : MonoBehaviour
                 selectedCustomGroupIndex--;
                 if (selectedCustomGroupIndex < 0)
                 {
-                    selectedCustomGroupIndex = 0;
+                    selectedCustomGroupIndex = customGroups.Count - 1;
                 }
                 UpdateCustomGroups();
             }
@@ -85,7 +85,7 @@ public class InputController : MonoBehaviour
                 selectedCustomGroupIndex++;
                 if (selectedCustomGroupIndex > customGroups.Count - 1)
                 {
-                    selectedCustomGroupIndex = customGroups.Count - 1;
+                    selectedCustomGroupIndex = 0;
                 }
                 UpdateCustomGroups();
             }
@@ -94,7 +94,7 @@ public class InputController : MonoBehaviour
                 selectedCustomButtonIndex--;
                 if (selectedCustomButtonIndex < 0)
                 {
-                    selectedCustomButtonIndex = 0;
+                    selectedCustomButtonIndex = customGroups[selectedCustomGroupIndex].gameObjects.Count - 1;
                 }
                 UpdateCustomGroups();
             }
@@ -103,7 +103,7 @@ public class InputController : MonoBehaviour
                 selectedCustomButtonIndex++;
                 if (selectedCustomButtonIndex > customGroups[selectedCustomGroupIndex].gameObjects.Count - 1)
                 {
-                    selectedCustomButtonIndex = customGroups[selectedCustomGroupIndex].gameObjects.Count - 1;
+                    selectedCustomButtonIndex = 0;
                 }
                 UpdateCustomGroups();
             }
