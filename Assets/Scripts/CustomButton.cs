@@ -10,12 +10,7 @@ public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private float pressScaleFactor = 0.9f;
     [SerializeField] private Button button;
     
-    private Vector3 originalScale;
-
-    private void Awake()
-    {
-        originalScale = transform.localScale;
-    }
+    private Vector3 originalScale = Vector3.one;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

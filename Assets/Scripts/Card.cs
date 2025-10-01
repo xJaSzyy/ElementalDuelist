@@ -97,10 +97,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void OnPointerUp(PointerEventData eventData)
     {
         Release();
-        if (RectTransformUtility.RectangleContainsScreenPoint(transform as RectTransform, eventData.position, eventData.pressEventCamera))
-        {
-            Click();
-        }
+        Click();
     }
 
     private void Flip()

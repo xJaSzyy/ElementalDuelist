@@ -433,8 +433,8 @@ public class GameManager : MonoBehaviour
         Color32 resultColor = playerWon ? new Color32(120, 161, 88, 255) : new Color32(177, 80, 83, 255);
 
         winnerText.SetText($"{resultText} in {FormatElapsedTime(elapsedTime)}", resultColor);
-        endPanel.SetActive(true);
         inputController.SetCustomHorizontalGroups(endPanelGroups);
+        endPanel.SetActive(true);
     }
 
     private string FormatElapsedTime(float timeSeconds)
