@@ -1,4 +1,5 @@
 using Assets.Scripts.Enums;
+using Assets.Scripts.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,8 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     [SerializeField] private List<CustomHorizontalGroup> customGroups;
-    private int selectedCustomGroupIndex = -1;
-    private int selectedCustomButtonIndex = 0;
+    [SerializeField] private int selectedCustomGroupIndex = -1;
+    [SerializeField] private int selectedCustomButtonIndex = 0;
 
     private InputMode currentInputMode = InputMode.Keyboard;
 
@@ -52,7 +53,9 @@ public class InputController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) ||
-            Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) ||
+            Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (currentInputMode != InputMode.Keyboard)
             {
@@ -98,28 +101,28 @@ public class InputController : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 selectedCustomButtonIndex++;
-                if (selectedCustomButtonIndex > customGroups[selectedCustomGroupIndex].buttons.Count - 1)
+                if (selectedCustomButtonIndex > customGroups[selectedCustomGroupIndex].gameObjects.Count - 1)
                 {
-                    selectedCustomButtonIndex = customGroups[selectedCustomGroupIndex].buttons.Count - 1;
+                    selectedCustomButtonIndex = customGroups[selectedCustomGroupIndex].gameObjects.Count - 1;
                 }
                 UpdateCustomGroups();
             }
             else if (Input.GetKeyDown(KeyCode.Return))
             {
-                customGroups[selectedCustomGroupIndex].buttons[selectedCustomButtonIndex].Press();
+                customGroups[selectedCustomGroupIndex].gameObjects[selectedCustomButtonIndex].GetComponent<ICustomSelectable>().Press();
             }
             
             if (Input.GetKeyUp(KeyCode.Return))
             {
-                customGroups[selectedCustomGroupIndex].buttons[selectedCustomButtonIndex].Release();
-                customGroups[selectedCustomGroupIndex].buttons[selectedCustomButtonIndex].Click();
+                customGroups[selectedCustomGroupIndex].gameObjects[selectedCustomButtonIndex].GetComponent<ICustomSelectable>().Release();
+                customGroups[selectedCustomGroupIndex].gameObjects[selectedCustomButtonIndex].GetComponent<ICustomSelectable>().Click();
             }
         }
     }
 
     private void UpdateCustomGroups()
     {
-        if (selectedCustomGroupIndex != -1 && customGroups[selectedCustomGroupIndex].buttons.Count - 1 < selectedCustomButtonIndex)
+        if (selectedCustomGroupIndex != -1 && customGroups[selectedCustomGroupIndex].gameObjects.Count - 1 < selectedCustomButtonIndex)
         {
             selectedCustomButtonIndex = 0;
         }
@@ -130,7 +133,7 @@ public class InputController : MonoBehaviour
 
             if (i == selectedCustomGroupIndex)
             {
-                customGroups[i].buttons[selectedCustomButtonIndex].Select(true);
+                customGroups[i].gameObjects[selectedCustomButtonIndex].GetComponent<ICustomSelectable>().Select(true);
             }
         }
     }
@@ -150,13 +153,13 @@ public class InputController : MonoBehaviour
         UpdateCustomGroups();
     }
 
-    public void Reselect(CustomButton customButton)
+    public void Reselect(ICustomSelectable selectable)
     {
         for (int i = 0; i < customGroups.Count; i++)
         {
-            for (int j = 0; j < customGroups[i].buttons.Count; j++)
+            for (int j = 0; j < customGroups[i].gameObjects.Count; j++)
             {
-                if (customGroups[i].buttons[j] == customButton)
+                if (customGroups[i].gameObjects[j].GetComponent<ICustomSelectable>() == selectable)
                 {
                     selectedCustomGroupIndex = i;
                     selectedCustomButtonIndex = j;
@@ -172,13 +175,13 @@ public class InputController : MonoBehaviour
 [Serializable]
 public class CustomHorizontalGroup
 {
-    public List<CustomButton> buttons;
+    public List<GameObject> gameObjects;
 
     public void DeselectAll()
     {
-        foreach (CustomButton button in buttons)
+        foreach (GameObject go in gameObjects)
         {
-            button.Deselect();
+            go.GetComponent<ICustomSelectable>().Deselect();
         }
     }
 }

@@ -8,6 +8,7 @@ public class HandManager : MonoBehaviour
 {
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
+    [SerializeField] private GameManager gameManager;
     public CardSide side;
     
     private List<Card> cards = new();
@@ -38,6 +39,11 @@ public class HandManager : MonoBehaviour
             cards[i].SetSortingOrder((i + 1) * 10);
             cards[i].UpdatePosition(splinePos, rotation);
             cards[i].stopRaised = false;
+        }
+
+        if (side == CardSide.Player)
+        {
+            gameManager.UpdatePlayerHandGroup();
         }
     }
 

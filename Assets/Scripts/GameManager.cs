@@ -1,6 +1,7 @@
 using Assets.Scripts.Enums;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,7 +24,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button restartButton;
     [SerializeField] private Button resumeButton;
     [SerializeField] private RectTransform loadingScreen;
-    [SerializeField] private List<CustomHorizontalGroup> mainGroups;
     [SerializeField] private List<CustomHorizontalGroup> endPanelGroups;
     [SerializeField] private List<CustomHorizontalGroup> pausePanelGroups;
 
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<CardData> cardDatas = new();
     [SerializeField] private List<Card> cards = new();
 
+    public CustomHorizontalGroup playerHandGroup;
     private CardSide firstSide = CardSide.Player;
     [HideInInspector] public CardSide currentSide = CardSide.Player;
     private float elapsedTime = 0f;
@@ -157,7 +158,7 @@ public class GameManager : MonoBehaviour
             card.gameManager = this;
             card.Rotate();
             card.frontSprite = iconSettuper.GenerateSprite(card.frontSprite, card.element);
-            
+
             cards.Add(card);
         }
     }
@@ -463,6 +464,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void UpdatePlayerHandGroup()
+    {
+        playerHandGroup.gameObjects = playerHand.GetCards()
+            .Select(card => card.gameObject)
+            .ToList();
+
+        inputController.SetCustomHorizontalGroups(new List<CustomHorizontalGroup> { playerHandGroup });
+    }
+
     #region UI
 
     private void RestartButton_Click()
@@ -474,7 +484,7 @@ public class GameManager : MonoBehaviour
     {
         LeanTween.scale(pausePanel, Vector3.zero, .25f).setOnComplete(() => pausePanel.SetActive(false));
         paused = false;
-        inputController.SetCustomHorizontalGroups(mainGroups);
+        inputController.SetCustomHorizontalGroups(new List<CustomHorizontalGroup> { playerHandGroup });
     }
 
     private void MenuButton_Click(RectTransform rect)

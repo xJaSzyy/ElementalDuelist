@@ -1,8 +1,9 @@
 using Assets.Scripts.Enums;
+using Assets.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ICustomSelectable
 {
     [Header("Settings")]
     [SerializeField] private Sprite backSprite;
@@ -75,35 +76,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand || stopRaised || side != CardSide.Player) { return; }
-
-        if (!isRaised)
-        {
-            RaiseCard();
-        }
+        Select();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand || stopRaised || side != CardSide.Player) { return; }
-
-        if (isRaised)
-        {
-            LowerCard();
-        }
+        Deselect();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (position != CardPosition.Hand || side != CardSide.Player) { return; }
-
-        if (gameManager.CanClickOnCard(side))
-        {
-            isRaised = false;
-            LeanTween.cancel(gameObject);
-            transform.SetPositionAndRotation(originalPosition, originalRotation);
-            gameManager.ClickOnCard(this);
-        }
+        Click();
     }
 
     private void Flip()
@@ -181,5 +164,48 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void SetSortingOrder(int index)
     {
         sr.sortingOrder = index;
+    }
+
+    public void Select(bool keyboard = false)
+    {
+        if (position != CardPosition.Hand || stopRaised || side != CardSide.Player) { return; }
+
+        if (!isRaised)
+        {
+            RaiseCard();
+        }
+    }
+
+    public void Deselect()
+    {
+        if (position != CardPosition.Hand || stopRaised || side != CardSide.Player) { return; }
+
+        if (isRaised)
+        {
+            LowerCard();
+        }
+    }
+
+    public void Press()
+    {
+        Debug.Log($"press {this.name}");
+    }
+
+    public void Release()
+    {
+        Debug.Log($"release {this.name}");
+    }
+
+    public void Click()
+    {
+        if (position != CardPosition.Hand || side != CardSide.Player) { return; }
+
+        if (gameManager.CanClickOnCard(side))
+        {
+            isRaised = false;
+            LeanTween.cancel(gameObject);
+            transform.SetPositionAndRotation(originalPosition, originalRotation);
+            gameManager.ClickOnCard(this);
+        }
     }
 }

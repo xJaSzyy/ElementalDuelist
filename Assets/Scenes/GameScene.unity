@@ -1292,15 +1292,15 @@ MonoBehaviour:
   loadingScreen: {fileID: 350803917}
   mainGroups: []
   endPanelGroups:
-  - buttons:
-    - {fileID: 870692836}
-  - buttons:
-    - {fileID: 2066663705}
+  - gameObjects:
+    - {fileID: 870692831}
+  - gameObjects:
+    - {fileID: 2066663700}
   pausePanelGroups:
-  - buttons:
-    - {fileID: 99052447}
-  - buttons:
-    - {fileID: 2011031575}
+  - gameObjects:
+    - {fileID: 99052445}
+  - gameObjects:
+    - {fileID: 2011031570}
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   cardDeck: {fileID: 1502612314}
   resetStack: {fileID: 76047061}

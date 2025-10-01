@@ -543,30 +543,30 @@ MonoBehaviour:
   settingsButton: {fileID: 1477834407}
   exitButton: {fileID: 1416651468}
   mainCustomGroups:
-  - buttons:
-    - {fileID: 394260504}
-  - buttons:
-    - {fileID: 894333370}
-  - buttons:
-    - {fileID: 1477834410}
-  - buttons:
-    - {fileID: 1416651471}
+  - gameObjects:
+    - {fileID: 394260499}
+  - gameObjects:
+    - {fileID: 894333365}
+  - gameObjects:
+    - {fileID: 1477834405}
+  - gameObjects:
+    - {fileID: 1416651466}
   customizePanel: {fileID: 2086790331}
   backCustomizeButton: {fileID: 649353960}
   customizeCustomGroups:
-  - buttons:
-    - {fileID: 649353963}
-  - buttons:
-    - {fileID: 1942837983}
-    - {fileID: 1845786734}
-  - buttons:
-    - {fileID: 1211291651}
-    - {fileID: 1384912794}
+  - gameObjects:
+    - {fileID: 649353958}
+  - gameObjects:
+    - {fileID: 1942837978}
+    - {fileID: 1845786729}
+  - gameObjects:
+    - {fileID: 1211291646}
+    - {fileID: 1384912789}
   settingsPanel: {fileID: 1923528600}
   backSettingsButton: {fileID: 1366902905}
   settingsCustomGroups:
-  - buttons:
-    - {fileID: 1366902908}
+  - gameObjects:
+    - {fileID: 1366902903}
 --- !u!4 &241826131
 Transform:
   m_ObjectHideFlags: 0
@@ -653,17 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1507909f1d443bd42ac859dca9787248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customGroups:
-  - buttons:
-    - {fileID: 394260504}
-  - buttons:
-    - {fileID: 894333370}
-  - buttons:
-    - {fileID: 1477834410}
-  - buttons:
-    - {fileID: 1416651471}
-  selectedCustomGroupIndex: 0
-  selectedCustomButtonIndex: 0
+  customGroups: []
 --- !u!1 &330352372
 GameObject:
   m_ObjectHideFlags: 0
