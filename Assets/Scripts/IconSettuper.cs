@@ -1,5 +1,6 @@
 using Assets.Scripts.Enums;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,10 @@ public class IconSettuper : MonoBehaviour
     [SerializeField] private Sprite[] iconSprites;
     [SerializeField] private Color[] colors;
 
-    [SerializeField] private SettingsData settings;
     [SerializeField] private Vector2Int iconUpPos = new(5, 51);
     [SerializeField] private Vector2Int iconDownPos = new(19, 5);
     
+    private SettingsData settings;
     private int iconStartIndex;
     private int colorStartIndex;
 
@@ -23,6 +24,8 @@ public class IconSettuper : MonoBehaviour
 
     private void Awake()
     {
+        settings = Resources.Load<SettingsData>("Settings");
+
         iconStartIndex = settings.iconStartIndex;
         colorStartIndex = settings.colorStartIndex;
     }
@@ -141,7 +144,6 @@ public class IconSettuper : MonoBehaviour
                && Mathf.Abs(color.b - target) < tolerance
                && color.a > 0.9f;
     }
-
 
     public bool AddIconStartIndex()
     {

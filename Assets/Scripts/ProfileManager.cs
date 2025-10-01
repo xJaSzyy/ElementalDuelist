@@ -1,6 +1,7 @@
 using Assets.Scripts.Enums;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,10 +59,10 @@ public class ProfileManager : MonoBehaviour
 
     private void OnDisable()
     {
-        nextIconButton.onClick.RemoveListener(NextIconButton_Click);
-        prevIconButton.onClick.RemoveListener(PrevIconButton_Click);
-        nextColorButton.onClick.RemoveListener(NextColorButton_Click);
-        prevColorButton.onClick.RemoveListener(PrevColorButton_Click);
+        nextIconButton.onClick.RemoveAllListeners();
+        prevIconButton.onClick.RemoveAllListeners();
+        nextColorButton.onClick.RemoveAllListeners();
+        prevColorButton.onClick.RemoveAllListeners();
 
         LeanTween.cancel(iconPreview.gameObject);
 
