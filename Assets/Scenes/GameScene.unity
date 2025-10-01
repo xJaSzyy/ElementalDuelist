@@ -526,6 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   splineContainer: {fileID: 310257014}
+  gameManager: {fileID: 752597072}
   side: 2
 --- !u!4 &314144639
 Transform:
@@ -858,6 +859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 2918463214011217601, guid: d5b18dbefbb44f14cbf85119d5d53d5f, type: 3}
   splineContainer: {fileID: 1581628451}
+  gameManager: {fileID: 752597072}
   side: 1
 --- !u!4 &546710804
 Transform:
@@ -1290,7 +1292,6 @@ MonoBehaviour:
   restartButton: {fileID: 870692833}
   resumeButton: {fileID: 99052448}
   loadingScreen: {fileID: 350803917}
-  mainGroups: []
   endPanelGroups:
   - gameObjects:
     - {fileID: 870692831}
@@ -1342,6 +1343,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa1274a84f09aa848924470b6b3cbc38, type: 2}
   - {fileID: 11400000, guid: fb579ba27608f244b9bf80225fb4f628, type: 2}
   cards: []
+  playerHandGroup:
+    gameObjects: []
   currentSide: 1
 --- !u!4 &752597073
 Transform:
@@ -1430,6 +1433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customGroups: []
+  selectedCustomGroupIndex: -1
+  selectedCustomButtonIndex: 0
 --- !u!1 &788389462
 GameObject:
   m_ObjectHideFlags: 0
