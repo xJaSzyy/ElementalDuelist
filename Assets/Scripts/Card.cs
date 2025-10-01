@@ -3,13 +3,16 @@ using Assets.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ICustomSelectable
+public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICustomSelectable
 {
     [Header("Settings")]
     [SerializeField] private Sprite backSprite;
     [SerializeField] private float raisedOffset = 1f;
     [SerializeField] private float shadowOffset = 100f;
-    
+    [SerializeField] private float duration = 0.05f;
+    [SerializeField] private float scaleFactor = 1.1f;
+    [SerializeField] private float pressScaleFactor = 0.9f;
+
     [Header("Other")]
     public Sprite frontSprite;
     public CardPosition position;
@@ -25,6 +28,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private bool isRaised = false;
     private Camera mainCamera;
     private Transform shadow;
+    private Vector3 originalScale;
 
     [HideInInspector] public bool hidden = false;
     [HideInInspector] public bool stopRaised = false;
@@ -35,6 +39,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         sr = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
         shadow = transform.GetChild(0).transform;
+        originalScale = transform.localScale;
     }
 
     private void Update()
@@ -84,9 +89,18 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         Deselect();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        Click();
+        Press();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Release();
+        if (RectTransformUtility.RectangleContainsScreenPoint(transform as RectTransform, eventData.position, eventData.pressEventCamera))
+        {
+            Click();
+        }
     }
 
     private void Flip()
@@ -188,12 +202,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void Press()
     {
-        Debug.Log($"press {this.name}");
+        LeanTween.scale(gameObject, originalScale * pressScaleFactor, duration).setEaseInOutQuad();
     }
 
     public void Release()
     {
-        Debug.Log($"release {this.name}");
+        LeanTween.scale(gameObject, originalScale * scaleFactor, duration).setEaseInOutQuad();
     }
 
     public void Click()
@@ -207,5 +221,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             transform.SetPositionAndRotation(originalPosition, originalRotation);
             gameManager.ClickOnCard(this);
         }
+
+        LeanTween.scale(gameObject, originalScale, duration).setEaseInOutQuad();
     }
 }
