@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProfileManager : MonoBehaviour
+public class CustomizeManager : MonoBehaviour
 {
     [SerializeField] private IconSettuper iconSettuper;
     [SerializeField] private Sprite cleanCardSprite;
