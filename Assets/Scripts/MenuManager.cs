@@ -114,12 +114,16 @@ public class MenuManager : MonoBehaviour
     private void SlideIn(RectTransform rect)
     {
         rect.gameObject.SetActive(true);
-        LeanTween.move(buttons, leftScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(buttons, leftScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        {
+            buttons.gameObject.SetActive(false);
+        });
         LeanTween.move(rect, onScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad);
     }
 
     private void SlideOut(RectTransform rect)
     {
+        buttons.gameObject.SetActive(true);
         LeanTween.move(buttons, onScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad);
         LeanTween.move(rect, rightScreenPosition, duration).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
         {

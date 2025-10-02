@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class SettingsManager : MonoBehaviour
 {
     [Header("Resolution")]
+    [SerializeField] private Button toggleFullscreenButton;
+    [SerializeField] private Sprite toggleOnSprite;
+    [SerializeField] private Sprite toggleOffSprite;
     [SerializeField] private Button nextResolutionButton;
     [SerializeField] private Button prevResolutionButton;
     [SerializeField] private CustomText resolutionText;
@@ -34,12 +37,14 @@ public class SettingsManager : MonoBehaviour
     {
         nextResolutionButton.onClick.AddListener(NextResolutionButton_Click);
         prevResolutionButton.onClick.AddListener(PrevResolutionButton_Click);
+        toggleFullscreenButton.onClick.AddListener(ToggleFullscreenButton_Click);
     }
 
     private void OnDisable()
     {
         nextResolutionButton.onClick.RemoveAllListeners();
         prevResolutionButton.onClick.RemoveAllListeners();
+        toggleFullscreenButton.onClick.RemoveAllListeners();
     }
 
     private void NextResolutionButton_Click()
@@ -93,5 +98,19 @@ public class SettingsManager : MonoBehaviour
         Vector2 size = resolutionPanel.sizeDelta;
         size.x = width;
         resolutionPanel.sizeDelta = size;
+    }
+
+    private void ToggleFullscreenButton_Click()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+
+        if (Screen.fullScreen)
+        {
+            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOnSprite;
+        }
+        else
+        {
+            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOffSprite;
+        }
     }
 }
