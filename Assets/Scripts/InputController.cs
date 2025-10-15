@@ -115,7 +115,7 @@ public class InputController : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.Return))
             {
                 customGroups[selectedCustomGroupIndex].gameObjects[selectedCustomButtonIndex].GetComponent<ICustomSelectable>().Release();
-                customGroups[selectedCustomGroupIndex].gameObjects[selectedCustomButtonIndex].GetComponent<ICustomSelectable>().Click();
+                customGroups[selectedCustomGroupIndex].gameObjects[selectedCustomButtonIndex].GetComponent<ICustomSelectable>().Click(true);
             }
         }
     }

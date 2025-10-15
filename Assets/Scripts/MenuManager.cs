@@ -63,13 +63,13 @@ public class MenuManager : MonoBehaviour
 
     private void OnDisable()
     {
-        playButton.onClick.RemoveListener(PlayButton_Click);
-        customizeButton.onClick.RemoveListener(CustomizeButton_Click);
-        settingsButton.onClick.RemoveListener(SettingsButton_Click);
-        exitButton.onClick.RemoveListener(ExitButton_Click);
+        playButton.onClick.RemoveAllListeners();
+        customizeButton.onClick.RemoveAllListeners();
+        settingsButton.onClick.RemoveAllListeners();
+        exitButton.onClick.RemoveAllListeners();
 
-        backCustomizeButton.onClick.RemoveListener(BackCustomizeButton_Click);
-        backSettingsButton.onClick.RemoveListener(BackSettingsButton_Click);
+        backCustomizeButton.onClick.RemoveAllListeners();
+        backSettingsButton.onClick.RemoveAllListeners();
     }
 
     private void PlayButton_Click()

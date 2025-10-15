@@ -67,8 +67,11 @@ public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         LeanTween.scale(gameObject, originalScale * scaleFactor, duration).setEaseInOutQuad();
     }
 
-    public void Click()
+    public void Click(bool keyboard = false)
     {
-        button.onClick.Invoke();
+        if (keyboard)
+        {
+            button.onClick.Invoke();
+        }
     }
 }

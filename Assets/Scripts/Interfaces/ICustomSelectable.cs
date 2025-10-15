@@ -6,6 +6,6 @@ namespace Assets.Scripts.Interfaces
         void Deselect();
         void Press();
         void Release();
-        void Click();
+        void Click(bool keyboard = false);
     }
 }

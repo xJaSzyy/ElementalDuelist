@@ -207,7 +207,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         LeanTween.scale(gameObject, originalScale * scaleFactor, duration).setEaseInOutQuad();
     }
 
-    public void Click()
+    public void Click(bool keyboard = false)
     {
         if (position != CardPosition.Hand || side != CardSide.Player) { return; }
 

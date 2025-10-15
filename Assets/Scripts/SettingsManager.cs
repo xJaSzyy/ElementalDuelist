@@ -106,11 +106,11 @@ public class SettingsManager : MonoBehaviour
 
         if (Screen.fullScreen)
         {
-            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOnSprite;
+            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOffSprite;
         }
         else
         {
-            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOffSprite;
+            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOnSprite;
         }
     }
 }
