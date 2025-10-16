@@ -30,6 +30,15 @@ public class SettingsManager : MonoBehaviour
             }
         }
 
+        if (Screen.fullScreen)
+        {
+            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOnSprite;
+        }
+        else
+        {
+            toggleFullscreenButton.GetComponent<Image>().sprite = toggleOffSprite;
+        }
+
         UpdateResolution();
     }
 

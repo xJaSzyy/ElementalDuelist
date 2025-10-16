@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RectTransform loadingScreen;
     [SerializeField] private List<CustomHorizontalGroup> endPanelGroups;
     [SerializeField] private List<CustomHorizontalGroup> pausePanelGroups;
+    [SerializeField] private CustomText alertText;
 
     [Header("References")]
     [SerializeField] private GameObject cardPrefab;
@@ -227,6 +228,7 @@ public class GameManager : MonoBehaviour
 
                     DetermineGameEnd();
 
+                    SetAlertText("Not beats");
                     Debug.Log("NOT BEATS");
                 }
                 else
@@ -266,6 +268,7 @@ public class GameManager : MonoBehaviour
 
                         DetermineGameEnd();
 
+                        SetAlertText("Not combined");
                         Debug.Log("NOT COMBINED");
                     }
                 }
@@ -302,6 +305,7 @@ public class GameManager : MonoBehaviour
 
                         DetermineGameEnd();
 
+                        SetAlertText("Not combined");
                         Debug.Log("NOT COMBINED");
                     }
                     else
@@ -471,6 +475,18 @@ public class GameManager : MonoBehaviour
             .ToList();
 
         inputController.SetCustomHorizontalGroups(new List<CustomHorizontalGroup> { playerHandGroup });
+    }
+
+    private void SetAlertText(string text)
+    {
+        alertText.gameObject.SetActive(true);
+        alertText.SetText(text, Color.yellow);
+
+        alertText.GetComponent<RectTransform>().localScale = Vector3.zero;
+        LeanTween.scale(alertText.GetComponent<RectTransform>(), Vector3.one, 0.6f).setEase(LeanTweenType.easeOutBack).setOnComplete(() =>
+        {
+            alertText.gameObject.SetActive(false);
+        });
     }
 
     #region UI
