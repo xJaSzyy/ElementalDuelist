@@ -708,6 +708,8 @@ MonoBehaviour:
   - gameObjects:
     - {fileID: 1603205171}
     - {fileID: 718671989}
+  - gameObjects:
+    - {fileID: 39159703}
 --- !u!4 &241826131
 Transform:
   m_ObjectHideFlags: 0

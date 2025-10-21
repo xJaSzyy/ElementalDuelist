@@ -39,7 +39,7 @@ public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void Select(bool keyboard = false)
     {
         LeanTween.scale(gameObject, originalScale * scaleFactor, duration).setEaseInOutQuad();
-        button.GetComponent<Image>().color = new Color32(212, 193, 105, 255);
+        button.GetComponent<Image>().color = Color.yellow;
 
         if (!keyboard)
         {

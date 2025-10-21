@@ -1,0 +1,140 @@
+using Assets.Scripts.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class SolitareCardSlot : MonoBehaviour, IDropHandler
+{
+    [Header("Options")]
+    [SerializeField] private SolitareSlotType slotType; 
+
+    public List<SolitareCard> cardsInSlot = new();
+    public bool full = false;
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (full)
+        {
+            return;
+        }
+
+        SolitareCard card = eventData.pointerDrag.GetComponent<SolitareCard>();
+        if (card != null && CanAcceptCard(card))
+        {
+            /*if (slotType == SolitareSlotType.Stack && card.childCards.Count != 0)
+            {
+                return;
+            }*/
+
+            card.WasDroppedInSlot = true;
+            card.PlaceInSlot(this);
+        }
+    }
+
+    public virtual bool CanAcceptCard(SolitareCard card)
+    {
+        if (card == null) return false;
+
+        if (slotType == SolitareSlotType.Stack)
+        {
+            return CanAcceptCardToStack(card);
+        }
+
+        if (slotType == SolitareSlotType.Table)
+        {
+            return CanAcceptCardToTable(card);
+        }
+
+        return true; 
+    }
+
+    private bool CanAcceptCardToStack(SolitareCard card)
+    {
+        if (cardsInSlot.Count == 0)
+        {
+            return card.Rank == Rank.Ace;
+        }
+        else if (cardsInSlot.Count == 1)
+        {
+            return card.Rank == Rank.Two;
+        }
+        else
+        {
+            SolitareCard topCard = cardsInSlot[cardsInSlot.Count - 1];
+            return card.Suit == topCard.Suit &&
+                   (int)card.Rank == (int)topCard.Rank + 1;
+        }
+    }
+
+    private bool CanAcceptCardToTable(SolitareCard card)
+    {
+        if (cardsInSlot.Count == 0)
+        {
+            return card.Rank == Rank.King;
+        }
+        else
+        {
+            SolitareCard topCard = cardsInSlot[cardsInSlot.Count - 1];
+            return IsOppositeColor(card, topCard) &&
+                   (int)card.Rank == (int)topCard.Rank - 1;
+        }
+    }
+
+    private bool IsOppositeColor(SolitareCard card1, SolitareCard card2)
+    {
+        bool card1IsBlack = card1.Suit == Suit.Clubs || card1.Suit == Suit.Spades;
+        bool card2IsBlack = card2.Suit == Suit.Clubs || card2.Suit == Suit.Spades;
+
+        return card1IsBlack != card2IsBlack;
+    }
+
+    public void AddCard(SolitareCard card)
+    {
+        if (!cardsInSlot.Contains(card))
+        {
+            cardsInSlot.Add(card);
+            card.SetCurrentSlot(this);
+        }
+
+        if (slotType == SolitareSlotType.Stack && cardsInSlot.Count == 13)
+        {
+            full = true;
+        }
+    }
+
+    public void RemoveCard(SolitareCard card)
+    {
+        cardsInSlot.Remove(card);
+    }
+
+    public void FlipLastCard()
+    {
+        if (cardsInSlot.Count == 0) { return; }
+
+        if (cardsInSlot[cardsInSlot.Count - 1].hide)
+        {
+            cardsInSlot[cardsInSlot.Count - 1].Flip();
+        }
+    }
+
+    public List<SolitareCard> RemoveAndGetAllCards()
+    {
+        var cards = new List<SolitareCard>(cardsInSlot);
+
+        foreach (var item in cards)
+        {
+            RemoveCard(item);
+        }
+
+        return cards;
+    }
+}
+
+public enum SolitareSlotType
+{
+    Deck,
+    Table,
+    Stack
+}
