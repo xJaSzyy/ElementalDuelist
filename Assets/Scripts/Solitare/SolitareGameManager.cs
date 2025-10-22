@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class SolitareGameManager : MonoBehaviour
 {
+    [Header("Stats")]
+    public bool win = false;
+
     [Header("Options")]
     [SerializeField] private GameObject cardPrefab;
     
@@ -24,6 +27,11 @@ public class SolitareGameManager : MonoBehaviour
 
     private void Update()
     {
+        if (win)
+        {
+            return;
+        }
+
         foreach (var item in foundationSlots)
         {
             if (!item.full)
@@ -32,7 +40,7 @@ public class SolitareGameManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Win");
+        win = true;
     }
 
     private void DrawCards()

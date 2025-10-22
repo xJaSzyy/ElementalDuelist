@@ -33,6 +33,11 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
             return false;
         }
 
+        if (slotType == SolitareSlotType.Stock)
+        {
+            return false;
+        }
+
         if (slotType == SolitareSlotType.Foundation)
         {
             return CanAcceptCardToFoundation(card);
@@ -105,7 +110,7 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
     {
         if (cardsInSlot.Count == 0) { return; }
 
-        if (cardsInSlot[cardsInSlot.Count - 1].hide)
+        if (cardsInSlot[cardsInSlot.Count - 1].Hide)
         {
             cardsInSlot[cardsInSlot.Count - 1].Flip();
         }

@@ -13,8 +13,9 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public bool WasDroppedInSlot { get; set; } = false;
 
     [Header("State")]
-    public bool hide = false;
+    public bool Hide = false;
     public bool IsDraggable = true;
+    public bool IsFlipped = false;
 
     [Header("References")]
     [SerializeField] private TMP_Text[] rankTexts;
@@ -42,6 +43,11 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         currentSlot = GetComponentInParent<SolitareCardSlot>();
         image = GetComponent<Image>();
+    }
+
+    private void Update()
+    {
+       
     }
 
     public void UpdateVisual()
@@ -98,30 +104,34 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void Flip()
     {
-        bool isFlipped = transform.localScale.x < 0;
-        isFlipped = !isFlipped;
-        Vector3 scale = transform.localScale;
-        scale.x = isFlipped ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-        transform.localScale = scale;
-        
+        IsFlipped = !IsFlipped;
+        float yRotation = IsFlipped ? 180f : 0f;
+
+        LeanTween.rotateY(gameObject, yRotation, .3f).setOnUpdate(FlipUpdate);
+
+        Hide = IsFlipped;
+        IsDraggable = !IsFlipped;
+    }
+
+    private void FlipUpdate(float val)
+    {
+        bool flip = transform.localEulerAngles.y > 90;
+
         foreach (var item in rankTexts)
         {
-            item.gameObject.SetActive(!isFlipped);
+            item.gameObject.SetActive(!flip);
         }
         foreach (var item in suitTexts)
         {
-            item.gameObject.SetActive(!isFlipped);
+            item.gameObject.SetActive(!flip);
         }
 
-        image.sprite = isFlipped ? backSprite : defaultSprite;
-
-        hide = isFlipped;
-        IsDraggable = !isFlipped;
+        image.sprite = flip ? backSprite : defaultSprite;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!IsDraggable || hide) return;
+        if (!IsDraggable || Hide) return;
 
         originalPosition = transform.position;
         originalParent = transform.parent;
@@ -167,7 +177,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!IsDraggable || hide) return;
+        if (!IsDraggable || Hide) return;
 
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
             rectTransform,
@@ -181,7 +191,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!IsDraggable || hide) return;
+        if (!IsDraggable || Hide) return;
 
         RestoreCardsAfterDrag();
 
