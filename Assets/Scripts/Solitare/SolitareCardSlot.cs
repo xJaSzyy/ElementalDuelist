@@ -1,7 +1,5 @@
 using Assets.Scripts.Enums;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,11 +21,6 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
         SolitareCard card = eventData.pointerDrag.GetComponent<SolitareCard>();
         if (card != null && CanAcceptCard(card))
         {
-            /*if (slotType == SolitareSlotType.Stack && card.childCards.Count != 0)
-            {
-                return;
-            }*/
-
             card.WasDroppedInSlot = true;
             card.PlaceInSlot(this);
         }
@@ -35,30 +28,29 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
 
     public virtual bool CanAcceptCard(SolitareCard card)
     {
-        if (card == null) return false;
-
-        if (slotType == SolitareSlotType.Stack)
+        if (card == null)
         {
-            return CanAcceptCardToStack(card);
+            return false;
         }
 
-        if (slotType == SolitareSlotType.Table)
+        if (slotType == SolitareSlotType.Foundation)
         {
-            return CanAcceptCardToTable(card);
+            return CanAcceptCardToFoundation(card);
+        }
+
+        if (slotType == SolitareSlotType.Tableau)
+        {
+            return CanAcceptCardToTableau(card);
         }
 
         return true; 
     }
 
-    private bool CanAcceptCardToStack(SolitareCard card)
+    private bool CanAcceptCardToFoundation(SolitareCard card)
     {
         if (cardsInSlot.Count == 0)
         {
             return card.Rank == Rank.Ace;
-        }
-        else if (cardsInSlot.Count == 1)
-        {
-            return card.Rank == Rank.Two;
         }
         else
         {
@@ -68,7 +60,7 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
         }
     }
 
-    private bool CanAcceptCardToTable(SolitareCard card)
+    private bool CanAcceptCardToTableau(SolitareCard card)
     {
         if (cardsInSlot.Count == 0)
         {
@@ -98,7 +90,7 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
             card.SetCurrentSlot(this);
         }
 
-        if (slotType == SolitareSlotType.Stack && cardsInSlot.Count == 13)
+        if (slotType == SolitareSlotType.Foundation && cardsInSlot.Count == 13)
         {
             full = true;
         }
@@ -134,7 +126,7 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
 
 public enum SolitareSlotType
 {
-    Deck,
-    Table,
-    Stack
+    Stock,
+    Tableau,
+    Foundation
 }

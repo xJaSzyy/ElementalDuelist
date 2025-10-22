@@ -12,7 +12,7 @@ public class SolitareGameManager : MonoBehaviour
     [SerializeField] private GameObject table;
     [SerializeField] private GameObject deck;
     [SerializeField] private SolitareDeckManager deckManager;
-    [SerializeField] private SolitareCardSlot[] stackSlots;
+    [SerializeField] private SolitareCardSlot[] foundationSlots;
 
     [SerializeField] private List<SolitareCard> tableCards = new();
 
@@ -24,7 +24,7 @@ public class SolitareGameManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (var item in stackSlots)
+        foreach (var item in foundationSlots)
         {
             if (!item.full)
             {
@@ -40,7 +40,7 @@ public class SolitareGameManager : MonoBehaviour
 
         foreach (Suit suit in Enum.GetValues(typeof(Suit)))
         {
-            for (int rankValue = 2; rankValue <= 14; rankValue++) 
+            for (int rankValue = 1; rankValue <= 13; rankValue++) 
             {
                 GameObject cardObject = Instantiate(cardPrefab);
 

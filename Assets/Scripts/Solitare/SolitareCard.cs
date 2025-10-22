@@ -24,6 +24,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public List<SolitareCard> childCards = new();
 
+    private RectTransform rectTransform;
     private Vector3 originalPosition;
     private Transform originalParent;
     private CanvasGroup canvasGroup;
@@ -33,6 +34,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        rectTransform = GetComponent<RectTransform>();
         if (canvasGroup == null)
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
@@ -46,9 +48,9 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         int rank = Convert.ToInt32(Rank);
 
-        var rankText = "";
+        string rankText;
 
-        if (rank <= 10)
+        if (rank <= 10 && rank >= 2)
         {
             rankText = rank.ToString();
         }
@@ -57,8 +59,8 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             rankText = Rank.ToString().ToCharArray()[0].ToString();
         }
 
-        var icon = "";
-        var color = Color.white;
+        string icon;
+        Color color;
 
         if (Suit == Suit.Clubs)
         {
@@ -193,7 +195,6 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         if (!IsDraggable || hide) return;
 
-        RectTransform rectTransform = GetComponent<RectTransform>();
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
             rectTransform,
             eventData.position,
@@ -265,18 +266,15 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         transform.position = originalPosition;
         transform.SetParent(originalParent);
 
-        if (currentSlot == null && originalParent != null)
+        currentSlot = originalParent.GetComponent<SolitareCardSlot>();
+        if (currentSlot != null)
         {
-            currentSlot = originalParent.GetComponent<SolitareCardSlot>();
-            if (currentSlot != null)
+            currentSlot.AddCard(this);
+            foreach (var childCard in childCards)
             {
-                currentSlot.AddCard(this);
-                foreach (var childCard in childCards)
-                {
-                    childCard.transform.SetParent(originalParent, true);
-                    currentSlot.AddCard(childCard);
-                    childCard.SetCurrentSlot(currentSlot);
-                }
+                childCard.transform.SetParent(originalParent, true);
+                currentSlot.AddCard(childCard);
+                childCard.SetCurrentSlot(currentSlot);
             }
         }
     }

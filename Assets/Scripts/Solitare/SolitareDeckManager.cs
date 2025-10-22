@@ -25,7 +25,7 @@ public class SolitareDeckManager : MonoBehaviour, IPointerClickHandler
 
     public SolitareCard GetRandomCard()
     {
-        System.Random rnd = new System.Random();
+        System.Random rnd = new();
 
         var card = deckCards[rnd.Next(0, deckCards.Count)];
         deckCards.Remove(card);

@@ -2,7 +2,8 @@ namespace Assets.Scripts.Enums
 {
 	public enum Rank
 	{
-		Two = 2,
+        Ace = 1,
+        Two = 2,
 		Three = 3,
 		Four = 4,
 		Five = 5,
@@ -14,6 +15,5 @@ namespace Assets.Scripts.Enums
 		Jack = 11,
 		Queen = 12, 
 		King = 13,
-		Ace = 14
 	}
 }
