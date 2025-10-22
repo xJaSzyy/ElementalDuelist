@@ -47,8 +47,8 @@ public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
         else
         {
             var cardOnTop = stockCards[stockCards.Count - 1];
-            cardOnTop.transform.SetParent(waste.transform, false);
-            cardOnTop.transform.localPosition = Vector3.zero;
+            cardOnTop.transform.SetParent(transform.parent);
+            LeanTween.move(cardOnTop.gameObject, waste.transform, .3f);
             RemoveCard(cardOnTop);
             waste.AddCard(cardOnTop);
         }

@@ -45,11 +45,6 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         image = GetComponent<Image>();
     }
 
-    private void Update()
-    {
-       
-    }
-
     public void UpdateVisual()
     {
         int rank = Convert.ToInt32(Rank);
@@ -105,9 +100,8 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public void Flip()
     {
         IsFlipped = !IsFlipped;
-        float yRotation = IsFlipped ? 180f : 0f;
 
-        LeanTween.rotateY(gameObject, yRotation, .3f).setOnUpdate(FlipUpdate);
+        LeanTween.scaleX(gameObject, IsFlipped ? -1 : 1, .3f).setOnUpdate(FlipUpdate);
 
         Hide = IsFlipped;
         IsDraggable = !IsFlipped;
@@ -115,7 +109,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void FlipUpdate(float val)
     {
-        bool flip = transform.localEulerAngles.y > 90;
+        bool flip = transform.localScale.x < 0f;
 
         foreach (var item in rankTexts)
         {
