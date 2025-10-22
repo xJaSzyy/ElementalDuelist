@@ -98,54 +98,25 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void Flip()
     {
-        transform.Rotate(0f, 180f, 0f);
-
-        Vector3 euler = transform.rotation.eulerAngles;
-        if (euler.y >= 360f)
+        bool isFlipped = transform.localScale.x < 0;
+        isFlipped = !isFlipped;
+        Vector3 scale = transform.localScale;
+        scale.x = isFlipped ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+        transform.localScale = scale;
+        
+        foreach (var item in rankTexts)
         {
-            euler.y -= 360f;
+            item.gameObject.SetActive(!isFlipped);
         }
-        else if (euler.y < 0f)
+        foreach (var item in suitTexts)
         {
-            euler.y += 360f;
+            item.gameObject.SetActive(!isFlipped);
         }
 
-        transform.rotation = Quaternion.Euler(euler);
+        image.sprite = isFlipped ? backSprite : defaultSprite;
 
-        float yRotation = transform.rotation.eulerAngles.y;
-
-        if (yRotation > 90f && yRotation < 270f)
-        {
-            foreach (var item in rankTexts)
-            {
-                item.gameObject.SetActive(false);
-            }
-            foreach (var item in suitTexts)
-            {
-                item.gameObject.SetActive(false);
-            }
-
-            image.sprite = backSprite;
-
-            hide = true;
-            IsDraggable = false; 
-        }
-        else
-        {
-            foreach (var item in rankTexts)
-            {
-                item.gameObject.SetActive(true);
-            }
-            foreach (var item in suitTexts)
-            {
-                item.gameObject.SetActive(true);
-            }
-
-            image.sprite = defaultSprite;
-
-            hide = false;
-            IsDraggable = true;
-        }
+        hide = isFlipped;
+        IsDraggable = !isFlipped;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -179,13 +150,16 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void PrepareCardsForDrag()
     {
-        canvasGroup.alpha = 0.6f;
+        LeanTween.alphaCanvas(canvasGroup, 0.6f, 0.3f);
         canvasGroup.blocksRaycasts = false;
+
         transform.SetParent(transform.root);
+
+        LeanTween.scale(gameObject, Vector3.one * 1.1f, 0.3f).setEaseInOutSine();
 
         foreach (var card in childCards)
         {
-            card.canvasGroup.alpha = 0.6f;
+            LeanTween.alphaCanvas(card.canvasGroup, 0.6f, 0.3f);
             card.canvasGroup.blocksRaycasts = false;
             card.transform.SetParent(transform);
         }
@@ -221,15 +195,19 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void RestoreCardsAfterDrag()
     {
-        canvasGroup.alpha = 1f;
+        LeanTween.alphaCanvas(canvasGroup, 1f, 0.3f);
         canvasGroup.blocksRaycasts = true;
+
+        LeanTween.scale(gameObject, Vector3.one, 0.3f).setEaseInOutSine();
 
         foreach (var card in childCards)
         {
-            card.canvasGroup.alpha = 1f;
+            LeanTween.alphaCanvas(card.canvasGroup, 1f, 0.3f);
+            LeanTween.scale(card.gameObject, Vector3.one, 0.3f).setEaseInOutSine();
             card.canvasGroup.blocksRaycasts = true;
         }
     }
+
 
     public void PlaceInSlot(SolitareCardSlot newSlot)
     {

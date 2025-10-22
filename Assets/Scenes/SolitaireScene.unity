@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 70655498}
   - component: {fileID: 70655500}
   m_Layer: 5
-  m_Name: Slot (1)
+  m_Name: Waste
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -376,8 +376,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 26698286612708530, guid: ad79868e9fccf9b498abd4b735b3cfb8, type: 3}
   table: {fileID: 86522003}
-  deck: {fileID: 841905776}
-  deckManager: {fileID: 841905779}
+  stock: {fileID: 841905776}
+  stockManager: {fileID: 841905779}
   foundationSlots:
   - {fileID: 1584791268}
   - {fileID: 816743041}
@@ -620,7 +620,7 @@ GameObject:
   - component: {fileID: 841905778}
   - component: {fileID: 841905779}
   m_Layer: 5
-  m_Name: Deck
+  m_Name: Stock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -685,9 +685,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362c921ee0b15ce42a89a252b5e93c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck: {fileID: 1672444420}
-  deckCards: []
-  slot: {fileID: 70655500}
+  stock: {fileID: 1672444420}
+  stockCards: []
+  waste: {fileID: 70655500}
 --- !u!1 &903182652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,7 +1510,7 @@ GameObject:
   - component: {fileID: 1672444423}
   - component: {fileID: 1672444422}
   m_Layer: 5
-  m_Name: Slot
+  m_Name: Stock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

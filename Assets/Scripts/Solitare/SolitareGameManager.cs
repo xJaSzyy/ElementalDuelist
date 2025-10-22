@@ -10,8 +10,8 @@ public class SolitareGameManager : MonoBehaviour
     
     [Header("References")]
     [SerializeField] private GameObject table;
-    [SerializeField] private GameObject deck;
-    [SerializeField] private SolitareDeckManager deckManager;
+    [SerializeField] private GameObject stock;
+    [SerializeField] private SolitareStockManager stockManager;
     [SerializeField] private SolitareCardSlot[] foundationSlots;
 
     [SerializeField] private List<SolitareCard> tableCards = new();
@@ -49,7 +49,7 @@ public class SolitareGameManager : MonoBehaviour
                 card.Rank = (Rank)rankValue;
                 card.UpdateVisual();
 
-                deckManager.AddCard(card);
+                stockManager.AddCard(card);
             }
         }
     }
@@ -62,10 +62,10 @@ public class SolitareGameManager : MonoBehaviour
 
             for (int j = 0; j < columnIndex + 1; j++)
             {
-                var card = deckManager.GetRandomCard();
+                var card = stockManager.GetRandomCard();
                 card.transform.SetParent(column.transform, false);
                 column.GetComponent<SolitareCardSlot>().AddCard(card);
-                deckManager.RemoveCard(card);
+                stockManager.RemoveCard(card);
                 tableCards.Add(card);
 
                 if (j + 1 < columnIndex + 1)
