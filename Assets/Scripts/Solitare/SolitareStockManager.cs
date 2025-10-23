@@ -23,17 +23,44 @@ public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
         stockCards.Remove(card);
     }
 
-    public SolitareCard GetRandomCard()
+    public SolitareCard GetTopCard()
     {
-        System.Random rnd = new();
+        if (stockCards.Count <= 0)
+        {
+            return null;
+        }
 
-        var card = stockCards[rnd.Next(0, stockCards.Count)];
+        var card = stockCards[stockCards.Count - 1];
         stockCards.Remove(card);
 
         return card;
     }
 
+    public void ShuffleCards()
+    {
+        System.Random rnd = new();
+        int n = stockCards.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rnd.Next(n + 1);
+            SolitareCard value = stockCards[k];
+            stockCards[k] = stockCards[n];
+            stockCards[n] = value;
+        }
+
+        for (int i = 0; i < stockCards.Count; i++)
+        {
+            stockCards[i].transform.SetSiblingIndex(i);
+        }
+    }
+
     public void OnPointerClick(PointerEventData eventData)
+    {
+        PointerClick();
+    }
+
+    public void PointerClick()
     {
         if (stockCards.Count == 0)
         {
@@ -47,10 +74,15 @@ public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
         else
         {
             var cardOnTop = stockCards[stockCards.Count - 1];
-            cardOnTop.transform.SetParent(transform.parent);
+            cardOnTop.transform.SetParent(waste.transform);
             LeanTween.move(cardOnTop.gameObject, waste.transform, .3f);
             RemoveCard(cardOnTop);
             waste.AddCard(cardOnTop);
         }
+    }
+
+    public int GetStockCardsCount()
+    {
+        return stockCards.Count;
     }
 }

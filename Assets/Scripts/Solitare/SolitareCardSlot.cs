@@ -127,6 +127,17 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
 
         return cards;
     }
+
+    public SolitareCard GetTopCard()
+    {
+        if (cardsInSlot.Count <= 0)
+        {
+            return null;
+        }
+
+        var card = cardsInSlot[cardsInSlot.Count - 1];
+        return card;
+    }
 }
 
 public enum SolitareSlotType
