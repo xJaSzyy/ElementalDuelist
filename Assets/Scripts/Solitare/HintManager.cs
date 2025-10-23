@@ -1,6 +1,8 @@
 using Assets.Scripts.Enums;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HintManager : MonoBehaviour
 {
@@ -91,7 +93,9 @@ public class HintManager : MonoBehaviour
                 }
 
                 if (movedCard)
+                {
                     break;
+                }
 
                 var wasteTopCard = waste.GetTopCard();
 
@@ -142,4 +146,46 @@ public class HintManager : MonoBehaviour
 
         inProccess = false;
     }
+
+    /*public void Animation()
+    {
+        foreach (var item in tableauSlots)
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        foreach (var item in foundationSlots)
+        {
+            item.GetComponent<Image>().enabled = false;
+        }
+
+        waste.gameObject.SetActive(false);
+        stockManager.gameObject.SetActive(false);
+
+        float radius = 2f;
+        Vector3 center = Vector3.zero;
+
+        List<SolitareCard> allCards = new List<SolitareCard>();
+        foreach (var slot in foundationSlots)
+        {
+            allCards.AddRange(slot.GetCards());
+        }
+
+        float angleStep = 360f / allCards.Count;
+
+        for (int i = 0; i < allCards.Count; i++)
+        {
+            if (i % 2 == 1)
+            {
+                allCards[i].gameObject.SetActive(false);
+                continue;
+            }
+
+            float angle = i * (360f / allCards.Count);
+            Vector3 targetPos = center + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * radius, Mathf.Sin(angle * Mathf.Deg2Rad) * radius, 0);
+            LeanTween.move(allCards[i].gameObject, targetPos, 1f).setEase(LeanTweenType.easeInOutQuad);
+            LeanTween.rotateAround(allCards[i].gameObject, Vector3.forward, 360f, 2f).setRepeat(1).setEaseLinear();
+            yield return new WaitForSeconds(animationSpeed);
+        }
+    }*/
 }

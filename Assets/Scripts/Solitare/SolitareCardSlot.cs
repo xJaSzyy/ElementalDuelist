@@ -1,4 +1,5 @@
 using Assets.Scripts.Enums;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -137,6 +138,11 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
 
         var card = cardsInSlot[cardsInSlot.Count - 1];
         return card;
+    }
+
+    public List<SolitareCard> GetCards()
+    {
+        return cardsInSlot;
     }
 }
 

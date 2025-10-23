@@ -24,7 +24,7 @@ public class SolitareGameManager : MonoBehaviour
     private void Start()
     {
         DrawCards();
-        stockManager.ShuffleCards();
+        //stockManager.ShuffleCards();
         SetCards();
 
         ready = true;
