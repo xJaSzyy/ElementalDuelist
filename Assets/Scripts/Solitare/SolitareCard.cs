@@ -17,6 +17,9 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public bool IsDraggable = true;
     public bool IsFlipped = false;
 
+    [Header("Options")]
+    public float animationSpeed = .3f;
+
     [Header("References")]
     [SerializeField] private TMP_Text[] rankTexts;
     [SerializeField] private TMP_Text[] suitTexts;
@@ -101,7 +104,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         IsFlipped = !IsFlipped;
 
-        LeanTween.scaleX(gameObject, IsFlipped ? -1 : 1, .3f).setOnUpdate(FlipUpdate);
+        LeanTween.scaleX(gameObject, IsFlipped ? -1 : 1, animationSpeed).setOnUpdate(FlipUpdate);
 
         Hide = IsFlipped;
         IsDraggable = !IsFlipped;
@@ -154,16 +157,16 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void PrepareCardsForDrag()
     {
-        LeanTween.alphaCanvas(canvasGroup, 0.6f, 0.3f);
+        LeanTween.alphaCanvas(canvasGroup, 0.6f, animationSpeed);
         canvasGroup.blocksRaycasts = false;
 
         transform.SetParent(transform.root);
 
-        LeanTween.scale(gameObject, Vector3.one * 1.1f, 0.3f).setEaseInOutSine();
+        LeanTween.scale(gameObject, Vector3.one * 1.1f, animationSpeed).setEaseInOutSine();
 
         foreach (var card in childCards)
         {
-            LeanTween.alphaCanvas(card.canvasGroup, 0.6f, 0.3f);
+            LeanTween.alphaCanvas(card.canvasGroup, 0.6f, animationSpeed);
             card.canvasGroup.blocksRaycasts = false;
             card.transform.SetParent(transform);
         }
@@ -199,21 +202,21 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void RestoreCardsAfterDrag()
     {
-        LeanTween.alphaCanvas(canvasGroup, 1f, 0.3f);
+        LeanTween.alphaCanvas(canvasGroup, 1f, animationSpeed);
         canvasGroup.blocksRaycasts = true;
 
-        LeanTween.scale(gameObject, Vector3.one, 0.3f).setEaseInOutSine();
+        LeanTween.scale(gameObject, Vector3.one, animationSpeed).setEaseInOutSine();
 
         foreach (var card in childCards)
         {
-            LeanTween.alphaCanvas(card.canvasGroup, 1f, 0.3f);
-            LeanTween.scale(card.gameObject, Vector3.one, 0.3f).setEaseInOutSine();
+            LeanTween.alphaCanvas(card.canvasGroup, 1f, animationSpeed);
+            LeanTween.scale(card.gameObject, Vector3.one, animationSpeed).setEaseInOutSine();
             card.canvasGroup.blocksRaycasts = true;
         }
     }
 
 
-    public void PlaceInSlot(SolitareCardSlot newSlot)
+    public void PlaceInSlot(SolitareCardSlot newSlot, bool child = true)
     {
         if (newSlot == null) return;
 
@@ -230,14 +233,18 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         currentSlot = newSlot;
         transform.SetParent(newSlot.gameObject.transform, true);
         newSlot.AddCard(this);
+        transform.localPosition = Vector3.zero;
 
-        foreach (var childCard in childCards)
+        if (child)
         {
-            childCard.transform.SetParent(newSlot.gameObject.transform, true);
-            newSlot.AddCard(childCard);
-            childCard.SetCurrentSlot(newSlot);
+            foreach (var childCard in childCards)
+            {
+                childCard.transform.SetParent(newSlot.gameObject.transform, true);
+                newSlot.AddCard(childCard);
+                childCard.SetCurrentSlot(newSlot);
 
-            childCard.transform.localPosition = Vector3.zero;
+                childCard.transform.localPosition = Vector3.zero;
+            }
         }
 
         transform.localPosition = Vector3.zero;

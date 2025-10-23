@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
 {
+    public float animationSpeed = .3f;
+
     [SerializeField] private GameObject stock;
     
     [SerializeField] private List<SolitareCard> stockCards = new();
@@ -75,7 +77,7 @@ public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
         {
             var cardOnTop = stockCards[stockCards.Count - 1];
             cardOnTop.transform.SetParent(waste.transform);
-            LeanTween.move(cardOnTop.gameObject, waste.transform, .3f);
+            LeanTween.move(cardOnTop.gameObject, waste.transform, animationSpeed);
             RemoveCard(cardOnTop);
             waste.AddCard(cardOnTop);
         }

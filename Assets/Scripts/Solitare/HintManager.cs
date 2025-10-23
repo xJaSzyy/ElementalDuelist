@@ -31,6 +31,8 @@ public class HintManager : MonoBehaviour
 
     private IEnumerator AutoWin()
     {
+        stockManager.animationSpeed = animationSpeed;
+
         while (!gameManager.win)
         {
             bool movedCard = false;
@@ -38,7 +40,9 @@ public class HintManager : MonoBehaviour
             foreach (var foundationSlot in foundationSlots)
             {
                 if (foundationSlot.full)
+                {
                     continue;
+                }
 
                 var foundationTopCard = foundationSlot.GetTopCard();
 
@@ -50,12 +54,15 @@ public class HintManager : MonoBehaviour
                     {
                         if (tableauTopCard != null && tableauTopCard.Rank == Rank.Ace)
                         {
+                            tableauTopCard.animationSpeed = animationSpeed;
+                            tableauTopCard.transform.SetParent(foundationSlot.gameObject.transform);
+                            LeanTween.move(tableauTopCard.gameObject, foundationSlot.gameObject.transform, animationSpeed).setOnComplete(() =>
+                            {
+                                tableauTopCard.PlaceInSlot(foundationSlot, false);
 
-                            tableauTopCard.PlaceInSlot(foundationSlot);
+                                movedCard = true;
+                            });
 
-                            movedCard = true;
-
-                            Debug.Log($"Moved: {tableauTopCard.name}");
                             yield return new WaitForSeconds(animationSpeed);
                             break;
                         }
@@ -69,11 +76,15 @@ public class HintManager : MonoBehaviour
                         foundationTopCard.Suit == tableauTopCard.Suit &&
                         foundationTopCard.Rank == tableauTopCard.Rank - 1)
                     {
-                        tableauTopCard.PlaceInSlot(foundationSlot);
+                        tableauTopCard.animationSpeed = animationSpeed;
+                        tableauTopCard.transform.SetParent(foundationSlot.gameObject.transform);
+                        LeanTween.move(tableauTopCard.gameObject, foundationSlot.gameObject.transform, animationSpeed).setOnComplete(() =>
+                        {
+                            tableauTopCard.PlaceInSlot(foundationSlot, false);
 
-                        movedCard = true;
+                            movedCard = true;
+                        });
 
-                        Debug.Log($"Moved: {tableauTopCard.name}");
                         yield return new WaitForSeconds(animationSpeed);
                         break;
                     }
@@ -88,12 +99,14 @@ public class HintManager : MonoBehaviour
                 {
                     if (wasteTopCard != null && wasteTopCard.Rank == Rank.Ace)
                     {
+                        wasteTopCard.animationSpeed = animationSpeed;
+                        wasteTopCard.transform.SetParent(foundationSlot.gameObject.transform);
+                        LeanTween.move(wasteTopCard.gameObject, foundationSlot.gameObject.transform, animationSpeed).setOnComplete(() =>
+                        {
+                            wasteTopCard.PlaceInSlot(foundationSlot, false);
 
-                        wasteTopCard.PlaceInSlot(foundationSlot);
-
-                        movedCard = true;
-
-                        Debug.Log($"Moved: {wasteTopCard.name}");
+                            movedCard = true;
+                        });
                         yield return new WaitForSeconds(animationSpeed);
                         break;
                     }
@@ -107,11 +120,14 @@ public class HintManager : MonoBehaviour
                     foundationTopCard.Suit == wasteTopCard.Suit &&
                     foundationTopCard.Rank == wasteTopCard.Rank - 1)
                 {
-                    wasteTopCard.PlaceInSlot(foundationSlot);
+                    wasteTopCard.animationSpeed = animationSpeed;
+                    wasteTopCard.transform.SetParent(foundationSlot.gameObject.transform);
+                    LeanTween.move(wasteTopCard.gameObject, foundationSlot.gameObject.transform, animationSpeed).setOnComplete(() =>
+                    {
+                        wasteTopCard.PlaceInSlot(foundationSlot, false);
 
-                    Debug.Log($"Moved: {wasteTopCard.name}");
-
-                    movedCard = true;
+                        movedCard = true;
+                    });
                     yield return new WaitForSeconds(animationSpeed);
                     break;
                 }

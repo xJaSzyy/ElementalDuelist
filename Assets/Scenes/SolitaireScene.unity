@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inProccess: 0
+  animationSpeed: 0.1
   gameManager: {fileID: 544630649}
   stockManager: {fileID: 1672444424}
   tableauSlots:
@@ -430,6 +431,7 @@ MonoBehaviour:
   - {fileID: 816743041}
   - {fileID: 1045123170}
   - {fileID: 1285101631}
+  waste: {fileID: 70655500}
 --- !u!1 &703409767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,6 +1603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362c921ee0b15ce42a89a252b5e93c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationSpeed: 0.3
   stock: {fileID: 1672444420}
   stockCards: []
   waste: {fileID: 70655500}
