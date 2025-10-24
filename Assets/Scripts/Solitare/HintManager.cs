@@ -86,6 +86,9 @@ public class HintManager : MonoBehaviour
             }
         }
 
+        SlotsDisable();
+        yield return StartCoroutine(PlayAnimation());
+
         inProccess = false;
     }
 
@@ -117,7 +120,7 @@ public class HintManager : MonoBehaviour
         yield return new WaitUntil(() => animationCompleted);
     }
 
-    /*public void Animation()
+    private void SlotsDisable()
     {
         foreach (var item in tableauSlots)
         {
@@ -131,17 +134,18 @@ public class HintManager : MonoBehaviour
 
         waste.gameObject.SetActive(false);
         stockManager.gameObject.SetActive(false);
+    }
 
+    public IEnumerator PlayAnimation()
+    {
         float radius = 2f;
         Vector3 center = Vector3.zero;
 
-        List<SolitareCard> allCards = new List<SolitareCard>();
+        List<SolitareCard> allCards = new();
         foreach (var slot in foundationSlots)
         {
             allCards.AddRange(slot.GetCards());
         }
-
-        float angleStep = 360f / allCards.Count;
 
         for (int i = 0; i < allCards.Count; i++)
         {
@@ -154,8 +158,8 @@ public class HintManager : MonoBehaviour
             float angle = i * (360f / allCards.Count);
             Vector3 targetPos = center + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * radius, Mathf.Sin(angle * Mathf.Deg2Rad) * radius, 0);
             LeanTween.move(allCards[i].gameObject, targetPos, 1f).setEase(LeanTweenType.easeInOutQuad);
-            LeanTween.rotateAround(allCards[i].gameObject, Vector3.forward, 360f, 2f).setRepeat(1).setEaseLinear();
+            LeanTween.rotateAround(allCards[i].gameObject, Vector3.forward, 360f, 1f).setRepeat(1).setEaseLinear();
             yield return new WaitForSeconds(animationSpeed);
         }
-    }*/
+    }
 }
