@@ -50,7 +50,6 @@ public class SolitareGameManager : MonoBehaviour
 
     private void DrawCards()
     {
-
         foreach (Suit suit in Enum.GetValues(typeof(Suit)))
         {
             for (int rankValue = 1; rankValue <= 13; rankValue++) 
@@ -78,12 +77,20 @@ public class SolitareGameManager : MonoBehaviour
             for (int j = 0; j < columnIndex + 1; j++)
             {
                 var card = stockManager.GetTopCard();
+
                 card.transform.SetParent(column.transform, false);
+
+                /*LeanTween.move(card.gameObject, column.transform, stockManager.animationSpeed)
+                    .setOnComplete(() =>
+                    {
+                    });*/
+
+                card.Flip();
                 column.GetComponent<SolitareCardSlot>().AddCard(card);
                 stockManager.RemoveCard(card);
                 tableauCards.Add(card);
 
-                if (j + 1 < columnIndex + 1)
+                if (j + 1 >= columnIndex + 1)
                 {
                     card.Flip();
                 }

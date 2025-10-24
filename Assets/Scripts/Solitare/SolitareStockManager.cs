@@ -16,7 +16,6 @@ public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
         stockCards.Add(card);
         card.transform.SetParent(stock.transform, false);
         card.transform.localPosition = Vector3.zero;
-        card.Flip();
     }
 
     public void RemoveCard(SolitareCard card)

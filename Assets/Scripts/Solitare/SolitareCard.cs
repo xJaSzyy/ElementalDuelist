@@ -13,9 +13,9 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public bool WasDroppedInSlot { get; set; } = false;
 
     [Header("State")]
-    public bool Hide = false;
-    public bool IsDraggable = true;
-    public bool IsFlipped = false;
+    public bool Hide = true;
+    public bool IsDraggable = false;
+    public bool IsFlipped = true;
 
     [Header("Options")]
     public float animationSpeed = .3f;
@@ -52,6 +52,8 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         currentSlot = GetComponentInParent<SolitareCardSlot>();
         coverImage = cover.GetComponent<Image>();
         coverRectTransform = cover.GetComponent<RectTransform>();
+
+        FlipUpdate(0);
     }
 
     public void UpdateVisual()
