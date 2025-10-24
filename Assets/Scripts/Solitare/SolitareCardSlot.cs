@@ -67,7 +67,7 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
         {
             SolitareCard topCard = cardsInSlot[cardsInSlot.Count - 1];
             return card.Suit == topCard.Suit &&
-                   (int)card.Rank == (int)topCard.Rank + 1;
+                (int)card.Rank == (int)topCard.Rank + 1;
         }
     }
 
@@ -80,8 +80,9 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
         else
         {
             SolitareCard topCard = cardsInSlot[cardsInSlot.Count - 1];
-            return IsOppositeColor(card, topCard) &&
-                   (int)card.Rank == (int)topCard.Rank - 1;
+            return !topCard.Hide &&
+                IsOppositeColor(card, topCard) &&
+                (int)card.Rank == (int)topCard.Rank - 1;
         }
     }
 

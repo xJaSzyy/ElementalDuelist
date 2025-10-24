@@ -157,8 +157,8 @@ public class HintManager : MonoBehaviour
 
             float angle = i * (360f / allCards.Count);
             Vector3 targetPos = center + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * radius, Mathf.Sin(angle * Mathf.Deg2Rad) * radius, 0);
-            LeanTween.move(allCards[i].gameObject, targetPos, 1f).setEase(LeanTweenType.easeInOutQuad);
-            LeanTween.rotateAround(allCards[i].gameObject, Vector3.forward, 360f, 1f).setRepeat(2).setEaseLinear();
+            LeanTween.move(allCards[i].gameObject, targetPos, 1f).setEase(LeanTweenType.linear);
+            LeanTween.rotateAround(allCards[i].gameObject, Vector3.forward, 360f, 2f).setRepeat(2).setEaseLinear();
             yield return new WaitForSeconds(animationSpeed);
         }
     }
