@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inProccess: 0
-  animationSpeed: 0.05
+  animationSpeed: 0.1
   gameManager: {fileID: 544630649}
   stockManager: {fileID: 1672444424}
   tableauSlots:

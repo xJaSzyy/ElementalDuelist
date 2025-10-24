@@ -25,6 +25,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [SerializeField] private TMP_Text[] suitTexts;
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite backSprite;
+    [SerializeField] private GameObject cover;
 
     public List<SolitareCard> childCards = new();
 
@@ -33,7 +34,11 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private Transform originalParent;
     private CanvasGroup canvasGroup;
     private SolitareCardSlot currentSlot;
-    private Image image;
+    private Image coverImage;
+    private RectTransform coverRectTransform;
+
+    private Vector3 lastPosition = Vector3.zero;
+    private float targetAngle = 0f;
 
     private void Awake()
     {
@@ -45,7 +50,8 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
 
         currentSlot = GetComponentInParent<SolitareCardSlot>();
-        image = GetComponent<Image>();
+        coverImage = cover.GetComponent<Image>();
+        coverRectTransform = cover.GetComponent<RectTransform>();
     }
 
     public void UpdateVisual()
@@ -123,7 +129,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             item.gameObject.SetActive(!flip);
         }
 
-        image.sprite = flip ? backSprite : defaultSprite;
+        coverImage.sprite = flip ? backSprite : defaultSprite;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -183,6 +189,40 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             out Vector3 worldPoint))
         {
             transform.position = worldPoint;
+
+            float dragDelta = worldPoint.x - lastPosition.x;
+
+            MoveCover(dragDelta);
+            foreach (var childCard in childCards)
+            {
+                childCard.MoveCover(dragDelta);
+            }
+
+            lastPosition = worldPoint;
+        }
+    }
+
+    public void MoveCover(float dragDelta)
+    {
+        if (Math.Abs(dragDelta) > .1f)
+        {
+            targetAngle += dragDelta > 0 ? -15f : 15f;
+            targetAngle = Mathf.Clamp(targetAngle, -30f, 30f);
+
+            Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
+            coverRectTransform.localRotation = Quaternion.Slerp(
+                coverRectTransform.localRotation,
+                targetRotation,
+                Time.deltaTime * 10f
+            );
+        }
+        else
+        {
+            coverRectTransform.localRotation = Quaternion.Slerp(
+                coverRectTransform.localRotation,
+                Quaternion.identity,
+                Time.deltaTime * 10f
+            );
         }
     }
 
@@ -197,7 +237,19 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             ReturnToOriginalPosition();
         }
 
+        ResetCover();
+        foreach (var childCard in childCards)
+        {
+            childCard.ResetCover();
+        }
+
         WasDroppedInSlot = false;
+    }
+
+    public void ResetCover()
+    {
+        coverRectTransform.localPosition = Vector3.zero;
+        coverRectTransform.localRotation = Quaternion.identity;
     }
 
     private void RestoreCardsAfterDrag()
@@ -214,7 +266,6 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             card.canvasGroup.blocksRaycasts = true;
         }
     }
-
 
     public void PlaceInSlot(SolitareCardSlot newSlot, bool child = true)
     {
