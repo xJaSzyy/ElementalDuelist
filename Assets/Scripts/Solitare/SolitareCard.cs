@@ -325,4 +325,21 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         currentSlot = slot;
     }
+
+    public void Move(Transform start, Transform end, float speed = .1f)
+    {
+        Canvas canvas = FindAnyObjectByType<Canvas>();
+        transform.SetParent(canvas.transform, false);
+
+        transform.position = start.position;
+
+        LeanTween.move(gameObject, end.position, speed)
+            .setEaseOutBounce()
+            .setOnComplete(() =>
+            {
+                transform.SetParent(end, true); 
+                transform.localPosition = Vector3.zero; 
+                transform.localRotation = Quaternion.identity;
+            });
+    }
 }

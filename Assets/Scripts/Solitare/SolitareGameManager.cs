@@ -1,5 +1,6 @@
 using Assets.Scripts.Enums;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -26,8 +27,6 @@ public class SolitareGameManager : MonoBehaviour
         DrawCards();
         stockManager.ShuffleCards();
         SetCards();
-
-        ready = true;
     }
 
     private void Update()
@@ -70,6 +69,11 @@ public class SolitareGameManager : MonoBehaviour
 
     private void SetCards()
     {
+        StartCoroutine(SetCardsCoroutine());
+    }
+
+    private IEnumerator SetCardsCoroutine()
+    {
         for (int columnIndex = 0; columnIndex < tableau.transform.childCount; columnIndex++)
         {
             var column = tableau.transform.GetChild(columnIndex);
@@ -78,24 +82,24 @@ public class SolitareGameManager : MonoBehaviour
             {
                 var card = stockManager.GetTopCard();
 
-                card.transform.SetParent(column.transform, false);
+                float moveSpeed = .1f;
+                card.Move(stockManager.transform, column.transform, moveSpeed);
 
-                /*LeanTween.move(card.gameObject, column.transform, stockManager.animationSpeed)
-                    .setOnComplete(() =>
-                    {
-                    });*/
+                yield return new WaitForSeconds(moveSpeed);
 
                 card.Flip();
                 column.GetComponent<SolitareCardSlot>().AddCard(card);
                 stockManager.RemoveCard(card);
                 tableauCards.Add(card);
 
-                if (j + 1 >= columnIndex + 1)
+                if (j + 1 > columnIndex)
                 {
                     card.Flip();
                 }
             }
         }
+
+        ready = true;
     }
 
     public bool IsAllCardsOpen()

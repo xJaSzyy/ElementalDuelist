@@ -67,9 +67,10 @@ public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
         {
             var cards = waste.RemoveAndGetAllCards();
             cards.Reverse();
-            foreach (var item in cards)
+            foreach (var card in cards)
             {
-                AddCard(item);
+                card.Flip();
+                AddCard(card);
             }
         }
         else

@@ -54,6 +54,11 @@ public class SolitareCardSlot : MonoBehaviour, IDropHandler
 
     private bool CanAcceptCardToFoundation(SolitareCard card)
     {
+        if (card.childCards.Count > 0)
+        {
+            return false;
+        }
+
         if (cardsInSlot.Count == 0)
         {
             return card.Rank == Rank.Ace;
