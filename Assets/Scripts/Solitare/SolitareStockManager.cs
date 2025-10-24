@@ -71,6 +71,8 @@ public class SolitareStockManager : MonoBehaviour, IPointerClickHandler
             {
                 card.Flip();
                 AddCard(card);
+                card.gameObject.transform.position = waste.transform.position;
+                LeanTween.move(card.gameObject, stock.transform, animationSpeed);
             }
         }
         else
