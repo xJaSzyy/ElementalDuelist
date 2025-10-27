@@ -1,4 +1,5 @@
 using Assets.Scripts.Enums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -161,5 +162,26 @@ public class HintManager : MonoBehaviour
             LeanTween.rotateAround(allCards[i].gameObject, Vector3.forward, 360f, 2f).setRepeat(2).setEaseLinear();
             yield return new WaitForSeconds(animationSpeed);
         }
+    }
+
+    public SolitareCardSlot GetAvailableSlot(SolitareCard card)
+    {
+        foreach (var foundationSlot in foundationSlots)
+        {
+            if (foundationSlot.CanAcceptCard(card))
+            {
+                return foundationSlot;
+            }
+        }
+
+        foreach (var tableauSlot in tableauSlots)
+        {
+            if (tableauSlot.CanAcceptCard(card))
+            {
+                return tableauSlot;
+            }
+        }
+
+        return null;
     }
 }

@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
-public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public Suit Suit { get; set; }
     public Rank Rank { get; set; }
@@ -48,6 +49,8 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
+        canvasGroup.interactable = !Hide;
+        canvasGroup.blocksRaycasts = !Hide;
 
         currentSlot = GetComponentInParent<SolitareCardSlot>();
         coverImage = cover.GetComponent<Image>();
@@ -116,6 +119,9 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         Hide = IsFlipped;
         IsDraggable = !IsFlipped;
+
+        canvasGroup.interactable = !Hide;
+        canvasGroup.blocksRaycasts = !Hide;
     }
 
     private void FlipUpdate(float val)
@@ -134,9 +140,32 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         coverImage.sprite = flip ? backSprite : defaultSprite;
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!IsDraggable || Hide)
+        {
+            return;
+        }
+
+        var hintManager = FindAnyObjectByType<HintManager>();
+        var slot = hintManager.GetAvailableSlot(this);
+
+        if (slot == null)
+        {
+            return;
+        }
+
+        PlaceInSlot(slot, false);
+
+        WasDroppedInSlot = false;
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!IsDraggable || Hide) return;
+        if (!IsDraggable || Hide)
+        {
+            return;
+        }
 
         originalPosition = transform.position;
         originalParent = transform.parent;
@@ -182,7 +211,10 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!IsDraggable || Hide) return;
+        if (!IsDraggable || Hide)
+        {
+            return;
+        }
 
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
             rectTransform,
@@ -230,7 +262,10 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!IsDraggable || Hide) return;
+        if (!IsDraggable || Hide)
+        {
+            return;
+        }
 
         RestoreCardsAfterDrag();
 
