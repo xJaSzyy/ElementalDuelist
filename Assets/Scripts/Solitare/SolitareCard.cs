@@ -166,10 +166,15 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             slot.cardsInSlot[^1].gameObject.transform : 
             slot.gameObject.transform;
 
-        LeanTween.move(gameObject, to.position, animationSpeed)
+        LeanTween.move(gameObject, to, animationSpeed)
             .setOnComplete(() => {
                 PlaceInSlot(slot);
             });
+
+        foreach (var childCard in childCards)
+        {
+            LeanTween.move(childCard.gameObject, to, animationSpeed);
+        }
 
         WasDroppedInSlot = false;
     }
