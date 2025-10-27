@@ -155,7 +155,21 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             return;
         }
 
-        PlaceInSlot(slot, false);
+        UpdateChilds();
+
+        if (slot.slotType == SolitareSlotType.Foundation && childCards.Count > 0)
+        {
+            return;
+        }
+
+        var to = slot.cardsInSlot.Count > 0 ? 
+            slot.cardsInSlot[^1].gameObject.transform : 
+            slot.gameObject.transform;
+
+        LeanTween.move(gameObject, to.position, animationSpeed)
+            .setOnComplete(() => {
+                PlaceInSlot(slot);
+            });
 
         WasDroppedInSlot = false;
     }
@@ -170,6 +184,13 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         originalPosition = transform.position;
         originalParent = transform.parent;
 
+        UpdateChilds();
+
+        PrepareCardsForDrag();
+    }
+
+    private void UpdateChilds()
+    {
         childCards.Clear();
         if (currentSlot != null)
         {
@@ -188,8 +209,6 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 currentSlot.RemoveCard(childCard);
             }
         }
-
-        PrepareCardsForDrag();
     }
 
     private void PrepareCardsForDrag()
@@ -319,7 +338,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
 
         currentSlot = newSlot;
-        transform.SetParent(newSlot.gameObject.transform, true);
+        transform.SetParent(newSlot.gameObject.transform);
         newSlot.AddCard(this);
         transform.localPosition = Vector3.zero;
 
@@ -327,7 +346,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         {
             foreach (var childCard in childCards)
             {
-                childCard.transform.SetParent(newSlot.gameObject.transform, true);
+                childCard.transform.SetParent(newSlot.gameObject.transform);
                 newSlot.AddCard(childCard);
                 childCard.SetCurrentSlot(newSlot);
 

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class SolitareCardSlot : MonoBehaviour, IDropHandler
 {
     [Header("Options")]
-    [SerializeField] private SolitareSlotType slotType;
+    public SolitareSlotType slotType;
 
     public List<SolitareCard> cardsInSlot = new();
     public bool full = false;
