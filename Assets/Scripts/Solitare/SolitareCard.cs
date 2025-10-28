@@ -205,12 +205,6 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                     childCards.Add(currentSlot.cardsInSlot[i]);
                 }
             }
-
-            /*currentSlot.RemoveCard(this);
-            foreach (var childCard in childCards)
-            {
-                currentSlot.RemoveCard(childCard);
-            }*/
         }
     }
 
@@ -343,6 +337,7 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             currentSlot.FlipLastCard();
         }
 
+        UpdateSlot(currentSlot);
         currentSlot = newSlot;
         transform.SetParent(newSlot.gameObject.transform);
         newSlot.AddCard(this);
@@ -362,9 +357,14 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         transform.localPosition = Vector3.zero;
 
-        foreach (var newSlotCard in newSlot.cardsInSlot)
+        UpdateSlot(currentSlot);
+    }
+
+    private void UpdateSlot(SolitareCardSlot slot)
+    {
+        foreach (var slotCard in slot.cardsInSlot)
         {
-            newSlotCard.UpdateChilds();
+            slotCard.UpdateChilds();
         }
     }
 
