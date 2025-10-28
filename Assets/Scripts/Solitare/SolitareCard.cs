@@ -122,6 +122,8 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         canvasGroup.interactable = !Hide;
         canvasGroup.blocksRaycasts = !Hide;
+
+        UpdateChilds();
     }
 
     private void FlipUpdate(float val)
@@ -155,8 +157,6 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             return;
         }
 
-        UpdateChilds();
-
         if (slot.slotType == SolitareSlotType.Foundation && childCards.Count > 0)
         {
             return;
@@ -189,12 +189,10 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         originalPosition = transform.position;
         originalParent = transform.parent;
 
-        UpdateChilds();
-
         PrepareCardsForDrag();
     }
 
-    private void UpdateChilds()
+    public void UpdateChilds()
     {
         childCards.Clear();
         if (currentSlot != null)
@@ -208,11 +206,11 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 }
             }
 
-            currentSlot.RemoveCard(this);
+            /*currentSlot.RemoveCard(this);
             foreach (var childCard in childCards)
             {
                 currentSlot.RemoveCard(childCard);
-            }
+            }*/
         }
     }
 
@@ -330,7 +328,10 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void PlaceInSlot(SolitareCardSlot newSlot, bool child = true)
     {
-        if (newSlot == null) return;
+        if (newSlot == null)
+        {
+            return;
+        }
 
         if (currentSlot != null)
         {
@@ -360,6 +361,11 @@ public class SolitareCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
 
         transform.localPosition = Vector3.zero;
+
+        foreach (var newSlotCard in newSlot.cardsInSlot)
+        {
+            newSlotCard.UpdateChilds();
+        }
     }
 
     public void ReturnToOriginalPosition()
